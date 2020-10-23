@@ -24,6 +24,8 @@ import { Place } from '../options/place/place.model';
 import { Method } from '../options/method/method.model';
 import { ToolType } from '../options/tool-type/tool-type.model';
 import { ClimaticEnvironmental } from '../options/climatic-environmental/ce.model';
+import { NormativeDocument } from '../options/normative-document/normative-document.model';
+import { SampleType } from '../options/sample-type/sample-type.model';
 
 export enum ActStatus {
   CREATED = 'CREATED',
@@ -123,8 +125,12 @@ export class Act {
   @JoinTable()
   normativeDocuments?: NormativeDocument[];
   @Field()
-  @Column({ nullable: true })
-  sampleType?: string;
+  @ManyToOne(
+    type => SampleType,
+    sampleType => sampleType.acts,
+    { cascade: true, eager: true },
+  )
+  sampleType?: SampleType;
   @Field(type => [String])
   @Column('text', { array: true, nullable: true })
   sample?: string[];

@@ -2,6 +2,7 @@ import { ObjectType } from '@nestjs/graphql';
 import { Entity, ManyToMany, OneToMany } from 'typeorm';
 import { Act } from '../../acts/act.model';
 import { BaseOption } from '../base-options.model';
+import { NDEvent } from './nd-event.model';
 
 @Entity()
 @ObjectType()

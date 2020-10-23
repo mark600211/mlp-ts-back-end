@@ -12,6 +12,7 @@ export class ObjectName extends BaseOption {
     events => events.objectName,
     { nullable: true },
   )
+  events: ObjectNameEvent[];
   @OneToMany(
     type => Act,
     acts => acts.typeOfSample,
