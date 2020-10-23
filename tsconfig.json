@@ -1,0 +1,45 @@
+{
+    "compilerOptions": {
+        "module": "commonjs",
+        "declaration": true,
+        "removeComments": true,
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "target": "es2017",
+        "sourceMap": true,
+        "outDir": "./dist",
+        "baseUrl": "./",
+        "incremental": true,
+        "esModuleInterop": true,
+        "paths": {
+            "@app/proto": [
+                "libs/proto/src"
+            ],
+            "@app/proto/*": [
+                "libs/proto/src/*"
+            ],
+            "@app/config": [
+                "libs/config/src"
+            ],
+            "@app/config/*": [
+                "libs/config/src/*"
+            ],
+            "@app/models": [
+                "libs/models/src"
+            ],
+            "@app/models/*": [
+                "libs/models/src/*"
+            ],
+            "@app/db": [
+                "libs/db/src"
+            ],
+            "@app/db/*": [
+                "libs/db/src/*"
+            ]
+        }
+    },
+    "exclude": [
+        "node_modules",
+        "dist"
+    ]
+}

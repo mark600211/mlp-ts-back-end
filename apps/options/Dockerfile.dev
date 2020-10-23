@@ -1,0 +1,4 @@
+FROM mark600/mbcl-ts-builder
+WORKDIR /app
+ENV NODE_ENV=development
+CMD ["yarn", "start", "options", "--watch"]
