@@ -1,5 +1,5 @@
 import { Injectable, Logger } from '@nestjs/common';
-import { Entity, Repository, getRepository } from 'typeorm';
+import { Repository, getRepository, EntityTarget } from 'typeorm';
 
 @Injectable()
 export class DbService {
@@ -8,7 +8,7 @@ export class DbService {
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   constructor() {}
 
-  getRepository<T extends typeof Entity>(entity: T): Repository<T> {
+  getRepository<T>(entity: EntityTarget<T>): Repository<T> {
     try {
       const repository = getRepository<T>(entity);
 

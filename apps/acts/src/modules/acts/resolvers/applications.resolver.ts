@@ -1,12 +1,12 @@
 import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
-import { Application } from '../models/application.model';
 import { Logger } from '@nestjs/common';
 import { QueryBus, CommandBus } from '@nestjs/cqrs';
 import { GetAllApplicationsQuery } from '../queries/impl/get-all-applications.query';
 import { CreateAppCommand } from '../commands/impl/create-app.command';
 import { DeleteAppCommand } from '../commands/impl/delete-app.command';
-import { CopyAppDto } from '../models/dto/copy-app.dto';
 import { CreateAppCopyCommand } from '../commands/impl/create-app-copy.command';
+import { Application } from '@app/models';
+import { CopyAppDto } from '@app/models';
 
 @Resolver(of => Application)
 export class AppResolver {

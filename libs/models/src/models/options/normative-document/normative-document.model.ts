@@ -1,21 +1,15 @@
 import { ObjectType } from '@nestjs/graphql';
-import { Entity, ManyToMany, OneToMany } from 'typeorm';
-import { Act } from '../../acts/act.model';
-import { BaseOption } from '../base-options.model';
+import { Entity, OneToMany } from 'typeorm';
 import { NDEvent } from './nd-event.model';
+import { NormativeDocumentBase } from './normative-document-base.model';
 
 @Entity()
 @ObjectType()
-export class NormativeDocument extends BaseOption {
+export class NormativeDocument extends NormativeDocumentBase {
   @OneToMany(
     type => NDEvent,
-    events => events,
+    events => events.normativeDocuemtns,
     { nullable: true },
   )
-  @ManyToMany(
-    type => Act,
-    acts => acts.typeOfSample,
-    { nullable: true },
-  )
-  acts: Act[];
+  events: NDEvent[];
 }

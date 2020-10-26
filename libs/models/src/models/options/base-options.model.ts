@@ -1,4 +1,10 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  CreateDateColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 import { ObjectType, Field, ID } from '@nestjs/graphql';
 
 @Entity()
@@ -10,4 +16,8 @@ export class BaseOption {
   @Field()
   @Column()
   label: string;
+  @CreateDateColumn()
+  createdAt?: Date;
+  @UpdateDateColumn()
+  updatedAt?: Date;
 }

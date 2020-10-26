@@ -1,29 +1,16 @@
 /* eslint-disable prefer-const */
-import {
-  CommandHandler,
-  ICommandHandler,
-  EventPublisher,
-  EventBus,
-} from '@nestjs/cqrs';
+import { CommandHandler, ICommandHandler, EventBus } from '@nestjs/cqrs';
 import { NewActCommand } from '../impl/new-act.command';
-import { Act } from '../../models/act.model';
 import { Logger } from '@nestjs/common';
-import { ActRepository } from '../../repositories/act.repository';
 import { ActsService } from '../../acts.service';
-import { ApplicationRepository } from '../../repositories/application.repository';
-import { Application } from '../../models/application.model';
 import { ActCreatedEvent } from '../../events/impl/act-created.event';
+import { Act } from '@app/models';
 
 @CommandHandler(NewActCommand)
 export class NewActHandler implements ICommandHandler<NewActCommand> {
   logger = new Logger(this.constructor.name);
 
-  constructor(
-    private readonly actRepository: ActRepository,
-    private readonly appRepository: ApplicationRepository,
-    private readonly as: ActsService,
-    private eventBus: EventBus,
-  ) {}
+  constructor(private readonly as: ActsService, private eventBus: EventBus) {}
 
   async execute(command: NewActCommand): Promise<Act> {
     this.logger.verbose(`new-act.command`);
@@ -31,27 +18,6 @@ export class NewActHandler implements ICommandHandler<NewActCommand> {
     const { newActData } = command;
 
     try {
-      const customer = await this.as.getCusomer(newActData.customer);
-
-      this.logger.verbose(customer);
-
-      const generalCustomer = await this.as.getGeneralCustomer(
-        newActData.generalCustomer,
-      );
-
-      this.logger.verbose(generalCustomer);
-
-      const lab = await this.as.getLab(newActData.lab);
-
-      this.logger.verbose(lab);
-
-      const { tos, habitan, htype } = await this.as.getTOSByReletaions(
-        newActData.typeOfSample.habitan,
-        newActData.typeOfSample.htype,
-      );
-
-      this.logger.verbose(tos);
-
       let applications: Application[] = [];
 
       if (newActData.applications) {
@@ -75,18 +41,6 @@ export class NewActHandler implements ICommandHandler<NewActCommand> {
         typeOfSample: tos,
         applications: applications,
       });
-
-      this.eventBus.publish(
-        new ActCreatedEvent(newAct, 'Customer', customer.id),
-      );
-      this.eventBus.publish(
-        new ActCreatedEvent(newAct, 'GeneralCustomer', generalCustomer.id),
-      );
-      this.eventBus.publish(new ActCreatedEvent(newAct, 'Lab', lab.id));
-
-      this.eventBus.publish(new ActCreatedEvent(newAct, 'TOS', htype.id));
-
-      this.eventBus.publish(new ActCreatedEvent(newAct, 'ACT', newAct.id));
 
       return newAct;
     } catch (e) {

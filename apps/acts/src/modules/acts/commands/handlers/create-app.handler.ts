@@ -1,8 +1,6 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { CreateAppCommand } from '../impl/create-app.command';
 import { Logger } from '@nestjs/common';
-import { Application } from '../../models/application.model';
-import { ApplicationRepository } from '../../repositories/application.repository';
 
 @CommandHandler(CreateAppCommand)
 export class CreateAppHandler implements ICommandHandler<CreateAppCommand> {

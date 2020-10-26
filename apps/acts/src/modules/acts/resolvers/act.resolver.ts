@@ -1,4 +1,4 @@
-import { Inject, OnModuleInit, Logger } from '@nestjs/common';
+import { OnModuleInit, Logger } from '@nestjs/common';
 import {
   Resolver,
   Query,
@@ -7,18 +7,15 @@ import {
   Parent,
   Mutation,
 } from '@nestjs/graphql';
-import { Act } from '../models/act.model';
+import { Act, NewActDto } from '@app/models';
 import { Customer } from '../../customers/models/customer.model';
 import { Observable } from 'rxjs';
 import { ClientGrpc } from '@nestjs/microservices';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { MigrationCreateActDto } from '../models/dto/migration-create-act.dto';
-import { NewActDto } from '../models/dto/new-act.dto';
 import { NewActCommand } from '../commands/impl/new-act.command';
-import { ActRepository } from '../repositories/act.repository';
 import { ActsService } from '../acts.service';
 import { UpdateActCommand } from '../commands/impl/update-act.command';
-import { PatchActDto } from '../models/dto/patch-act.dto';
 import { GeneralCustomer } from '../../general-customers/models/general-customer.model';
 import { Lab } from '../../labs/models/lab.model';
 import { Doc } from '../../files/models/doc.model';
