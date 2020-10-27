@@ -2,6 +2,8 @@
 import { DbService } from '@app/db';
 import {
   AdditionAct,
+  Application,
+  ApplicationBase,
   ClimaticEnvironmentalAct,
   ConsumerNotFound,
   CustomerAct,
@@ -26,7 +28,7 @@ import {
   TypeOfSampleAct,
 } from '@app/models';
 import { Injectable, Logger } from '@nestjs/common';
-import { Repository } from 'typeorm';
+import { EntityTarget, Repository } from 'typeorm';
 import { AllConsumers } from '../../models/all-consumers.model';
 import { Lab } from '../labs/models/lab.model';
 
@@ -60,6 +62,7 @@ export class ConsumersService {
     | EnvironmentalEngineerAct
     | RepresentativeAct
     | PassedSampleAct
+    | Application
   > {
     let repository: Repository<any>;
 
@@ -147,6 +150,8 @@ export class ConsumersService {
           PassedSampleAct,
         );
         break;
+      case 'application':
+        repository = this.dbService.getRepository<Application>(Application);
       default:
         break;
     }
@@ -154,7 +159,34 @@ export class ConsumersService {
     return repository;
   }
 
-  findConsumers(data: NewActDto): AllConsumers {
+  getConsumerWithException<T>(id: string, entity: EntityTarget<T>): Promise<T> {
+    const repository: Repository<T> = this.dbService.getRepository(entity);
+
+    const consumer = this.findConsumerWithExceptions(repository, id);
+
+    return consumer;
+  }
+
+  async findConsumerWithExceptions<T>(
+    repository: Repository<T>,
+    id: string,
+  ): Promise<T> {
+    const consumer = await repository.findOne(id);
+
+    if (!consumer) throw new ConsumerNotFound(typeof consumer);
+
+    return consumer;
+  }
+
+  creatConsumer<T, U>(data: U, entity: EntityTarget<T>): Promise<T> {
+    const repository: Repository<T> = this.dbService.getRepository<T>(entity);
+
+    const newConsumer = repository.save({ ...data });
+
+    return newConsumer;
+  }
+
+  findAllConsumers(data: NewActDto): AllConsumers {
     let allConsumers: AllConsumers;
 
     const keys = Object.keys(data);
@@ -165,9 +197,10 @@ export class ConsumersService {
 
         if (!repositroy) return;
 
-        const consumer = await repositroy.findOne(data[key]);
-
-        if (!consumer) throw new ConsumerNotFound(key);
+        const consumer = await this.findConsumerWithExceptions(
+          repositroy,
+          data[key],
+        );
 
         allConsumers[key] = consumer;
       }
@@ -175,19 +208,30 @@ export class ConsumersService {
       if (Array.isArray(data[key]) && data[key].length >= 1) {
         let consumerFoundArr: any[] = [];
 
-        const consumerArr: string[] = data[key];
+        const consumerArr: any[] = data[key];
 
         const repository = this.getRepository(key);
 
         if (!repository) return;
 
-        consumerArr.forEach(async id => {
-          const consumer = await repository.findOne(id);
+        if (consumerArr[0] instanceof ApplicationBase) {
+          consumerArr.forEach(async (app: ApplicationBase) => {
+            const consumer = await (repository as Repository<
+              Application
+            >).update(app.id, { ...app });
 
-          if (!consumer) throw new ConsumerNotFound(key);
+            consumerFoundArr.push(consumer);
+          });
+        } else {
+          consumerArr.forEach(async id => {
+            const consumer = await this.findConsumerWithExceptions(
+              repository,
+              id,
+            );
 
-          consumerFoundArr.push(consumer);
-        });
+            consumerFoundArr.push(consumer);
+          });
+        }
 
         allConsumers[key] = consumerFoundArr;
       }

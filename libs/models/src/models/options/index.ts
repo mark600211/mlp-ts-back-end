@@ -16,3 +16,4 @@ export * from './sample';
 export * from './sample-type';
 export * from './tool-type';
 export * from './type-of-sample';
+export * from './base-options.model';

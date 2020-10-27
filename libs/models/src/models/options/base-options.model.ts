@@ -9,7 +9,7 @@ import { ObjectType, Field, ID } from '@nestjs/graphql';
 
 @Entity()
 @ObjectType()
-export class BaseOption {
+export class Option {
   @Field(() => ID)
   @PrimaryGeneratedColumn('uuid')
   readonly id: string;

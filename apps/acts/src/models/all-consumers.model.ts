@@ -5,7 +5,6 @@ import {
   PlaceAct,
   TypeOfSampleAct,
   ObjectNameAct,
-  DateAndTime,
   MethodAct,
   ToolTypeAct,
   ClimaticEnvironmentalAct,
@@ -21,6 +20,7 @@ import {
   EnvironmentalEngineerAct,
   RepresentativeAct,
   PassedSampleAct,
+  Application,
 } from '@app/models';
 
 export interface AllConsumers {
@@ -45,4 +45,5 @@ export interface AllConsumers {
   environmentalEngineer?: EnvironmentalEngineerAct;
   representative?: RepresentativeAct;
   passedSample?: PassedSampleAct;
+  applications: Application[];
 }
