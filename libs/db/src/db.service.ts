@@ -1,4 +1,4 @@
-import { ConsumerNotFound, EntityNotFound } from '@app/models';
+import { EntityNotFound } from '@app/models';
 import { Injectable, Logger } from '@nestjs/common';
 import { Repository, getRepository, EntityTarget } from 'typeorm';
 
@@ -25,24 +25,44 @@ export class DbService {
     try {
       const repository: Repository<T> = this.getRepository<T>(entity);
 
-      const newConsumer = repository.save({ ...data });
+      const newEntity = repository.save({ ...data });
 
-      return newConsumer;
+      return newEntity;
     } catch (error) {
       this.logger.error(error);
     }
   }
 
-  async updateEntity<T extends U, U extends { id: string }>(
-    data: U,
+  async updateEntityById<T extends U, U>(
     entity: EntityTarget<T>,
+    data: U,
+    id: string,
   ): Promise<T> {
     this.logger.verbose('update entity');
 
     try {
       const repository: Repository<T> = this.getRepository<T>(entity);
 
-      const newEntity: T = await repository.findOne(data.id);
+      const newEntity = await this.findEntityByIdWithException(entity, id);
+
+      await repository.save(newEntity, data);
+
+      return newEntity;
+    } catch (error) {
+      this.logger.error(error);
+    }
+  }
+
+  async findEntityByIdWithException<T>(
+    entity: EntityTarget<T>,
+    id: string,
+  ): Promise<T> {
+    this.logger.verbose('find entity');
+
+    try {
+      const repository = this.getRepository<T>(entity);
+
+      const newEntity = repository.findOne(id);
 
       if (!newEntity) throw new EntityNotFound<T>();
 
@@ -51,6 +71,4 @@ export class DbService {
       this.logger.error(error);
     }
   }
-
-  findeEntityWithException<T>(): Promise<T> {}
 }

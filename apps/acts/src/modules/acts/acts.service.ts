@@ -13,31 +13,18 @@ export class ActsService {
     private readonly consumerService: ConsumersService,
   ) {}
 
-  getRepository(key: string): Repository<Act | Application> {
-    let repository: Repository<any>;
-
-    switch (key) {
-      case 'act':
-        repository = this.dbService.getRepository<Act>(Act);
-        break;
-      case 'application':
-        repository = this.dbService.getRepository<Application>(Application);
-        break;
-    }
-
-    return repository;
-  }
-
   newAct(data: NewActDto): Promise<Act> {
-    const repository = this.getRepository('act');
+    const repository = this.dbService.getRepository<Act>(Act);
 
-    const consumers = this.consumerService.findConsumers(data);
+    const consumers = this.consumerService.findAllConsumers(data);
 
-    const newAct = repository.create({
+    const newAct = repository.save({
       ...consumers,
       name: data.name,
       datetime: data.datetime,
     });
+
+    return newAct;
   }
 
   findAct(id: string): Promise<Act> {

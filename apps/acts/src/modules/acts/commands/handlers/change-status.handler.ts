@@ -2,7 +2,6 @@ import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { Logger } from '@nestjs/common';
 import { ActsService } from '../../acts.service';
 import { ChangeStatusCommand } from '../impl/change-status.command';
-import { ActStatus } from '../../models/act.model';
 
 @CommandHandler(ChangeStatusCommand)
 export class ChangeStatusHandler
@@ -21,13 +20,20 @@ export class ChangeStatusHandler
 
       switch (status) {
         case 'ACT':
-          if (act.status !== ActStatus.REGISTERED && act.status !== ActStatus.PROTOCOL && ActStatus.FULL) {
+          if (
+            act.status !== ActStatus.REGISTERED &&
+            act.status !== ActStatus.PROTOCOL &&
+            ActStatus.FULL
+          ) {
             act.status = ActStatus.CREATED;
           }
           break;
         case 'ACT_PDF':
-          if (act.status !== ActStatus.PROTOCOL && act.status !== ActStatus.FULL) {
-            act.status = ActStatus.REGISTERED
+          if (
+            act.status !== ActStatus.PROTOCOL &&
+            act.status !== ActStatus.FULL
+          ) {
+            act.status = ActStatus.REGISTERED;
           }
         case 'PROTOCOL':
           if (act.status !== ActStatus.PROTOCOL) {

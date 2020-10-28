@@ -1,6 +1,7 @@
 /* eslint-disable prefer-const */
 import { DbService } from '@app/db';
 import {
+  Act,
   AdditionAct,
   Application,
   ApplicationBase,
@@ -176,14 +177,6 @@ export class ConsumersService {
     if (!consumer) throw new ConsumerNotFound(typeof consumer);
 
     return consumer;
-  }
-
-  creatConsumer<T, U>(data: U, entity: EntityTarget<T>): Promise<T> {
-    const repository: Repository<T> = this.dbService.getRepository<T>(entity);
-
-    const newConsumer = repository.save({ ...data });
-
-    return newConsumer;
   }
 
   findAllConsumers(data: NewActDto): AllConsumers {
