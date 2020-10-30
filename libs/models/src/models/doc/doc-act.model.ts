@@ -1,14 +1,12 @@
-import { ObjectType } from '@nestjs/graphql';
-import { Entity, ManyToOne } from 'typeorm';
-import { Act } from '../acts/act.model';
+import { Entity, OneToMany } from 'typeorm';
+import { ActIdBase } from '../options/act-id-base.model';
+import { Doc } from './doc.model';
 
 @Entity()
-@ObjectType()
-export class DocAct {
-  @ManyToOne(
-    type => Act,
-    act => act.docs,
-    { cascade: true, onUpdate: 'CASCADE' },
+export class DocActId extends ActIdBase {
+  @OneToMany(
+    type => Doc,
+    docs => docs.act,
   )
-  act?: Act;
+  docs: Doc[];
 }

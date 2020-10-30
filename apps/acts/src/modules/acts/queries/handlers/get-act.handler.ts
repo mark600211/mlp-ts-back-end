@@ -1,24 +1,24 @@
-import { QueryHandler, IQueryHandler } from '@nestjs/cqrs';
-import { GetActQuery } from '../impl/get-act.query';
+import { Act } from '@app/models';
 import { Logger } from '@nestjs/common';
-import { ActRepository } from '../../repositories/act.repository';
-import { Act } from '../../models/act.model';
+import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
+import { ActsService } from '../../acts.service';
+import { GetActQuery } from '../impl';
 
 @QueryHandler(GetActQuery)
 export class GetActHandler implements IQueryHandler<GetActQuery> {
   logger = new Logger(this.constructor.name);
 
-  constructor(private readonly actRepository: ActRepository) {}
+  constructor(private readonly actsService: ActsService) {}
 
   async execute(query: GetActQuery): Promise<Act> {
-    this.logger.verbose('get-act.hanler');
+    this.logger.verbose('get-act.handler');
 
-    const { actId } = query;
+    const { id } = query;
 
     try {
-      return await this.actRepository.findActById(actId)
+      return this.actsService.findAct(id);
     } catch (error) {
-      this.logger.error(error.message);
+      this.logger.error(error);
     }
   }
 }

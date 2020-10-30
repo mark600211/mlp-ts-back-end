@@ -1,5 +1,5 @@
-import { TypeOfSample } from 'apps/acts/src/modules/type-of-sample/models/type-of-sample.model';
 import { Entity, JoinColumn } from 'typeorm';
+import { TypeOfSample } from '.';
 import { BaseEvent } from '../../base-event.model';
 
 @Entity()

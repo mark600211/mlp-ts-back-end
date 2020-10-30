@@ -1,9 +1,11 @@
 import { InputType, Field } from '@nestjs/graphql';
 import { ApplicationBase } from '../../application';
 import { DateAndTime } from '../../date-time.model';
+import { Act } from '../act.model';
 
 @InputType()
 export class NewActDto {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   @Field()
   name: string;
   @Field()

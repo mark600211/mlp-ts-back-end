@@ -1,1 +1,1 @@
-export * from './copy-app.dto';
+export * from './patch-app.dto';

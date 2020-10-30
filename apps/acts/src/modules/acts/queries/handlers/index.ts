@@ -1,4 +1,4 @@
-import { GetAllApplicationHandler } from './get-all-applications.handler';
 import { GetActHandler } from './get-act.handler';
+import { GetActsHandler } from './get-acts.handler';
 
-export const QueryHandlers = [GetAllApplicationHandler, GetActHandler];
+export const QueryHandlers = [GetActHandler, GetActsHandler];

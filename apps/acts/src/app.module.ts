@@ -1,31 +1,20 @@
 import { Module } from '@nestjs/common';
 import * as path from 'path';
-import { DatabaseModule } from './database/database.module';
 import { ActsModule } from './modules/acts/acts.module';
-import { CustomersModule } from './modules/customers/customers.module';
-import { GeneralCustomersModule } from './modules/general-customers/general-customers.module';
-import { LabsModule } from './modules/labs/labs.module';
-import { TypeOfSampleModule } from './modules/type-of-sample/type-of-sample.module';
 import { KafkaClientOptions } from './options/kafka.client.options';
 import { ClientProxyFactory } from '@nestjs/microservices';
-import { FilesModule } from './modules/files/files.module';
 import { ConfigModule } from '@app/config';
 import { ConsumersModule } from './modules/consumers/consumers.module';
+import { ApplicationModule } from './modules/application/application.module';
+import { DbModule } from '@app/db';
 
 @Module({
   imports: [
-    // ConfigModule.forRoot({
-    //   isGlobal: true,
-    // }),
+    DbModule.forRoot(),
     ConfigModule.register({ folder: path.resolve(__dirname, './config') }),
-    DatabaseModule,
     ActsModule,
-    CustomersModule,
-    GeneralCustomersModule,
-    LabsModule,
-    TypeOfSampleModule,
-    FilesModule,
     ConsumersModule,
+    ApplicationModule,
   ],
   providers: [
     KafkaClientOptions,

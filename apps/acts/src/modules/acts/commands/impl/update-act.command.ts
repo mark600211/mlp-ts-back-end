@@ -1,5 +1,5 @@
-import { PatchActDto } from "../../models/dto/patch-act.dto";
+import { PatchActDto } from '@app/models';
 
 export class UpdateActCommand {
-    constructor(public readonly data: PatchActDto) {}
+  constructor(public readonly data: PatchActDto) {}
 }

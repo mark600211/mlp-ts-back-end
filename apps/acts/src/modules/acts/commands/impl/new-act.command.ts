@@ -1,5 +1,5 @@
-import { NewActDto } from "../../models/dto/new-act.dto";
+import { NewActDto } from '@app/models';
 
 export class NewActCommand {
-    constructor(public readonly newActData: NewActDto) {}
+  constructor(public readonly newActData: NewActDto) {}
 }

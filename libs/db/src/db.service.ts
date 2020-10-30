@@ -1,6 +1,6 @@
 import { EntityNotFound } from '@app/models';
 import { Injectable, Logger } from '@nestjs/common';
-import { Repository, getRepository, EntityTarget } from 'typeorm';
+import { Repository, getRepository, ObjectType } from 'typeorm';
 
 @Injectable()
 export class DbService {
@@ -9,7 +9,7 @@ export class DbService {
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   constructor() {}
 
-  getRepository<T>(entity: EntityTarget<T>): Repository<T> {
+  getRepository<T>(entity: ObjectType<T>): Repository<T> {
     try {
       const repository = getRepository<T>(entity);
 
@@ -19,7 +19,21 @@ export class DbService {
     }
   }
 
-  creatEntity<T extends U, U>(data: U, entity: EntityTarget<T>): Promise<T> {
+  findEntities<T>(entity: ObjectType<T>): Promise<T[]> {
+    this.logger.verbose('find-entities');
+
+    try {
+      const repository: Repository<T> = this.getRepository<T>(entity);
+
+      const entities = repository.find();
+
+      return entities;
+    } catch (error) {
+      this.logger.error(error);
+    }
+  }
+
+  creatEntity<T extends U, U>(data: U, entity: ObjectType<T>): Promise<T> {
     this.logger.verbose('create entity');
 
     try {
@@ -34,7 +48,7 @@ export class DbService {
   }
 
   async updateEntityById<T extends U, U>(
-    entity: EntityTarget<T>,
+    entity: ObjectType<T>,
     data: U,
     id: string,
   ): Promise<T> {
@@ -54,7 +68,7 @@ export class DbService {
   }
 
   async findEntityByIdWithException<T>(
-    entity: EntityTarget<T>,
+    entity: ObjectType<T>,
     id: string,
   ): Promise<T> {
     this.logger.verbose('find entity');
@@ -67,6 +81,20 @@ export class DbService {
       if (!newEntity) throw new EntityNotFound<T>();
 
       return newEntity;
+    } catch (error) {
+      this.logger.error(error);
+    }
+  }
+
+  async deleteEntityById<T>(entity: ObjectType<T>, id: string): Promise<void> {
+    this.logger.verbose('delete entity');
+
+    try {
+      const repository = this.getRepository(entity);
+
+      const newEntity = await this.findEntityByIdWithException(entity, id);
+
+      await repository.delete(newEntity);
     } catch (error) {
       this.logger.error(error);
     }

@@ -1,3 +1,3 @@
 export class GetActQuery {
-  constructor(public readonly actId: string) {}
+  constructor(public readonly id: string) {}
 }

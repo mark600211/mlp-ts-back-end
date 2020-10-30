@@ -1,7 +1,7 @@
 import { ObjectType } from '@nestjs/graphql';
 import { Entity } from 'typeorm';
-import { BaseOption } from '../base-options.model';
+import { Option } from '../base-options.model';
 
 @Entity()
 @ObjectType()
-export class MethodBase extends BaseOption {}
+export class MethodBase extends Option {}

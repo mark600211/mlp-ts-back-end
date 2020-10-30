@@ -1,20 +1,20 @@
 import { ObjectType } from '@nestjs/graphql';
 import { Entity, ManyToOne } from 'typeorm';
 import { LabBase } from '../../consumers';
-import { BaseOption } from '../base-options.model';
-import { TypeOfSampleBase } from '../type-of-sample';
+import { Option } from '../base-options.model';
+import { TypeOfSample } from '../type-of-sample';
 
 @Entity()
 @ObjectType()
-export class DefinedIndicatorBase extends BaseOption {
+export class DefinedIndicatorBase extends Option {
   @ManyToOne(
     type => LabBase,
     lab => lab.defidnedIndicators,
   )
   lab: LabBase;
   @ManyToOne(
-    type => TypeOfSampleBase,
+    type => TypeOfSample,
     typeOfSample => typeOfSample.definedIndicators,
   )
-  typeOfSample: TypeOfSampleBase;
+  typeOfSample: TypeOfSample;
 }

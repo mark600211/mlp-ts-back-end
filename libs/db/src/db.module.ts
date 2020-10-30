@@ -1,6 +1,8 @@
 import { ConfigModule, ConfigService } from '@app/config';
 import { DynamicModule, Global, Module } from '@nestjs/common';
+import { GraphQLModule } from '@nestjs/graphql';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { join } from 'path';
 import { DbService } from './db.service';
 
 @Global()
@@ -10,6 +12,12 @@ export class DbModule {
     return {
       module: DbModule,
       imports: [
+        GraphQLModule.forRoot({
+          debug: true,
+          playground: true,
+          autoSchemaFile: join(process.cwd(), 'src/shema.gql'),
+          sortSchema: true,
+        }),
         TypeOrmModule.forRootAsync({
           imports: [ConfigModule],
           inject: [ConfigService],

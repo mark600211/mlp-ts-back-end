@@ -1,7 +1,15 @@
 import { DbService } from '@app/db';
-import { Act, Application, NewActDto } from '@app/models';
-import { HttpException, HttpStatus, Injectable, Logger } from '@nestjs/common';
-import { Repository } from 'typeorm';
+import {
+  Act,
+  ActBase,
+  ActStatus,
+  Doc,
+  DocType,
+  NewActDto,
+  PatchActDto,
+} from '@app/models';
+import { Injectable, Logger } from '@nestjs/common';
+import { AllConsumersNew, AllConsumersPatch } from '../../interfaces';
 import { ConsumersService } from '../consumers/consumers.service';
 
 @Injectable()
@@ -16,7 +24,9 @@ export class ActsService {
   newAct(data: NewActDto): Promise<Act> {
     const repository = this.dbService.getRepository<Act>(Act);
 
-    const consumers = this.consumerService.findAllConsumers(data);
+    const consumers = this.consumerService.findAllConsumers<AllConsumersNew>(
+      data,
+    );
 
     const newAct = repository.save({
       ...consumers,
@@ -27,19 +37,23 @@ export class ActsService {
     return newAct;
   }
 
+  findActs(): Promise<Act[]> {
+    this.logger.verbose('find-acts');
+
+    try {
+      const acts = this.dbService.findEntities(Act);
+
+      return acts;
+    } catch (error) {
+      this.logger.error(error);
+    }
+  }
+
   findAct(id: string): Promise<Act> {
     this.logger.log('find act');
 
     try {
-      const repository = this.getRepository('act') as Repository<Act>;
-
-      const act = repository.findOne(id);
-
-      if (!act)
-        throw new HttpException(
-          { status: HttpStatus.NOT_FOUND, error: 'Act wasn`t found' },
-          HttpStatus.NOT_FOUND,
-        );
+      const act = this.dbService.findEntityByIdWithException<Act>(Act, id);
 
       return act;
     } catch (error) {
@@ -47,9 +61,65 @@ export class ActsService {
     }
   }
 
-  findApplication;
+  updateAct(data: PatchActDto): Promise<Act> {
+    this.logger.verbose('update-act');
 
-  saveAct(act: Act): Promise<Act> {
-    return this.actRepository.save(act);
+    try {
+      const consumers = this.consumerService.findAllConsumers<
+        AllConsumersPatch
+      >(data);
+
+      const updateData: ActBase = {
+        ...consumers,
+        id: data.id,
+        name: data.name,
+        datetime: data.datetime,
+      };
+
+      const newAct = this.dbService.updateEntityById(Act, updateData, data.id);
+
+      return newAct;
+    } catch (error) {
+      this.logger.error(error);
+    }
+  }
+
+  async changeActStatus(id: string, status: DocType): Promise<void> {
+    this.logger.verbose('change-status.method');
+
+    try {
+      const act = await this.findAct(id);
+
+      switch (status) {
+        case DocType.ACT:
+          if (
+            act.status !== ActStatus.REGISTERED &&
+            act.status !== ActStatus.PROTOCOL &&
+            ActStatus.FULL
+          ) {
+            act.status = ActStatus.CREATED;
+          }
+          break;
+        case DocType.ACT_PDF:
+          if (
+            act.status !== ActStatus.PROTOCOL &&
+            act.status !== ActStatus.FULL
+          ) {
+            act.status = ActStatus.REGISTERED;
+          }
+        case DocType.PROTOCOL:
+          if (act.status !== ActStatus.PROTOCOL) {
+            act.status = ActStatus.PROTOCOL;
+          }
+          break;
+        case DocType.FINAL_PROTOCOL:
+          act.status = ActStatus.FULL;
+          break;
+      }
+
+      await this.dbService.updateEntityById(Act, act, id);
+    } catch (error) {
+      this.logger.error(error);
+    }
   }
 }
