@@ -5,5 +5,5 @@ import { PassedSample } from './passed-sample.model';
 @Entity()
 export class PassedSampleEvent extends BaseEvent {
   @JoinColumn({ name: 'payload' })
-  passedSample: PassedSample;
+  payload: PassedSample;
 }

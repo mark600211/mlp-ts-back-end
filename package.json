@@ -88,7 +88,9 @@
       "@app/models/(.*)": "<rootDir>/libs/models/src/$1",
       "@app/models": "<rootDir>/libs/models/src",
       "@app/db/(.*)": "<rootDir>/libs/db/src/$1",
-      "@app/db": "<rootDir>/libs/db/src"
+      "@app/db": "<rootDir>/libs/db/src",
+      "@app/cqrs/(.*)": "<rootDir>/libs/cqrs/src/$1",
+      "@app/cqrs": "<rootDir>/libs/cqrs/src"
     }
   }
 }

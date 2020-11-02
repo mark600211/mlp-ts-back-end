@@ -5,5 +5,5 @@ import { Representative } from './representative.model';
 @Entity()
 export class RepresentativeEvent extends BaseEvent {
   @JoinColumn({ name: 'payload' })
-  representative: Representative;
+  payload: Representative;
 }

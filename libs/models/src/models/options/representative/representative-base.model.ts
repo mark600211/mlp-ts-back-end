@@ -1,7 +1,11 @@
-import { ObjectType } from '@nestjs/graphql';
-import { Entity } from 'typeorm';
+import { Field, ID, ObjectType } from '@nestjs/graphql';
+import { Entity, PrimaryGeneratedColumn } from 'typeorm';
 import { Option } from '../base-options.model';
 
 @Entity()
 @ObjectType()
-export class RepresentativeBase extends Option {}
+export class RepresentativeBase extends Option {
+  @Field(() => ID)
+  @PrimaryGeneratedColumn('uuid')
+  readonly id: string;
+}

@@ -5,5 +5,5 @@ import { ObjectName } from './object-name.model';
 @Entity()
 export class ObjectNameEvent extends BaseEvent {
   @JoinColumn({ name: 'payload' })
-  objectName: ObjectName;
+  payload: ObjectName;
 }

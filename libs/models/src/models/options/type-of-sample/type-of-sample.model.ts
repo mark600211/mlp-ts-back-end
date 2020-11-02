@@ -1,21 +1,21 @@
 import { ObjectType } from '@nestjs/graphql';
 import { Entity, OneToMany } from 'typeorm';
-import { DefinedIndicatorBase } from '..';
-import { TOSEvent } from './tos-event.model';
+import { DefinedIndicator } from '..';
+import { TypeOfSampleEvent } from './tos-event.model';
 import { TypeOfSampleBase } from './type-of-sample-base.model';
 
 @Entity()
 @ObjectType()
 export class TypeOfSample extends TypeOfSampleBase {
   @OneToMany(
-    type => TOSEvent,
-    events => events.tos,
+    type => TypeOfSampleEvent,
+    events => events,
     { nullable: true },
   )
-  events: TOSEvent[];
+  events: TypeOfSampleEvent[];
   @OneToMany(
-    type => DefinedIndicatorBase,
+    type => DefinedIndicator,
     definedIndicators => definedIndicators.typeOfSample,
   )
-  definedIndicators: DefinedIndicatorBase[];
+  definedIndicators: DefinedIndicator[];
 }

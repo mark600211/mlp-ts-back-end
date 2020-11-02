@@ -5,5 +5,5 @@ import { ToolType } from './tool-type.model';
 @Entity()
 export class ToolTypeEvent extends BaseEvent {
   @JoinColumn({ name: 'payload' })
-  toolType: ToolType;
+  payload: ToolType;
 }

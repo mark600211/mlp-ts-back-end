@@ -5,5 +5,5 @@ import { ClimaticEnvironmental } from './ce.model';
 @Entity()
 export class ClimaticEnvironmentalEvent extends BaseEvent {
   @JoinColumn({ name: 'payload' })
-  ce: ClimaticEnvironmental;
+  payload: ClimaticEnvironmental;
 }

@@ -1,21 +1,12 @@
-import {
-  Entity,
-  PrimaryGeneratedColumn,
-  Column,
-  CreateDateColumn,
-  UpdateDateColumn,
-} from 'typeorm';
-import { ObjectType, Field, ID } from '@nestjs/graphql';
+import { Entity, Column, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import { ObjectType, Field } from '@nestjs/graphql';
 
 @Entity()
 @ObjectType()
 export class Option {
-  @Field(() => ID)
-  @PrimaryGeneratedColumn('uuid')
-  readonly id: string;
   @Field()
   @Column()
-  label: string;
+  lable: string;
   @CreateDateColumn()
   createdAt?: Date;
   @UpdateDateColumn()

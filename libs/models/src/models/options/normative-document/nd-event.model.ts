@@ -3,7 +3,7 @@ import { BaseEvent } from '../../base-event.model';
 import { NormativeDocument } from './normative-document.model';
 
 @Entity()
-export class NDEvent extends BaseEvent {
+export class NormativeDocumentEvent extends BaseEvent {
   @JoinColumn({ name: 'payload' })
-  normativeDocuemtns: NormativeDocument;
+  payload: NormativeDocument;
 }

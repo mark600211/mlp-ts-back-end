@@ -5,5 +5,5 @@ import { Goal } from './goal.model';
 @Entity()
 export class GoalEvent extends BaseEvent {
   @JoinColumn({ name: 'payload' })
-  goal: Goal;
+  payload: Goal;
 }

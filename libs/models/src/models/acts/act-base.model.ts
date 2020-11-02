@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/camelcase */
 import {
   Entity,
-  PrimaryGeneratedColumn,
   Column,
   ManyToOne,
   OneToMany,
@@ -10,7 +9,7 @@ import {
   ManyToMany,
   JoinTable,
 } from 'typeorm';
-import { ObjectType, Field, ID } from '@nestjs/graphql';
+import { ObjectType, Field } from '@nestjs/graphql';
 
 import { CustomerAct, LabAct, GeneralCustomerAct } from '../consumers';
 import {
@@ -39,9 +38,6 @@ import { Application } from '../application';
 @Entity()
 @ObjectType()
 export class ActBase {
-  @Field(type => ID)
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
   @Field(type => String)
   @Column()
   name: string;

@@ -5,5 +5,5 @@ import { SampleType } from './sample-type.model';
 @Entity()
 export class SampleTypeEvent extends BaseEvent {
   @JoinColumn({ name: 'payload' })
-  sampleType: SampleType;
+  payload: SampleType;
 }

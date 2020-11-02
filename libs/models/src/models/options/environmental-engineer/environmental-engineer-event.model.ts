@@ -5,5 +5,5 @@ import { EnvironmentalEngineer } from './environmental-engineer.model';
 @Entity()
 export class EnvironmentalEngineerEvent extends BaseEvent {
   @JoinColumn({ name: 'payload' })
-  environmentalEngineer: EnvironmentalEngineer;
+  payload: EnvironmentalEngineer;
 }

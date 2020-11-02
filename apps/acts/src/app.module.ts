@@ -7,10 +7,12 @@ import { ConfigModule } from '@app/config';
 import { ConsumersModule } from './modules/consumers/consumers.module';
 import { ApplicationModule } from './modules/application/application.module';
 import { DbModule } from '@app/db';
+import { CqrsIndividualModule } from 'libs/cqrs/src';
 
 @Module({
   imports: [
     DbModule.forRoot(),
+    CqrsIndividualModule,
     ConfigModule.register({ folder: path.resolve(__dirname, './config') }),
     ActsModule,
     ConsumersModule,

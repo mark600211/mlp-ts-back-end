@@ -5,5 +5,5 @@ import { InformationAboutSelection } from './information-about-selection.model';
 @Entity()
 export class InformationAboutSelectionEvent extends BaseEvent {
   @JoinColumn({ name: 'payload' })
-  informationAboutSelection: InformationAboutSelection;
+  payload: InformationAboutSelection;
 }

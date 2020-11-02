@@ -5,5 +5,5 @@ import { BaseEvent } from '../../base-event.model';
 @Entity()
 export class CustomerEvent extends BaseEvent {
   @JoinColumn({ name: 'payload' })
-  customer: Customer;
+  payload: Customer;
 }

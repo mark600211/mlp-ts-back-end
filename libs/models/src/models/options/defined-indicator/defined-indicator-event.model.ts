@@ -5,5 +5,5 @@ import { DefinedIndicator } from './defined-indicator.model';
 @Entity()
 export class DefinedIndicatorEvent extends BaseEvent {
   @JoinColumn({ name: 'payload' })
-  definedIndicator: DefinedIndicator;
+  payload: DefinedIndicator;
 }

@@ -3,7 +3,7 @@ import { TypeOfSample } from '.';
 import { BaseEvent } from '../../base-event.model';
 
 @Entity()
-export class TOSEvent extends BaseEvent {
+export class TypeOfSampleEvent extends BaseEvent {
   @JoinColumn({ name: 'payload' })
-  tos: TypeOfSample;
+  payload: TypeOfSample;
 }

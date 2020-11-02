@@ -3,7 +3,7 @@ import { GeneralCustomer } from './general-customer.model';
 import { BaseEvent } from '../../base-event.model';
 
 @Entity()
-export class GSEvent extends BaseEvent {
+export class GeneralCustomerEvent extends BaseEvent {
   @JoinColumn({ name: 'payload' })
-  general_customer: GeneralCustomer;
+  payload: GeneralCustomer;
 }

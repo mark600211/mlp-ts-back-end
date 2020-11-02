@@ -1,70 +1,88 @@
 {
-    "collection": "@nestjs/schematics",
-    "sourceRoot": "apps/acts/src",
-    "monorepo": true,
-    "root": "apps/acts",
-    "compilerOptions": {
-        "webpack": true,
-        "tsConfigPath": "apps/acts/tsconfig.app.json"
+  "collection": "@nestjs/schematics",
+  "sourceRoot": "apps/acts/src",
+  "monorepo": true,
+  "root": "apps/acts",
+  "compilerOptions": {
+    "webpack": true,
+    "tsConfigPath": "apps/acts/tsconfig.app.json"
+  },
+  "projects": {
+    "acts": {
+      "type": "application",
+      "root": "apps/acts",
+      "entryFile": "main",
+      "sourceRoot": "apps/acts/src",
+      "outDir": "./dist",
+      "compilerOptions": {
+        "tsConfigPath": "apps/acts/tsconfig.app.json",
+        "assets": [
+          "**/*.env"
+        ]
+      }
     },
-    "projects": {
-        "acts": {
-            "type": "application",
-            "root": "apps/acts",
-            "entryFile": "main",
-            "sourceRoot": "apps/acts/src",
-            "outDir": "./dist",
-            "compilerOptions": {
-                "tsConfigPath": "apps/acts/tsconfig.app.json",
-                "assets": [
-                    "**/*.env"
-                ]
-            }
-        },
-        "options": {
-            "type": "application",
-            "root": "apps/options",
-            "entryFile": "main",
-            "sourceRoot": "apps/options/src",
-            "compilerOptions": {
-                "tsConfigPath": "apps/options/tsconfig.app.json"
-            }
-        },
-        "proto": {
-            "type": "library",
-            "root": "libs/proto",
-            "entryFile": "index",
-            "sourceRoot": "libs/proto/src",
-            "compilerOptions": {
-                "tsConfigPath": "libs/proto/tsconfig.lib.json"
-            }
-        },
-        "config": {
-            "type": "library",
-            "root": "libs/config",
-            "entryFile": "index",
-            "sourceRoot": "libs/config/src",
-            "compilerOptions": {
-                "tsConfigPath": "libs/config/tsconfig.lib.json"
-            }
-        },
-        "models": {
-            "type": "library",
-            "root": "libs/models",
-            "entryFile": "index",
-            "sourceRoot": "libs/models/src",
-            "compilerOptions": {
-                "tsConfigPath": "libs/models/tsconfig.lib.json"
-            }
-        },
-        "db": {
-            "type": "library",
-            "root": "libs/db",
-            "entryFile": "index",
-            "sourceRoot": "libs/db/src",
-            "compilerOptions": {
-                "tsConfigPath": "libs/db/tsconfig.lib.json"
-            }
-        }
+    "options": {
+      "type": "application",
+      "root": "apps/options",
+      "entryFile": "main",
+      "sourceRoot": "apps/options/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/options/tsconfig.app.json"
+      }
+    },
+    "proto": {
+      "type": "library",
+      "root": "libs/proto",
+      "entryFile": "index",
+      "sourceRoot": "libs/proto/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/proto/tsconfig.lib.json"
+      }
+    },
+    "config": {
+      "type": "library",
+      "root": "libs/config",
+      "entryFile": "index",
+      "sourceRoot": "libs/config/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/config/tsconfig.lib.json"
+      }
+    },
+    "models": {
+      "type": "library",
+      "root": "libs/models",
+      "entryFile": "index",
+      "sourceRoot": "libs/models/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/models/tsconfig.lib.json"
+      }
+    },
+    "db": {
+      "type": "library",
+      "root": "libs/db",
+      "entryFile": "index",
+      "sourceRoot": "libs/db/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/db/tsconfig.lib.json"
+      }
+    },
+    "cqrs": {
+      "type": "library",
+      "root": "libs/cqrs",
+      "entryFile": "index",
+      "sourceRoot": "libs/cqrs/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/cqrs/tsconfig.lib.json"
+      }
+    },
+    "consumers": {
+      "type": "application",
+      "root": "apps/consumers",
+      "entryFile": "main",
+      "sourceRoot": "apps/consumers/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/consumers/tsconfig.app.json"
+      }
     }
+  }
 }
