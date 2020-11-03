@@ -8,7 +8,7 @@ import { MethodBase } from './method-base.model';
 export class Method extends MethodBase {
   @OneToMany(
     type => MethodEvent,
-    events => events.method,
+    events => events.payload,
     { nullable: true },
   )
   events: MethodEvent[];

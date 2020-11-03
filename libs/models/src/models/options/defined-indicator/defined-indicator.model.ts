@@ -11,7 +11,7 @@ export class DefinedIndicator extends DefinedIndicatorRelations {
   readonly id: string;
   @OneToMany(
     type => DefinedIndicatorEvent,
-    events => events,
+    events => events.payload,
     { nullable: true },
   )
   events: DefinedIndicatorEvent[];

@@ -1,5 +1,5 @@
 import { EntityNotFound } from '@app/models';
-import { Injectable, Logger, Type } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { Repository, getRepository, ObjectType } from 'typeorm';
 
 @Injectable()
@@ -19,13 +19,13 @@ export class DbService {
     }
   }
 
-  findEntities<T>(entity: ObjectType<T>): Promise<T[]> {
+  async findEntitiess<T>(entity: ObjectType<T>): Promise<T[]> {
     this.logger.verbose('find-entities');
 
     try {
       const repository: Repository<T> = this.getRepository<T>(entity);
 
-      const entities = repository.find();
+      const entities = await repository.find();
 
       return entities;
     } catch (error) {
@@ -33,7 +33,7 @@ export class DbService {
     }
   }
 
-  creatEntity<T extends U, U>(entity: ObjectType<T>, data: U): Promise<T> {
+  creatEntity<T, U>(entity: ObjectType<T>, data: U): Promise<T> {
     this.logger.verbose('create entity');
 
     try {
@@ -47,7 +47,7 @@ export class DbService {
     }
   }
 
-  async updateEntityById<T, U>(
+  async updateEntityById<T extends U, U>(
     entity: ObjectType<T>,
     data: U,
     id: string,
@@ -57,9 +57,7 @@ export class DbService {
     try {
       const repository: Repository<T> = this.getRepository<T>(entity);
 
-      let newEntity = await this.findEntityByIdWithException(entity, id);
-
-      newEntity = { ...data };
+      const newEntity = await this.findEntityByIdWithException(entity, id);
 
       await repository.save(newEntity, data);
 

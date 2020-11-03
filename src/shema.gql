@@ -1,0 +1,274 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Act {
+  additions: AdditionAct!
+  applications: [Application!]!
+  climaticEnvironmental: ClimaticEnvironmentalAct!
+  customer: CustomerAct!
+  datetime: DateAndTime!
+  environmentalEngineer: EnvironmentalEngineerAct!
+  generalCustomer: GeneralCustomerAct!
+  goal: GoalAct!
+  id: ID!
+  informationAboutSelection: InformationAboutSelectionAct!
+  isCorrect: Boolean!
+  lab: LabAct!
+  method: MethodAct!
+  name: String!
+  normativeDocuments: [NormativeDocumentAct!]!
+  objectName: ObjectNameAct!
+  passedSample: PassedSampleAct!
+  place: PlaceAct!
+  planning: PlanningAct!
+  preparation: [PreparationAct!]!
+  representative: RepresentativeAct!
+  sample: [SampleAct!]!
+  sampleType: SampleTypeAct!
+  status: String!
+  toolType: ToolTypeAct!
+  typeOfSample: TypeOfSampleAct!
+}
+
+type AdditionAct {
+  id: ID!
+  lable: String!
+}
+
+input AddresInput {
+  building: String
+  city: String
+  country: String
+  region: String
+  room: String
+  street: String
+  zip: String
+}
+
+type Address {
+  building: String
+  city: String
+  country: String
+  region: String
+  room: String
+  street: String
+  zip: String
+}
+
+type Application {
+  datetime: DateAndTime!
+  id: ID!
+  place: String!
+}
+
+input ApplicationInput {
+  datetime: DateTimeInput!
+  id: ID!
+  place: String!
+}
+
+type ClimaticEnvironmentalAct {
+  id: ID!
+  lable: String!
+}
+
+type CustomerAct {
+  address: Address!
+  email: String
+  fullname: String!
+  id: ID!
+  label: String!
+  tel: String
+}
+
+type DateAndTime {
+  date: DateTime!
+  time: String!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+input DateTimeInput {
+  date: DateTime!
+  time: String!
+}
+
+type EnvironmentalEngineerAct {
+  id: ID!
+  lable: String!
+}
+
+type GeneralCustomerAct {
+  address: Address!
+  email: String
+  fullname: String!
+  id: ID!
+  label: String!
+  tel: String
+}
+
+type GoalAct {
+  id: ID!
+  lable: String!
+}
+
+type InformationAboutSelectionAct {
+  id: ID!
+  lable: String!
+}
+
+type LabAct {
+  address: Address!
+  email: String
+  fullname: String!
+  id: ID!
+  label: String!
+  tel: String
+}
+
+type MethodAct {
+  id: ID!
+  lable: String!
+}
+
+type Mutation {
+  createAct(data: NewActDto!): Act!
+  createApplication(data: PatchAppDto!): Application!
+  createTest(data: String!): Test!
+  updateAct(data: PatchActDto!, id: String!): Act!
+  updateApplication(data: PatchAppDto!, id: String!): Application!
+  updateTest(data: String!, id: String!): Test!
+}
+
+input NewActDto {
+  additions: String!
+  applications: [ApplicationInput!]
+  climaticEnvironmental: String!
+  customer: String!
+  datetime: DateTimeInput!
+  definedIndicators: [String!]!
+  environmentalEngineer: String!
+  generalCustomer: String!
+  goal: String!
+  informationAboutSelection: String!
+  lab: String!
+  method: String!
+  name: String!
+  normativeDocument: [String!]!
+  objectName: String!
+  passedSample: String!
+  place: String!
+  planning: String!
+  preparation: [String!]!
+  representative: String!
+  sample: [String!]!
+  sampleType: String!
+  toolType: String!
+  typeOfSample: String!
+}
+
+type NormativeDocumentAct {
+  id: ID!
+  lable: String!
+}
+
+type ObjectNameAct {
+  id: ID!
+  lable: String!
+}
+
+type PassedSampleAct {
+  id: ID!
+  lable: String!
+}
+
+input PatchActDto {
+  additions: String!
+  applications: [ApplicationInput!]
+  climaticEnvironmental: String!
+  customer: String!
+  datetime: DateTimeInput!
+  definedIndicators: [String!]!
+  environmentalEngineer: String!
+  generalCustomer: String!
+  goal: String!
+  id: String!
+  informationAboutSelection: String!
+  lab: String!
+  method: String!
+  name: String!
+  normativeDocument: [String!]!
+  objectName: String!
+  passedSample: String!
+  place: String!
+  planning: String!
+  preparation: [String!]!
+  representative: String!
+  sample: [String!]!
+  sampleType: String!
+  toolType: String!
+  typeOfSample: String!
+}
+
+input PatchAppDto {
+  datetime: DateTimeInput!
+  place: String!
+}
+
+type PlaceAct {
+  id: ID!
+  lable: String!
+}
+
+type PlanningAct {
+  id: ID!
+  lable: String!
+}
+
+type PreparationAct {
+  id: ID!
+  lable: String!
+}
+
+type Query {
+  findAllAct: [Act!]!
+  findAllApplication: [Application!]!
+  findAllTest: [Test!]!
+  findByIdAct(id: String!): Act!
+  findByIdApplication(id: String!): Application!
+  findByIdTest(id: String!): Test!
+}
+
+type RepresentativeAct {
+  id: ID!
+  lable: String!
+}
+
+type SampleAct {
+  id: ID!
+  lable: String!
+}
+
+type SampleTypeAct {
+  id: ID!
+  lable: String!
+}
+
+type Test {
+  id: ID!
+  test: String!
+}
+
+type ToolTypeAct {
+  id: ID!
+  lable: String!
+}
+
+type TypeOfSampleAct {
+  id: ID!
+  lable: String!
+}

@@ -9,19 +9,23 @@ import {
   TryCatchWrapper,
   TryCatchWrapperAsync,
 } from '@app/models';
+import { AbstractDataService } from '@app/resolvers/base-resolver/abstract-data.service';
 import { Injectable } from '@nestjs/common';
+import { EntitiesService } from 'libs/commands/src';
 import { AllConsumersNew, AllConsumersPatch } from '../../interfaces';
 import { ConsumersService } from '../consumers/consumers.service';
 
 @Injectable()
-export class ActsService {
+export class ActsService extends AbstractDataService {
   constructor(
-    private readonly dbService: DbService,
     private readonly consumerService: ConsumersService,
-  ) {}
+    private readonly entities: EntitiesService,
+  ) {
+    super();
+  }
 
   @TryCatchWrapper()
-  newActData(data: NewActDto): ActBase {
+  async newData(data: NewActDto): Promise<ActBase> {
     const consumers = this.consumerService.findAllConsumers<AllConsumersNew>(
       data,
     );
@@ -36,7 +40,7 @@ export class ActsService {
   }
 
   @TryCatchWrapper()
-  updateActData(data: PatchActDto): ActBase {
+  async updateData(data: PatchActDto): Promise<ActBase> {
     const consumers = this.consumerService.findAllConsumers<AllConsumersPatch>(
       data,
     );
@@ -52,7 +56,7 @@ export class ActsService {
 
   @TryCatchWrapperAsync()
   async changeActStatus(id: string, status: DocType): Promise<void> {
-    const act = await this.dbService.findEntityByIdWithException(Act, id);
+    const act = await this.entities.findEntityByIdWithException(Act, id);
 
     switch (status) {
       case DocType.ACT:
@@ -81,6 +85,6 @@ export class ActsService {
         break;
     }
 
-    await this.dbService.updateEntityById(Act, act, id);
+    await this.entities.updateEntityById(Act, act, id);
   }
 }

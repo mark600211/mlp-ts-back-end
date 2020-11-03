@@ -8,7 +8,7 @@ import { SampleTypeEvent } from './sample-type-event.model';
 export class SampleType extends SampleTypeBase {
   @OneToMany(
     type => SampleTypeEvent,
-    events => events.sampleType,
+    events => events.payload,
     { nullable: true },
   )
   events: SampleTypeEvent[];

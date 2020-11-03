@@ -8,7 +8,7 @@ import { CustomerBase } from './customer-base.model';
 export class Customer extends CustomerBase {
   @OneToMany(
     type => CustomerEvent,
-    events => events.customer,
+    events => events.payload,
     { nullable: true },
   )
   events: CustomerEvent[];

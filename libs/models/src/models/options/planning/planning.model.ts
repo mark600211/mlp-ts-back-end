@@ -8,7 +8,7 @@ import { PlanningEvent } from './planning-event.model';
 export class Planning extends PlanningBase {
   @OneToMany(
     type => PlanningEvent,
-    events => events.planning,
+    events => events.payload,
     { nullable: true },
   )
   events: PlanningEvent[];

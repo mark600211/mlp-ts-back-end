@@ -139,9 +139,9 @@ export class ActBase {
     { cascade: true, eager: true },
   )
   goal?: GoalAct;
-  @Field(type => [DefinedIndicatorAct])
-  @ManyToMany(() => DefinedIndicatorAct, { cascade: true, eager: true })
-  definedIndicators?: DefinedIndicatorAct[];
+  //   @Field(type => [DefinedIndicatorAct])
+  //   @ManyToMany(() => DefinedIndicatorAct, { cascade: true, eager: true })
+  //   definedIndicators?: DefinedIndicatorAct[];
   @Field()
   @ManyToOne(
     type => AdditionAct,

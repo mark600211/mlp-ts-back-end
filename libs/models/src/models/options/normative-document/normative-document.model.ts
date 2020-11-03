@@ -1,15 +1,15 @@
 import { ObjectType } from '@nestjs/graphql';
 import { Entity, OneToMany } from 'typeorm';
-import { NDEvent } from './nd-event.model';
+import { NormativeDocumentEvent } from './nd-event.model';
 import { NormativeDocumentBase } from './normative-document-base.model';
 
 @Entity()
 @ObjectType()
 export class NormativeDocument extends NormativeDocumentBase {
   @OneToMany(
-    type => NDEvent,
-    events => events.normativeDocuemtns,
+    type => NormativeDocumentEvent,
+    events => events.payload,
     { nullable: true },
   )
-  events: NDEvent[];
+  events: NormativeDocumentEvent[];
 }

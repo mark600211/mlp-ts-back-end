@@ -9,10 +9,10 @@ export class DefinedIndicatorAct extends DefinedIndicatorBase {
   @Field(() => ID)
   @PrimaryGeneratedColumn('uuid')
   readonly id: string;
-  @ManyToMany(
-    type => Act,
-    acts => acts.definedIndicators,
-    { nullable: true },
-  )
-  acts: Act[];
+  //   @ManyToMany(
+  //     type => Act,
+  //     acts => acts.definedIndicators,
+  //     { nullable: true },
+  //   )
+  //   acts: Act[];
 }

@@ -8,7 +8,7 @@ import { ClimaticEnvironmentalEvent } from './ce-event.model';
 export class ClimaticEnvironmental extends ClimaticEnvironmentalBase {
   @OneToMany(
     type => ClimaticEnvironmentalEvent,
-    events => events.ce,
+    events => events.payload,
     { nullable: true },
   )
   evnets: ClimaticEnvironmentalEvent[];

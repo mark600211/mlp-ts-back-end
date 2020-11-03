@@ -8,7 +8,7 @@ import { ToolTypeEvent } from './tool-type-event.model';
 export class ToolType extends ToolTypeBase {
   @OneToMany(
     type => ToolTypeEvent,
-    events => events.toolType,
+    events => events.payload,
     { nullable: true },
   )
   events: ToolTypeEvent[];

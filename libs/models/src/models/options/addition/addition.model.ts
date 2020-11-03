@@ -8,7 +8,7 @@ import { AdditionEvent } from './addition-event.model';
 export class Addition extends AdditionBase {
   @OneToMany(
     type => AdditionEvent,
-    events => events.addition,
+    events => events.payload,
     { nullable: true },
   )
   events: AdditionEvent[];

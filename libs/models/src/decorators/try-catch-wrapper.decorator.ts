@@ -14,19 +14,17 @@ export function TryCatchWrapper<T>() {
       logger.verbose(propertyKey);
 
       try {
-        originalMethod.apply(this, args);
+        return originalMethod.apply(this, args);
       } catch (error) {
-        const [, , next] = args;
+        logger.error(error.message);
 
-        logger.error(error);
-
-        next(error);
+        return error;
       }
     };
   };
 }
 
-export function TryCatchWrapperAsync<T>() {
+export function TryCatchWrapperAsync() {
   return function(
     target: any,
     propertyKey: string,
@@ -40,13 +38,11 @@ export function TryCatchWrapperAsync<T>() {
       logger.verbose(propertyKey);
 
       try {
-        await originalMethod.apply(this, args);
+        return originalMethod.apply(this, args);
       } catch (error) {
-        const [, , next] = args;
+        logger.error(error.message);
 
-        logger.error(error);
-
-        next(error);
+        return error;
       }
     };
   };

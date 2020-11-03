@@ -8,7 +8,7 @@ import { RepresentativeBase } from './representative-base.model';
 export class Representative extends RepresentativeBase {
   @OneToMany(
     type => RepresentativeEvent,
-    events => events.representative,
+    events => events.payload,
     { nullable: true },
   )
   events: RepresentativeEvent[];

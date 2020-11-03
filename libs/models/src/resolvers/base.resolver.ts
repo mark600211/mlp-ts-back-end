@@ -1,7 +1,6 @@
 import { Type } from '@nestjs/common';
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { TryCatchWrapperAsync } from '../decorators';
-import { BaseResolverHostInterface } from '../interfaces';
 
 export function BaseResolver<T extends Type<unknown>, D>(classRef: T): any {
   @Resolver({ isAbstract: true })

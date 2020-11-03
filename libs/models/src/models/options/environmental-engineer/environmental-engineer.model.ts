@@ -8,7 +8,7 @@ import { EnvironmentalEngineerEvent } from './environmental-engineer-event.model
 export class EnvironmentalEngineer extends EnvironmentalEngineerBase {
   @OneToMany(
     type => EnvironmentalEngineerEvent,
-    events => events.environmentalEngineer,
+    events => events.payload,
     { nullable: true },
   )
   events: EnvironmentalEngineerEvent[];

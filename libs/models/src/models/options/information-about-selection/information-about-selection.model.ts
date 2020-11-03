@@ -8,7 +8,7 @@ import { InformationAboutSelectionEvent } from './information-about-selection-ev
 export class InformationAboutSelection extends InformationAboutSelectionBase {
   @OneToMany(
     type => InformationAboutSelectionEvent,
-    events => events.informationAboutSelection,
+    events => events.payload,
     { nullable: true },
   )
   events: InformationAboutSelectionEvent[];

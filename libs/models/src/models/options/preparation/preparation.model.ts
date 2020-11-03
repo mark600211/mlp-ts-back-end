@@ -8,7 +8,7 @@ import { PreparationEvent } from './preparation-event.model';
 export class Preparation extends PreparationBase {
   @OneToMany(
     type => PreparationEvent,
-    events => events.preparation,
+    events => events.payload,
     { nullable: true },
   )
   events: PreparationEvent[];

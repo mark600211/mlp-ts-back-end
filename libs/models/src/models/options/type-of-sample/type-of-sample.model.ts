@@ -9,7 +9,7 @@ import { TypeOfSampleBase } from './type-of-sample-base.model';
 export class TypeOfSample extends TypeOfSampleBase {
   @OneToMany(
     type => TypeOfSampleEvent,
-    events => events,
+    events => events.payload,
     { nullable: true },
   )
   events: TypeOfSampleEvent[];

@@ -8,7 +8,7 @@ import { ObjectNameEvent } from './object-name-event.model';
 export class ObjectName extends ObjectNameBase {
   @OneToMany(
     type => ObjectNameEvent,
-    events => events.objectName,
+    events => events.payload,
     { nullable: true },
   )
   events: ObjectNameEvent[];

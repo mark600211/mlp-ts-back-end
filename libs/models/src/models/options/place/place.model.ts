@@ -8,7 +8,7 @@ import { PlaceEvent } from './place-event.model';
 export class Place extends PlaceBase {
   @OneToMany(
     type => PlaceEvent,
-    events => events.place,
+    events => events.payload,
     { nullable: true },
   )
   events: PlaceEvent[];

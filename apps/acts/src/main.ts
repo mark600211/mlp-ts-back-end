@@ -28,9 +28,9 @@ async function bootstrap() {
 
   app.connectMicroservice<MicroserviceOptions>(grpcServiceOptions);
 
-  const kafkaService = app.get(KafkaClientOptions);
+  //   const kafkaService = app.get(KafkaClientOptions);
 
-  app.connectMicroservice<MicroserviceOptions>(kafkaService.kafkaClientOptions);
+  //   app.connectMicroservice<MicroserviceOptions>(kafkaService.kafkaClientOptions);
 
   await app.startAllMicroservicesAsync();
 

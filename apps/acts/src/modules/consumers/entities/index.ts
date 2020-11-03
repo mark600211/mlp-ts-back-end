@@ -38,7 +38,7 @@ export const ConsumersEntities = [
   SampleAct,
   PreparationAct,
   GoalAct,
-  DefinedIndicatorAct,
+  //   DefinedIndicatorAct,
   AdditionAct,
   InformationAboutSelectionAct,
   EnvironmentalEngineerAct,

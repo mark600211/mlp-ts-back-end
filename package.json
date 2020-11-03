@@ -90,7 +90,11 @@
       "@app/db/(.*)": "<rootDir>/libs/db/src/$1",
       "@app/db": "<rootDir>/libs/db/src",
       "@app/cqrs/(.*)": "<rootDir>/libs/cqrs/src/$1",
-      "@app/cqrs": "<rootDir>/libs/cqrs/src"
+      "@app/cqrs": "<rootDir>/libs/cqrs/src",
+      "@app/resolvers/(.*)": "<rootDir>/libs/resolvers/src/$1",
+      "@app/resolvers": "<rootDir>/libs/resolvers/src",
+      "@app/commands/(.*)": "<rootDir>/libs/commands/src/$1",
+      "@app/commands": "<rootDir>/libs/commands/src"
     }
   }
 }

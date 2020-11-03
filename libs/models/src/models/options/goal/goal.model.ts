@@ -8,7 +8,7 @@ import { GoalEvent } from './goal-event.model';
 export class Goal extends GoalBase {
   @OneToMany(
     type => GoalEvent,
-    events => events.goal,
+    events => events.payload,
     { nullable: true },
   )
   events: GoalEvent[];
