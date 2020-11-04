@@ -48,6 +48,8 @@ import { CONSUMERS } from '@app/models/enum/consumers.enum';
 import { Controller, Logger } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
 import { Payload } from '@nestjs/microservices';
+import { ActsController } from '../acts/acts.controller';
+import { TestService } from '../acts/test.service';
 import {
   createConsumerEventPattern,
   updateConsumerEventPattern,
@@ -61,16 +63,16 @@ export class ConsumersController {
 
   //   constructor(private readonly commandBus: CommandBus) {}
 
-  //   @createConsumerEventPattern(CONSUMERS.CUSTOMER)
-  //   handleNewCustomer(
-  //     @Payload() message: MessageConsumerController<CustomerBase>,
-  //   ): void {
-  //     const {
-  //       value: { payload },
-  //     } = message;
+  // @createConsumerEventPattern(CONSUMERS.CUSTOMER)
+  // handleNewCustomer(
+  //   @Payload() message: MessageConsumerController<CustomerBase>,
+  // ): void {
+  //   const {
+  //     value: { payload },
+  //   } = message;
 
-  //     this.commandBus.execute(new CreateEntityCommand(CustomerAct, payload));
-  //   }
+  //   this.commandBus.execute(new CreateEntityCommand(CustomerAct, payload));
+  // }
 
   //   @updateConsumerEventPattern(CONSUMERS.CUSTOMER)
   //   handleUpdateCustomer(

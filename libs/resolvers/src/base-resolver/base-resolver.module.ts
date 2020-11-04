@@ -1,29 +1,55 @@
 import { EntitiesService } from '@app/commands';
-import { EntitiesModule } from '@app/commands/entities/entities.module';
-import { DbModule, DbService } from '@app/db';
 import { DynamicModule, Module, Type } from '@nestjs/common';
+import { ObjectType } from 'typeorm';
 import { AbstractDataService } from './abstract-data.service';
-import { dataServiceToken, entitiesToken } from './data-service.token';
+import { BaseResolver } from './base-resolver.resolver';
+import {
+  createDataProviders,
+  createInjectServices,
+  createResolverProviders,
+} from './providers.service';
+import { getDataServiceTokens, getResolverTokens } from './token.service';
 
 @Module({})
 export class BaseResolverModule {
-  static forRoot(
-    classDataRef: Type<AbstractDataService>,
-    ...additionServices: Type<unknown>[]
+  static register(
+    options: {
+      classRef: ObjectType<unknown>;
+      serviceDataRef: Type<AbstractDataService>;
+      injectServices?: Type<unknown>[];
+    }[],
   ): DynamicModule {
+    const prefixedResolverProviders = createResolverProviders(
+      options.map(data => data.classRef),
+    );
+
+    const prefixedDataProviders = createDataProviders(
+      options.map(data => {
+        return { classRef: data.classRef, serviceDataRef: data.serviceDataRef };
+      }),
+    );
+
+    const prefixedInjectServices = createInjectServices(
+      options.map(data => (data.injectServices ? data.injectServices : [])),
+    );
+
+    const prefixedDataServiceTokens = getDataServiceTokens(
+      options.map(data => data.classRef.name),
+    );
+
+    const prefixedResolverTokens = getResolverTokens(
+      options.map(data => data.classRef.name),
+    );
+
     return {
       module: BaseResolverModule,
-      imports: [EntitiesModule.register(), DbModule.forRoot()],
       providers: [
-        DbService,
-        {
-          provide: dataServiceToken,
-          useClass: classDataRef,
-        },
         EntitiesService,
-        ...additionServices,
+        ...prefixedResolverProviders,
+        ...prefixedDataProviders,
+        ...prefixedInjectServices,
       ],
-      exports: [dataServiceToken, entitiesToken],
+      exports: [EntitiesService, ...prefixedDataServiceTokens],
     };
   }
 }

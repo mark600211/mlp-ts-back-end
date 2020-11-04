@@ -1,11 +1,10 @@
-import { Inject, Logger, Type } from '@nestjs/common';
+import { Controller, Type } from '@nestjs/common';
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { TryCatchWrapperAsync } from '@app/models';
 import { AbstractDataService } from './abstract-data.service';
-import { dataServiceToken, entitiesToken } from './data-service.token';
 import { ObjectType } from 'typeorm';
 import { EntitiesService } from 'libs/commands/src';
-import { DbService } from '@app/db';
+import { dataService } from './data-service.decorator';
 
 export function BaseResolver<
   T extends ObjectType<T>,
@@ -14,33 +13,22 @@ export function BaseResolver<
   E extends ObjectType<E>
 >(
   classRef: T,
-  newDataDto: ND,
-  updateDataDto: UD,
-  eventCondition: boolean,
+  newDataDto?: ND,
+  updateDataDto?: UD,
+  eventCondition = false,
   eventClassRef?: E,
 ): any {
   @Resolver({ isAbstract: true })
   abstract class BaseResolverHost {
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
-    logger = new Logger('TTTTTTTTT');
-
-    protected entities: EntitiesService;
-
     constructor(
-      @Inject(dataServiceToken) private readonly service: AbstractDataService,
-      private readonly factory: EntitiesService,
-      private readonly db: DbService,
-    ) {
-      this.entities = new EntitiesService(db);
-    }
+      @dataService(classRef.name) private readonly service: AbstractDataService,
+      private readonly entities: EntitiesService,
+    ) {}
 
     @Query(type => [classRef], { name: `findAll${classRef.name}` })
     @TryCatchWrapperAsync()
     async findAll(): Promise<T[]> {
-      this.logger.verbose(this.entities);
-      this.logger.verbose(this.service);
-
-      return await this.db.findEntitiess(classRef);
+      return await this.entities.findEntities(classRef);
     }
 
     @Query(type => classRef, { name: `findById${classRef.name}` })

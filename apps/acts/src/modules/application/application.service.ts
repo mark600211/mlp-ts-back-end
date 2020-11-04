@@ -1,3 +1,4 @@
+import { PatchAppDto } from '@app/models';
 import { AbstractDataService } from '@app/resolvers/base-resolver/abstract-data.service';
 import { Injectable } from '@nestjs/common';
 
@@ -7,7 +8,7 @@ export class ApplicationService extends AbstractDataService {
     return data;
   }
 
-  async updateData(data: any): Promise<any> {
+  async updateData(data: PatchAppDto): Promise<PatchAppDto> {
     return data;
   }
 }

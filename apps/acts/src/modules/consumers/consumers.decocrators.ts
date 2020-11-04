@@ -17,7 +17,6 @@ export function createConsumerEventPattern(consumerType: CONSUMERS) {
     );
 
     const origignalMethod = descriptor.value;
-
     descriptor.value = function(...args) {
       logger.verbose(`handle-new-${consumerType}`);
 

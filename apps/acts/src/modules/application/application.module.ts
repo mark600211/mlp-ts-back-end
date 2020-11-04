@@ -1,5 +1,3 @@
-import { EntitiesService } from '@app/commands';
-import { DbService } from '@app/db';
 import { Application } from '@app/models';
 import { BaseResolverModule } from '@app/resolvers';
 import { Module } from '@nestjs/common';
@@ -10,7 +8,12 @@ import { ApplicationService } from './application.service';
 @Module({
   imports: [
     TypeOrmModule.forFeature([Application]),
-    BaseResolverModule.forRoot(ApplicationService, DbService),
+    BaseResolverModule.register([
+      {
+        classRef: Application,
+        serviceDataRef: ApplicationService,
+      },
+    ]),
   ],
   providers: [ApplicationService, ApplicationResolver],
 })
