@@ -5,7 +5,10 @@
     "root": "apps/acts",
     "compilerOptions": {
         "webpack": true,
-        "tsConfigPath": "apps/acts/tsconfig.app.json"
+        "tsConfigPath": "apps/acts/tsconfig.app.json",
+        "assets": [
+            "**/*.env"
+        ]
     },
     "projects": {
         "acts": {
@@ -15,10 +18,7 @@
             "sourceRoot": "apps/acts/src",
             "outDir": "./dist",
             "compilerOptions": {
-                "tsConfigPath": "apps/acts/tsconfig.app.json",
-                "assets": [
-                    "**/*.env"
-                ]
+                "tsConfigPath": "apps/acts/tsconfig.app.json"
             }
         },
         "options": {
@@ -91,6 +91,27 @@
             "sourceRoot": "libs/commands/src",
             "compilerOptions": {
                 "tsConfigPath": "libs/commands/tsconfig.lib.json"
+            }
+        },
+        "rules": {
+            "type": "application",
+            "root": "apps/rules",
+            "entryFile": "main",
+            "sourceRoot": "apps/rules/src",
+            "compilerOptions": {
+                "tsConfigPath": "apps/rules/tsconfig.app.json"
+            }
+        },
+        "files": {
+            "type": "application",
+            "root": "apps/files",
+            "entryFile": "main",
+            "sourceRoot": "apps/files/src",
+            "compilerOptions": {
+                "tsConfigPath": "apps/files/tsconfig.app.json",
+                "assets": [
+                    "tmp/**/*"
+                ]
             }
         }
     }

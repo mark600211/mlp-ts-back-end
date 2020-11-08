@@ -1,55 +1,47 @@
-import {
-  CreateEntityWithEventCommand,
-  GetEntitiesQuery,
-  UpdateEntityWithEventCommand,
-} from '@app/cqrs';
-import {
-  Option,
-  PatchOption,
-  Planning,
-  PlanningBase,
-  PlanningEvent,
-  TryCatchWrapper,
-  TryCatchWrapperAsync,
-} from '@app/models';
-import { CommandBus, QueryBus } from '@nestjs/cqrs';
-import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { PatchOption, Planning, PlanningEvent } from '@app/models';
+import { BaseResolver } from '@app/resolvers';
+import { Resolver } from '@nestjs/graphql';
 
 @Resolver(of => Planning)
-export class PlanningResolver {
-  constructor(
-    private readonly queryBus: QueryBus,
-    private readonly commandBus: CommandBus,
-  ) {}
-
-  @TryCatchWrapper()
-  @Query()
-  plannings(): Promise<Planning[]> {
-    return this.queryBus.execute(new GetEntitiesQuery(Planning));
+export class PlanningResolver extends BaseResolver(
+  Planning,
+  String,
+  PatchOption,
+  true,
+  PlanningEvent,
+) {
+  constructor() {
+    super();
   }
 
-  @TryCatchWrapperAsync()
-  @Mutation()
-  async newPlanning(@Args('lable') lable: string): Promise<Planning> {
-    const data: Option = { lable };
+  //   @TryCatchWrapper()
+  //   @Query()
+  //   plannings(): Promise<Planning[]> {
+  //     return this.queryBus.execute(new GetEntitiesQuery(Planning));
+  //   }
 
-    return this.commandBus.execute(
-      new CreateEntityWithEventCommand(Planning, data, PlanningEvent),
-    );
-  }
+  //   @TryCatchWrapperAsync()
+  //   @Mutation()
+  //   async newPlanning(@Args('lable') lable: string): Promise<Planning> {
+  //     const data: Option = { lable };
 
-  @TryCatchWrapperAsync()
-  @Mutation()
-  async updatePlanning(@Args('data') data: PatchOption): Promise<Planning> {
-    const updateData: PlanningBase = data;
+  //     return this.commandBus.execute(
+  //       new CreateEntityWithEventCommand(Planning, data, PlanningEvent),
+  //     );
+  //   }
 
-    return this.commandBus.execute(
-      new UpdateEntityWithEventCommand(
-        Planning,
-        updateData,
-        data.id,
-        PlanningEvent,
-      ),
-    );
-  }
+  //   @TryCatchWrapperAsync()
+  //   @Mutation()
+  //   async updatePlanning(@Args('data') data: PatchOption): Promise<Planning> {
+  //     const updateData: PlanningBase = data;
+
+  //     return this.commandBus.execute(
+  //       new UpdateEntityWithEventCommand(
+  //         Planning,
+  //         updateData,
+  //         data.id,
+  //         PlanningEvent,
+  //       ),
+  //     );
+  //   }
 }

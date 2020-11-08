@@ -1,2 +1,2 @@
 export * from './proto.module';
-export * from './proto.service';
+export * from './service-module.service';

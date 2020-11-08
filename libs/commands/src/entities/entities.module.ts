@@ -1,3 +1,4 @@
+import { DbModule } from '@app/db';
 import { DynamicModule, Module, Type } from '@nestjs/common';
 import { EntitiesService } from './entities.service';
 

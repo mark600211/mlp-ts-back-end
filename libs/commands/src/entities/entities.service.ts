@@ -2,7 +2,7 @@
 import { DbService } from '@app/db';
 import { EventDto, TryCatchWrapper, TryCatchWrapperAsync } from '@app/models';
 import { Inject, Injectable } from '@nestjs/common';
-import { ObjectType } from 'typeorm';
+import { FindConditions, ObjectType } from 'typeorm';
 
 @Injectable()
 export class EntitiesService {
@@ -22,6 +22,26 @@ export class EntitiesService {
   }
 
   @TryCatchWrapper()
+  findOneWhere<T, F>(entity: ObjectType<T>, where: F): Promise<T> {
+    return this.service.findOneWhere(entity, where);
+  }
+
+  @TryCatchWrapper()
+  findManyWhere<T, F>(entity: ObjectType<T>, where: F): Promise<T[]> {
+    return this.service.findManyWhere(entity, where);
+  }
+
+  @TryCatchWrapper()
+  findWhereOrederedTaken<T>(
+    entity: ObjectType<T>,
+    where: FindConditions<T>,
+    order: { [P in keyof T]?: 'ASC' | 'DESC' },
+    take: number,
+  ): Promise<T[]> {
+    return this.findWhereOrederedTaken(entity, where, order, take);
+  }
+
+  @TryCatchWrapper()
   createEntity<T extends U, U>(entity: ObjectType<T>, data: U): Promise<T> {
     return this.service.creatEntity(entity, data);
   }
@@ -33,6 +53,15 @@ export class EntitiesService {
     id: string,
   ): Promise<T> {
     return this.service.updateEntityById(entity, data, id);
+  }
+
+  @TryCatchWrapper()
+  updateWere<T extends D, W, D>(
+    entity: ObjectType<T>,
+    where: W,
+    data: D,
+  ): Promise<T> {
+    return this.service.updateWhere(entity, where, data);
   }
 
   @TryCatchWrapperAsync()

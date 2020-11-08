@@ -12,11 +12,18 @@ export class DbModule {
     return {
       module: DbModule,
       imports: [
-        GraphQLModule.forRoot({
-          debug: true,
-          playground: true,
-          autoSchemaFile: join(process.cwd(), 'src/shema.gql'),
-          sortSchema: true,
+        GraphQLModule.forRootAsync({
+          imports: [ConfigModule],
+          useFactory: (configService: ConfigService) => ({
+            debug: true,
+            playground: true,
+            autoSchemaFile: join(
+              process.cwd(),
+              configService.get<string>('GRAPHQL_FOLDER'),
+            ),
+            sortSchema: true,
+          }),
+          inject: [ConfigService],
         }),
         TypeOrmModule.forRootAsync({
           imports: [ConfigModule],

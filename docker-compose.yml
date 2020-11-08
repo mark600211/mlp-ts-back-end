@@ -94,47 +94,44 @@ services:
   #     - "8081:8081"
   #   networks:
   #     - test
-  # db_files:
-  #   image: debezium/postgres:latest
-  #   volumes:
-  #     - ./db_data/db_files2:/var/lib/postgresql/data
-  #   environment:
-  #     POSTGRES_PASSWORD: mobicolab
-  #     POSTGRES_USER: mobicolab
-  #     POSTGRES_DB: postgres
-  #   ports:
-  #     - "6001:5432"
-  #   networks:
-  #     - files
-  #     - zookeeper
-  # api_files:
-  #   build:
-  #     context: "./files"
-  #     dockerfile: Dockerfile.dev
-  #   restart: always
-  #   volumes:
-  #     - "./files:/app"
-  #     - "/app/node_modules"
-  #     - "./proto:/proto"
-  #   networks:
-  #     - files
-  #     - zookeeper
-  #     - test
-  #   environment:
-  #     TYPEORM_PORT: 5432
-  #     TYPEORM_HOST_DOCKER: db_files
-  #     TYPEORM_USERNAME: mobicolab
-  #     TYPEORM_PASSWORD: mobicolab
-  #     TYPEORM_DATABASE: postgres
-  #     KAFKA_HOST: ${HOST_IP}
-  #     KAFKA_PORT1: 19092
-  #     KAFKA_PORT2: 29092
-  #   ports:
-  #     - "3010:3010"
-  #     - "50051:50051"
-  #   # depends_on:
-  #   #   - db_files
-  #   #   - api_acts
+  db_files:
+    image: debezium/postgres:latest
+    volumes:
+      - ./db_data/db_files2:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: mobicolab
+      POSTGRES_USER: mobicolab
+      POSTGRES_DB: postgres
+    ports:
+      - "6001:5432"
+    networks:
+      - files
+      - zookeeper
+  api_files:
+    image: mark600/mbcl-ts-builder
+    restart: always
+    command: "yarn start files --watch"
+    volumes:
+      - "./apps/files:/tmp/apps/acts"
+    networks:
+      - files
+      - zookeeper
+      - test
+    environment:
+      TYPEORM_PORT: 5432
+      TYPEORM_HOST_DOCKER: db_files
+      TYPEORM_USERNAME: mobicolab
+      TYPEORM_PASSWORD: mobicolab
+      TYPEORM_DATABASE: postgres
+      KAFKA_HOST: ${HOST_IP}
+      KAFKA_PORT1: 19092
+      KAFKA_PORT2: 29092
+    ports:
+      - "3010:3010"
+      - "50051:50051"
+    # depends_on:
+    #   - db_files
+    #   - api_acts
   # api_subscriptions:
   #   build:
   #     context: "./api-subscriptions"
@@ -202,166 +199,55 @@ services:
       - db_acts
       # - api_customers
 
-  # db_customers:
-  #   image: debezium/postgres:latest
-  #   volumes:
-  #     - ./db_data/db_customers2:/var/lib/postgresql/data
-  #   environment:
-  #     POSTGRES_PASSWORD: mobicolab
-  #     POSTGRES_USER: mobicolab
-  #     POSTGRES_DB: postgres
-  #   ports:
-  #     - "6003:5432"
-  #   networks:
-  #     - customers
-  #     - zookeeper
-  # api_customers:
-  #   build:
-  #     context: "./customers"
-  #     dockerfile: Dockerfile.dev
-  #   restart: always
-  #   volumes:
-  #     - "./customers:/app"
-  #     - "/app/node_modules"
-  #     - "./proto:/proto"
-  #   networks:
-  #     - zookeeper
-  #     - customers
-  #     - test
-  #   environment:
-  #     TYPEORM_PORT: 5432
-  #     TYPEORM_HOST_DOCKER: db_customers
-  #     TYPEORM_USERNAME: mobicolab
-  #     TYPEORM_PASSWORD: mobicolab
-  #     TYPEORM_DATABASE: postgres
-  #     KAFKA_HOST: ${HOST_IP}
-  #     KAFKA_PORT1: 19092
-  #     KAFKA_PORT2: 29092
-  #   ports:
-  #     - "3030:3030"
-  #   depends_on:
-  #     - db_customers
-  #     - api_general_customers
-  # db_general_customers:
-  #   image: debezium/postgres:latest
-  #   volumes:
-  #     - ./db_data/db_general_customers:/var/lib/postgresql/data
-  #   environment:
-  #     POSTGRES_PASSWORD: mobicolab
-  #     POSTGRES_USER: mobicolab
-  #     POSTGRES_DB: postgres
-  #   ports:
-  #     - "6004:5432"
-  #   networks:
-  #     - gcustomers
-  #     - zookeeper
-  # api_general_customers:
-  #   build:
-  #     context: "./general-customers"
-  #     dockerfile: Dockerfile.dev
-  #   restart: always
-  #   volumes:
-  #     - "./general-customers:/app"
-  #     - "/app/node_modules"
-  #     - "./proto:/proto"
-  #   networks:
-  #     - test
-  #     - zookeeper
-  #     - gcustomers
-  #   environment:
-  #     TYPEORM_PORT: 5432
-  #     TYPEORM_HOST_DOCKER: db_general_customers
-  #     TYPEORM_USERNAME: mobicolab
-  #     TYPEORM_PASSWORD: mobicolab
-  #     TYPEORM_DATABASE: postgres
-  #     KAFKA_HOST: ${HOST_IP}
-  #     KAFKA_PORT1: 19092
-  #     KAFKA_PORT2: 29092
-  #   ports:
-  #     - "3040:3040"
-  #   depends_on:
-  #     - db_general_customers
-  #     - api_labs
-  # db_labs:
-  #   image: debezium/postgres:latest
-  #   volumes:
-  #     - ./db_data/db_labs:/var/lib/postgresql/data
-  #   environment:
-  #     POSTGRES_PASSWORD: mobicolab
-  #     POSTGRES_USER: mobicolab
-  #     POSTGRES_DB: postgres
-  #   ports:
-  #     - "6005:5432"
-  #   networks:
-  #     - labs
-  #     - zookeeper
-  # api_labs:
-  #   build:
-  #     context: "./labs"
-  #     dockerfile: Dockerfile.dev
-  #   restart: always
-  #   volumes:
-  #     - "./labs:/app"
-  #     - "/app/node_modules"
-  #     - "./proto:/proto"
-  #   networks:
-  #     - labs
-  #     - zookeeper
-  #     - test
-  #   environment:
-  #     TYPEORM_PORT: 5432
-  #     TYPEORM_HOST_DOCKER: db_labs
-  #     TYPEORM_USERNAME: mobicolab
-  #     TYPEORM_PASSWORD: mobicolab
-  #     TYPEORM_DATABASE: postgres
-  #     KAFKA_HOST: ${HOST_IP}
-  #     KAFKA_PORT1: 19092
-  #     KAFKA_PORT2: 29092
-  #   ports:
-  #     - "3050:3050"
-  #   depends_on:
-  #     - db_labs
-  # db_tos:
-  #   image: debezium/postgres:latest
-  #   volumes:
-  #     - ./db_data/db_tos:/var/lib/postgresql/data
-  #   environment:
-  #     POSTGRES_PASSWORD: mobicolab
-  #     POSTGRES_USER: mobicolab
-  #     POSTGRES_DB: postgres
-  #   ports:
-  #     - "6009:5432"
-  #   networks:
-  #     - tos
-  #     - zookeeper
-  # api_tos:
-  #   build:
-  #     context: "./type-of-sample"
-  #     dockerfile: Dockerfile.dev
-  #   restart: always
-  #   volumes:
-  #     - "./type-of-sample:/app"
-  #     - "/app/node_modules"
-  #     - ./proto:/proto
-  #   networks:
-  #     - tos
-  #     - zookeeper
-  #     - test
-  #   environment:
-  #     TYPEORM_PORT: 5432
-  #     TYPEORM_HOST_DOCKER: db_tos
-  #     TYPEORM_USERNAME: mobicolab
-  #     TYPEORM_PASSWORD: mobicolab
-  #     TYPEORM_DATABASE: postgres
-  #     KAFKA_HOST: ${HOST_IP}
-  #     KAFKA_PORT1: 19092
-  #     KAFKA_PORT2: 29092
-  #   ports:
-  #     - "3090:3090"
-  #   depends_on:
-  #     - db_tos
-  #     # - api_files
+  db_consumers:
+    image: debezium/postgres:latest
+    volumes:
+      - ./db_data/db_consumers:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: mobicolab
+      POSTGRES_USER: mobicolab
+      POSTGRES_DB: postgres
+    ports:
+      - "6003:5432"
+    networks:
+      - customers
+      - zookeeper
 
+  api_consumers:
+    image: mark600/mbcl-ts-builder
+    restart: always
+    command: "yarn start consumers --watch"
+    volumes:
+      - "./apps/customers:/tmp/apps/customers"
+    networks:
+      - zookeeper
+      - customers
+      - test
+    environment:
+      TYPEORM_PORT: 5432
+      TYPEORM_HOST_DOCKER: db_customers
+      TYPEORM_USERNAME: mobicolab
+      TYPEORM_PASSWORD: mobicolab
+      TYPEORM_DATABASE: postgres
+      KAFKA_HOST: ${HOST_IP}
+      KAFKA_PORT1: 19092
+      KAFKA_PORT2: 29092
+    ports:
+      - "3030:3030"
+
+  db_options:
+    image: debezium/postgres:latest
+    volumes:
+      - ./db_data/db_options:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: mobicolab
+      POSTGRES_USER: mobicolab
+      POSTGRES_DB: postgres
+    ports:
+      - "6009:5432"
+    networks:
+      - tos
+      - zookeeper
   api_options:
     image: mark600/mbcl-ts-builder
     restart: always
@@ -384,48 +270,45 @@ services:
     ports:
       - "3090:3090"
     # depends_on:
-    # - db_tos
+    # - db_options
     # - api_files
 
-  # db_rules:
-  #   image: debezium/postgres:latest
-  #   volumes:
-  #     - ./db_data/db_rules:/var/lib/postgresql/data
-  #   environment:
-  #     POSTGRES_PASSWORD: mobicolab
-  #     POSTGRES_USER: mobicolab
-  #     POSTGRES_DB: postgres
-  #   ports:
-  #     - "6007:5432"
-  #   networks:
-  #     - rules
-  #     - zookeeper
-  # api_rules:
-  #   build:
-  #     context: "./rules"
-  #     dockerfile: Dockerfile.dev
-  #   restart: always
-  #   volumes:
-  #     - "./rules:/app"
-  #     - "/app/node_modules"
-  #   networks:
-  #     - rules
-  #     - zookeeper
-  #     - test
-  #   environment:
-  #     TYPEORM_PORT: 5432
-  #     TYPEORM_HOST_DOCKER: db_rules
-  #     TYPEORM_USERNAME: mobicolab
-  #     TYPEORM_PASSWORD: mobicolab
-  #     TYPEORM_DATABASE: postgres
-  #     KAFKA_HOST: ${HOST_IP}
-  #     KAFKA_PORT1: 19092
-  #     KAFKA_PORT2: 29092
-  #   ports:
-  #     - "3070:3070"
-  #   depends_on:
-  #     - db_labs
-  #     - api_tos
+  db_rules:
+    image: debezium/postgres:latest
+    volumes:
+      - ./db_data/db_rules:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: mobicolab
+      POSTGRES_USER: mobicolab
+      POSTGRES_DB: postgres
+    ports:
+      - "6007:5432"
+    networks:
+      - rules
+      - zookeeper
+  api_rules:
+    image: mark600/mbcl-ts-builder
+    restart: always
+    command: "yarn start options --watch"
+    volumes:
+      - "./apps/rules:/tmp/apps/rules"
+    networks:
+      - rules
+      - zookeeper
+      - test
+    environment:
+      TYPEORM_PORT: 5432
+      TYPEORM_HOST_DOCKER: db_rules
+      TYPEORM_USERNAME: mobicolab
+      TYPEORM_PASSWORD: mobicolab
+      TYPEORM_DATABASE: postgres
+      KAFKA_HOST: ${HOST_IP}
+      KAFKA_PORT1: 19092
+      KAFKA_PORT2: 29092
+    ports:
+      - "3070:3070"
+    depends_on:
+      - db_rules
   # api_templater:
   #   build:
   #     context: "./templater"

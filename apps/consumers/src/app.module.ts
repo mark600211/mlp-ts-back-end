@@ -1,9 +1,34 @@
+import { ConfigModule } from '@app/config';
+import { DbModule } from '@app/db';
 import { Module } from '@nestjs/common';
-import { CustomersModule } from './modules/customers/customers.module';
-import { GeneralCustomersModule } from './modules/general-customers/general-customers.module';
-import { LabsModule } from './modules/labs/labs.module';
+import { Resolvers } from './resolvers';
+import * as path from 'path';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { Entities } from './entities';
+import { BaseResolverModule } from '@app/resolvers';
+import { Customer, GeneralCustomer, Lab } from '@app/models';
+import { ConsumersService } from './consumers.service';
 
 @Module({
-  imports: [CustomersModule, GeneralCustomersModule, LabsModule],
+  imports: [
+    DbModule.forRoot(),
+    ConfigModule.register({ folder: path.resolve(__dirname, './config') }),
+    TypeOrmModule.forFeature([...Entities]),
+    BaseResolverModule.register([
+      {
+        classRef: Customer,
+        serviceDataRef: ConsumersService,
+      },
+      {
+        classRef: GeneralCustomer,
+        serviceDataRef: ConsumersService,
+      },
+      {
+        classRef: Lab,
+        serviceDataRef: ConsumersService,
+      },
+    ]),
+  ],
+  providers: [ConsumersService, ...Resolvers],
 })
 export class AppModule {}

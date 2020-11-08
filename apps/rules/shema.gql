@@ -1,0 +1,190 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type AdditionAct {
+  id: ID!
+  lable: String!
+}
+
+input AddresInput {
+  building: String
+  city: String
+  country: String
+  region: String
+  room: String
+  street: String
+  zip: String
+}
+
+type Address {
+  building: String
+  city: String
+  country: String
+  region: String
+  room: String
+  street: String
+  zip: String
+}
+
+type Application {
+  datetime: DateAndTime!
+  id: ID!
+  place: String!
+}
+
+type ClimaticEnvironmentalAct {
+  id: ID!
+  lable: String!
+}
+
+type CustomerAct {
+  address: Address!
+  email: String
+  fullname: String!
+  id: ID!
+  label: String!
+  tel: String
+}
+
+type DateAndTime {
+  date: DateTime!
+  time: String!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+input DateTimeInput {
+  date: DateTime!
+  time: String!
+}
+
+type EnvironmentalEngineerAct {
+  id: ID!
+  lable: String!
+}
+
+input FindLabTypeOfSampleTemplate {
+  labId: String!
+  typeOfSampleId: String!
+}
+
+type GeneralCustomerAct {
+  address: Address!
+  email: String
+  fullname: String!
+  id: ID!
+  label: String!
+  tel: String
+}
+
+type GoalAct {
+  id: ID!
+  lable: String!
+}
+
+type InformationAboutSelectionAct {
+  id: ID!
+  lable: String!
+}
+
+type LabAct {
+  address: Address!
+  email: String
+  fullname: String!
+  id: ID!
+  label: String!
+  tel: String
+}
+
+type LabTypeOfSampleTemplateModel {
+  labId: ID!
+  path: String
+  typeOfSampleId: ID!
+}
+
+type MethodAct {
+  id: ID!
+  lable: String!
+}
+
+type Mutation {
+  createLabTypeOfSampleTemplateModel(data: NewLabTypeOfSampleTemplate!): LabTypeOfSampleTemplateModel!
+  updateLabTypeOfSampleTemplateModel(data: String!, id: String!): LabTypeOfSampleTemplateModel!
+  updateWhereLabTypeOfSampleTemplateModel(data: UpdateLabTypeOfSampleTemplate!, where: FindLabTypeOfSampleTemplate!): LabTypeOfSampleTemplateModel!
+}
+
+input NewLabTypeOfSampleTemplate {
+  labId: String!
+  path: String!
+  typeOfSampleId: String!
+}
+
+type NormativeDocumentAct {
+  id: ID!
+  lable: String!
+}
+
+type ObjectNameAct {
+  id: ID!
+  lable: String!
+}
+
+type PassedSampleAct {
+  id: ID!
+  lable: String!
+}
+
+type PlaceAct {
+  id: ID!
+  lable: String!
+}
+
+type PlanningAct {
+  id: ID!
+  lable: String!
+}
+
+type PreparationAct {
+  id: ID!
+  lable: String!
+}
+
+type Query {
+  findAllLabTypeOfSampleTemplateModel: [LabTypeOfSampleTemplateModel!]!
+  findByIdLabTypeOfSampleTemplateModel(id: String!): LabTypeOfSampleTemplateModel!
+  findManyWhereLabTypeOfSampleTemplateModel(where: String!): [LabTypeOfSampleTemplateModel!]!
+  findOneWhereLabTypeOfSampleTemplateModel(where: FindLabTypeOfSampleTemplate!): LabTypeOfSampleTemplateModel!
+}
+
+type RepresentativeAct {
+  id: ID!
+  lable: String!
+}
+
+type SampleAct {
+  id: ID!
+  lable: String!
+}
+
+type SampleTypeAct {
+  id: ID!
+  lable: String!
+}
+
+type ToolTypeAct {
+  id: ID!
+  lable: String!
+}
+
+type TypeOfSampleAct {
+  id: ID!
+  lable: String!
+}
+
+input UpdateLabTypeOfSampleTemplate {
+  path: String!
+}

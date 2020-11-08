@@ -1,6 +1,6 @@
-import { EntityNotFound } from '@app/models';
+import { EntityNotFound, TryCatchWrapperAsync } from '@app/models';
 import { Injectable, Logger } from '@nestjs/common';
-import { Repository, getRepository, ObjectType } from 'typeorm';
+import { Repository, getRepository, ObjectType, FindConditions } from 'typeorm';
 
 @Injectable()
 export class DbService {
@@ -67,6 +67,23 @@ export class DbService {
     }
   }
 
+  @TryCatchWrapperAsync()
+  async updateWhere<T extends D, W, D>(
+    entity: ObjectType<T>,
+    where: W,
+    data: D,
+  ): Promise<T> {
+    const repository = this.getRepository(entity);
+
+    const newEtity = await repository.findOne(where);
+
+    if (!newEtity) throw new EntityNotFound<T>();
+
+    await repository.save(newEtity, data);
+
+    return newEtity;
+  }
+
   async findEntityByIdWithException<T>(
     entity: ObjectType<T>,
     id: string,
@@ -84,6 +101,38 @@ export class DbService {
     } catch (error) {
       this.logger.error(error);
     }
+  }
+
+  @TryCatchWrapperAsync()
+  async findWhereOrederedTaken<T>(
+    entity: ObjectType<T>,
+    where: FindConditions<T>,
+    order: { [P in keyof T]?: 'ASC' | 'DESC' },
+    take: number,
+  ): Promise<T[]> {
+    const repository = this.getRepository(entity);
+
+    const entities = await repository.find({ where, order, take });
+
+    return entities;
+  }
+
+  @TryCatchWrapperAsync()
+  async findManyWhere<T, F>(entity: ObjectType<T>, where: F): Promise<T[]> {
+    const repository = this.getRepository(entity);
+
+    const entities = await repository.find(where);
+
+    return entities;
+  }
+
+  @TryCatchWrapperAsync()
+  async findOneWhere<T, F>(entity: ObjectType<T>, where: F): Promise<T> {
+    const repositry = this.getRepository(entity);
+
+    const findedEntity = await repositry.findOne(where);
+
+    return findedEntity;
   }
 
   async deleteEntityById<T>(entity: ObjectType<T>, id: string): Promise<void> {

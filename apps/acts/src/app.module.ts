@@ -7,11 +7,9 @@ import { ConfigModule } from '@app/config';
 import { ConsumersModule } from './modules/consumers/consumers.module';
 import { ApplicationModule } from './modules/application/application.module';
 import { DbModule } from '@app/db';
-import { CqrsModule } from '@nestjs/cqrs';
 
 @Module({
   imports: [
-    CqrsModule,
     DbModule.forRoot(),
     ConfigModule.register({ folder: path.resolve(__dirname, './config') }),
     ActsModule,

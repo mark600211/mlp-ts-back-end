@@ -1,21 +1,21 @@
-import { ObjectType } from '@nestjs/graphql';
-import { OneToMany, Entity, ManyToOne } from 'typeorm';
-import { DocActId } from './doc-act.model';
+import { ObjectType, Field, ID } from '@nestjs/graphql';
+import {
+  Entity,
+  CreateDateColumn,
+  UpdateDateColumn,
+  PrimaryColumn,
+} from 'typeorm';
 import { DocBase } from './doc-base.model';
-import { DocEvent } from './doc-event.model';
 
 @Entity()
 @ObjectType()
 export class Doc extends DocBase {
-  @OneToMany(
-    type => DocEvent,
-    events => events.doc,
-    { nullable: true, onDelete: 'CASCADE' },
-  )
-  docEvents?: DocEvent[];
-  @ManyToOne(
-    type => DocActId,
-    act => act.docs,
-  )
-  act: DocActId;
+  @Field(type => ID)
+  @PrimaryColumn()
+  id: string;
+  @Field()
+  @CreateDateColumn()
+  createdAt?: Date;
+  @UpdateDateColumn()
+  updatedAt?: Date;
 }

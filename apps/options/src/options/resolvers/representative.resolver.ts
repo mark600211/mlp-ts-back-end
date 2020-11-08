@@ -1,63 +1,55 @@
-import {
-  CreateEntityWithEventCommand,
-  GetEntitiesQuery,
-  UpdateEntityWithEventCommand,
-} from '@app/cqrs';
-import {
-  Option,
-  PatchOption,
-  Representative,
-  RepresentativeBase,
-  RepresentativeEvent,
-  TryCatchWrapper,
-  TryCatchWrapperAsync,
-} from '@app/models';
-import { CommandBus, QueryBus } from '@nestjs/cqrs';
-import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { PatchOption, Representative, RepresentativeEvent } from '@app/models';
+import { BaseResolver } from '@app/resolvers';
+import { Resolver } from '@nestjs/graphql';
 
 @Resolver(of => Representative)
-export class RepresentativeResolver {
-  constructor(
-    private readonly queryBus: QueryBus,
-    private readonly commandBus: CommandBus,
-  ) {}
-
-  @TryCatchWrapper()
-  @Query()
-  representatives(): Promise<Representative[]> {
-    return this.queryBus.execute(new GetEntitiesQuery(Representative));
+export class RepresentativeResolver extends BaseResolver(
+  Representative,
+  String,
+  PatchOption,
+  true,
+  RepresentativeEvent,
+) {
+  constructor() {
+    super();
   }
 
-  @TryCatchWrapperAsync()
-  @Mutation()
-  async newRepresentative(
-    @Args('lable') lable: string,
-  ): Promise<Representative> {
-    const data: Option = { lable };
+  //   @TryCatchWrapper()
+  //   @Query()
+  //   representatives(): Promise<Representative[]> {
+  //     return this.queryBus.execute(new GetEntitiesQuery(Representative));
+  //   }
 
-    return this.commandBus.execute(
-      new CreateEntityWithEventCommand(
-        Representative,
-        data,
-        RepresentativeEvent,
-      ),
-    );
-  }
+  //   @TryCatchWrapperAsync()
+  //   @Mutation()
+  //   async newRepresentative(
+  //     @Args('lable') lable: string,
+  //   ): Promise<Representative> {
+  //     const data: Option = { lable };
 
-  @TryCatchWrapperAsync()
-  @Mutation()
-  async updateRepresentative(
-    @Args('data') data: PatchOption,
-  ): Promise<Representative> {
-    const updateData: RepresentativeBase = data;
+  //     return this.commandBus.execute(
+  //       new CreateEntityWithEventCommand(
+  //         Representative,
+  //         data,
+  //         RepresentativeEvent,
+  //       ),
+  //     );
+  //   }
 
-    return this.commandBus.execute(
-      new UpdateEntityWithEventCommand(
-        Representative,
-        updateData,
-        data.id,
-        RepresentativeEvent,
-      ),
-    );
-  }
+  //   @TryCatchWrapperAsync()
+  //   @Mutation()
+  //   async updateRepresentative(
+  //     @Args('data') data: PatchOption,
+  //   ): Promise<Representative> {
+  //     const updateData: RepresentativeBase = data;
+
+  //     return this.commandBus.execute(
+  //       new UpdateEntityWithEventCommand(
+  //         Representative,
+  //         updateData,
+  //         data.id,
+  //         RepresentativeEvent,
+  //       ),
+  //     );
+  //   }
 }

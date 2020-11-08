@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package python_files_service;
+
+import "google/protobuf/empty.proto";
+
+service PythonFilesService {
+    rpc downloadDoc (Path) returns (stream File);
+}
+
+message Path {
+    string path = 1;
+}
+
+message File {
+    bytes chunk = 1;
+}

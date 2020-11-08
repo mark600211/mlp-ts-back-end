@@ -1,11 +1,14 @@
+import { ConfigModule } from '@app/config';
+import { DbModule } from '@app/db';
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import * as path from 'path';
 import { OptionsModule } from './options/options.module';
 
 @Module({
-  imports: [OptionsModule],
-  controllers: [AppController],
-  providers: [AppService],
+  imports: [
+    OptionsModule,
+    DbModule.forRoot(),
+    ConfigModule.register({ folder: path.resolve(__dirname, './config') }),
+  ],
 })
 export class AppModule {}

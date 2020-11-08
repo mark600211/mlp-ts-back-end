@@ -1,0 +1,342 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Addition {
+  id: ID!
+  lable: String!
+}
+
+type AdditionAct {
+  id: ID!
+  lable: String!
+}
+
+input AddresInput {
+  building: String
+  city: String
+  country: String
+  region: String
+  room: String
+  street: String
+  zip: String
+}
+
+type Address {
+  building: String
+  city: String
+  country: String
+  region: String
+  room: String
+  street: String
+  zip: String
+}
+
+type Application {
+  datetime: DateAndTime!
+  id: ID!
+  place: String!
+}
+
+type ClimaticEnvironmental {
+  id: ID!
+  lable: String!
+}
+
+type ClimaticEnvironmentalAct {
+  id: ID!
+  lable: String!
+}
+
+type CustomerAct {
+  address: Address!
+  email: String
+  fullname: String!
+  id: ID!
+  label: String!
+  tel: String
+}
+
+type DateAndTime {
+  date: DateTime!
+  time: String!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+input DateTimeInput {
+  date: DateTime!
+  time: String!
+}
+
+type DefinedIndicator {
+  id: ID!
+  lable: String!
+}
+
+type EnvironmentalEngineer {
+  id: ID!
+  lable: String!
+}
+
+type EnvironmentalEngineerAct {
+  id: ID!
+  lable: String!
+}
+
+type GeneralCustomerAct {
+  address: Address!
+  email: String
+  fullname: String!
+  id: ID!
+  label: String!
+  tel: String
+}
+
+type Goal {
+  id: ID!
+  lable: String!
+}
+
+type GoalAct {
+  id: ID!
+  lable: String!
+}
+
+type InformationAboutSelection {
+  id: ID!
+  lable: String!
+}
+
+type InformationAboutSelectionAct {
+  id: ID!
+  lable: String!
+}
+
+type LabAct {
+  address: Address!
+  email: String
+  fullname: String!
+  id: ID!
+  label: String!
+  tel: String
+}
+
+type Method {
+  id: ID!
+  lable: String!
+}
+
+type MethodAct {
+  id: ID!
+  lable: String!
+}
+
+type Mutation {
+  createAddition(data: String!): Addition!
+  createClimaticEnvironmental(data: String!): ClimaticEnvironmental!
+  createDefinedIndicator(data: NewDefinedIndicator!): DefinedIndicator!
+  createEnvironmentalEngineer(data: String!): EnvironmentalEngineer!
+  createGoal(data: String!): Goal!
+  createInformationAboutSelection(data: String!): InformationAboutSelection!
+  createMethod(data: String!): Method!
+  createNormativeDocument(data: String!): NormativeDocument!
+  createObjectName(data: String!): ObjectName!
+  createPassedSample(data: String!): PassedSample!
+  createPlace(data: String!): Place!
+  createPlanning(data: String!): Planning!
+  createPreparation(data: String!): Preparation!
+  createRepresentative(data: String!): Representative!
+  createSample(data: String!): Sample!
+  createSampleType(data: String!): SampleType!
+  createToolType(data: String!): ToolType!
+  createTypeOfSample(data: String!): TypeOfSample!
+  updateAddition(data: PatchOption!, id: String!): Addition!
+  updateClimaticEnvironmental(data: PatchOption!, id: String!): ClimaticEnvironmental!
+  updateDefinedIndicator(data: PatchDefinedIndicator!, id: String!): DefinedIndicator!
+  updateEnvironmentalEngineer(data: PatchOption!, id: String!): EnvironmentalEngineer!
+  updateGoal(data: PatchOption!, id: String!): Goal!
+  updateInformationAboutSelection(data: PatchOption!, id: String!): InformationAboutSelection!
+  updateMethod(data: PatchOption!, id: String!): Method!
+  updateNormativeDocument(data: PatchOption!, id: String!): NormativeDocument!
+  updateObjectName(data: PatchOption!, id: String!): ObjectName!
+  updatePassedSample(data: PatchOption!, id: String!): PassedSample!
+  updatePlace(data: PatchOption!, id: String!): Place!
+  updatePlanning(data: PatchOption!, id: String!): Planning!
+  updatePreparation(data: PatchOption!, id: String!): Preparation!
+  updateRepresentative(data: PatchOption!, id: String!): Representative!
+  updateSample(data: PatchOption!, id: String!): Sample!
+  updateSampleType(data: PatchOption!, id: String!): SampleType!
+  updateToolType(data: PatchOption!, id: String!): ToolType!
+  updateTypeOfSample(data: PatchOption!, id: String!): TypeOfSample!
+}
+
+input NewDefinedIndicator {
+  lab: String!
+  lable: String!
+  tos: String!
+}
+
+type NormativeDocument {
+  id: ID!
+  lable: String!
+}
+
+type NormativeDocumentAct {
+  id: ID!
+  lable: String!
+}
+
+type ObjectName {
+  id: ID!
+  lable: String!
+}
+
+type ObjectNameAct {
+  id: ID!
+  lable: String!
+}
+
+type PassedSample {
+  id: ID!
+  lable: String!
+}
+
+type PassedSampleAct {
+  id: ID!
+  lable: String!
+}
+
+input PatchDefinedIndicator {
+  id: String!
+  lab: String!
+  lable: String!
+  tos: String!
+}
+
+input PatchOption {
+  id: String!
+  lable: String!
+}
+
+type Place {
+  id: ID!
+  lable: String!
+}
+
+type PlaceAct {
+  id: ID!
+  lable: String!
+}
+
+type Planning {
+  id: ID!
+  lable: String!
+}
+
+type PlanningAct {
+  id: ID!
+  lable: String!
+}
+
+type Preparation {
+  id: ID!
+  lable: String!
+}
+
+type PreparationAct {
+  id: ID!
+  lable: String!
+}
+
+type Query {
+  findAllAddition: [Addition!]!
+  findAllClimaticEnvironmental: [ClimaticEnvironmental!]!
+  findAllDefinedIndicator: [DefinedIndicator!]!
+  findAllEnvironmentalEngineer: [EnvironmentalEngineer!]!
+  findAllGoal: [Goal!]!
+  findAllInformationAboutSelection: [InformationAboutSelection!]!
+  findAllMethod: [Method!]!
+  findAllNormativeDocument: [NormativeDocument!]!
+  findAllObjectName: [ObjectName!]!
+  findAllPassedSample: [PassedSample!]!
+  findAllPlace: [Place!]!
+  findAllPlanning: [Planning!]!
+  findAllPreparation: [Preparation!]!
+  findAllRepresentative: [Representative!]!
+  findAllSample: [Sample!]!
+  findAllSampleType: [SampleType!]!
+  findAllToolType: [ToolType!]!
+  findAllTypeOfSample: [TypeOfSample!]!
+  findByIdAddition(id: String!): Addition!
+  findByIdClimaticEnvironmental(id: String!): ClimaticEnvironmental!
+  findByIdDefinedIndicator(id: String!): DefinedIndicator!
+  findByIdEnvironmentalEngineer(id: String!): EnvironmentalEngineer!
+  findByIdGoal(id: String!): Goal!
+  findByIdInformationAboutSelection(id: String!): InformationAboutSelection!
+  findByIdMethod(id: String!): Method!
+  findByIdNormativeDocument(id: String!): NormativeDocument!
+  findByIdObjectName(id: String!): ObjectName!
+  findByIdPassedSample(id: String!): PassedSample!
+  findByIdPlace(id: String!): Place!
+  findByIdPlanning(id: String!): Planning!
+  findByIdPreparation(id: String!): Preparation!
+  findByIdRepresentative(id: String!): Representative!
+  findByIdSample(id: String!): Sample!
+  findByIdSampleType(id: String!): SampleType!
+  findByIdToolType(id: String!): ToolType!
+  findByIdTypeOfSample(id: String!): TypeOfSample!
+}
+
+type Representative {
+  id: ID!
+  lable: String!
+}
+
+type RepresentativeAct {
+  id: ID!
+  lable: String!
+}
+
+type Sample {
+  id: ID!
+  lable: String!
+}
+
+type SampleAct {
+  id: ID!
+  lable: String!
+}
+
+type SampleType {
+  id: ID!
+  lable: String!
+}
+
+type SampleTypeAct {
+  id: ID!
+  lable: String!
+}
+
+type ToolType {
+  id: ID!
+  lable: String!
+}
+
+type ToolTypeAct {
+  id: ID!
+  lable: String!
+}
+
+type TypeOfSample {
+  id: ID!
+  lable: String!
+}
+
+type TypeOfSampleAct {
+  id: ID!
+  lable: String!
+}

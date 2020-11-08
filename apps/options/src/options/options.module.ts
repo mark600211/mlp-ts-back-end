@@ -1,18 +1,18 @@
+import { EntitiesModule } from '@app/commands/entities/entities.module';
+import { BaseResolverModule } from '@app/resolvers';
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { CommandHandlers } from './commands/handlers';
 import { Entities } from './entities';
 import { OptionsService } from './options.service';
-import { QueryHandlers } from './queries/handlers';
+import { ResolverUtils } from './resolver.utils';
 import { Resolvers } from './resolvers';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([...Entities])],
-  providers: [
-    OptionsService,
-    ...Resolvers,
-    ...QueryHandlers,
-    ...CommandHandlers,
+  imports: [
+    TypeOrmModule.forFeature([...Entities]),
+    BaseResolverModule.register([...ResolverUtils]),
+    EntitiesModule.register(),
   ],
+  providers: [OptionsService, ...Resolvers],
 })
 export class OptionsModule {}

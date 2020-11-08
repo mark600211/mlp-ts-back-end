@@ -16,7 +16,7 @@ import { EntitiesModule } from '@app/commands/entities/entities.module';
   imports: [
     TypeOrmModule.forFeature([Act, ActEvent, Test]),
     ConsumersModule,
-    EntitiesModule,
+    EntitiesModule.register(),
     BaseResolverModule.register([
       {
         classRef: Act,

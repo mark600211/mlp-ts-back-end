@@ -1,26 +1,42 @@
-import { DynamicModule, Module } from '@nestjs/common';
-import { ProtoService } from './proto.service';
-import { ConfigModule } from '@app/config';
-import { PROTO_OPTIONS } from './constants';
-import { ProtoModuleOptions } from './interfaces/proto-options.interface';
+import { DynamicModule, Global, Module } from '@nestjs/common';
+import { ClientProxyFactory, ClientsModule } from '@nestjs/microservices';
+import { Modules } from '@app/models';
+import { createClientModules } from './clients-module.service';
+import { ServiceModuleService } from './service-module.service';
 
-@Module({
-  imports: [ConfigModule],
-  providers: [ProtoService],
-  exports: [ProtoService],
-})
+@Global()
+@Module({})
 export class ProtoModule {
-  static register(options: ProtoModuleOptions): DynamicModule {
+  static register(names: Modules[], serviceName?: Modules): DynamicModule {
+    const clientModules = createClientModules(names);
+
+    const providers = serviceName
+      ? [
+          {
+            provide: 'SERVICE_NAME',
+            useValue: serviceName ? serviceName : null,
+          },
+          {
+            provide: serviceName,
+            useFactory: (grpcServiceOptions: ServiceModuleService) => {
+              const options = grpcServiceOptions.getServiceOptions();
+              return ClientProxyFactory.create({ ...options });
+            },
+            inject: [ServiceModuleService],
+          },
+          ServiceModuleService,
+        ]
+      : [];
+
+    const exports = serviceName
+      ? [ClientsModule, ServiceModuleService]
+      : [ClientsModule];
+
     return {
       module: ProtoModule,
-      providers: [
-        {
-          provide: PROTO_OPTIONS,
-          useValue: options,
-        },
-        ProtoService,
-      ],
-      exports: [ProtoService],
+      imports: [ClientsModule.register(clientModules)],
+      providers,
+      exports,
     };
   }
 }

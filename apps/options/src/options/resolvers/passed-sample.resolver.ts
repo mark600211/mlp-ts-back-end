@@ -1,57 +1,49 @@
-import {
-  CreateEntityWithEventCommand,
-  GetEntitiesQuery,
-  UpdateEntityWithEventCommand,
-} from '@app/cqrs';
-import {
-  Option,
-  PassedSample,
-  PassedSampleBase,
-  PassedSampleEvent,
-  PatchOption,
-  TryCatchWrapper,
-  TryCatchWrapperAsync,
-} from '@app/models';
-import { CommandBus, QueryBus } from '@nestjs/cqrs';
-import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { PassedSample, PassedSampleEvent, PatchOption } from '@app/models';
+import { BaseResolver } from '@app/resolvers';
+import { Resolver } from '@nestjs/graphql';
 
 @Resolver(of => PassedSample)
-export class PassedSampleResolver {
-  constructor(
-    private readonly queryBus: QueryBus,
-    private readonly commandBus: CommandBus,
-  ) {}
-
-  @TryCatchWrapper()
-  @Query()
-  passedSamples(): Promise<PassedSample[]> {
-    return this.queryBus.execute(new GetEntitiesQuery(PassedSample));
+export class PassedSampleResolver extends BaseResolver(
+  PassedSample,
+  String,
+  PatchOption,
+  true,
+  PassedSampleEvent,
+) {
+  constructor() {
+    super();
   }
 
-  @TryCatchWrapperAsync()
-  @Mutation()
-  async newPassedSample(@Args('lable') lable: string): Promise<PassedSample> {
-    const data: Option = { lable };
+  //   @TryCatchWrapper()
+  //   @Query()
+  //   passedSamples(): Promise<PassedSample[]> {
+  //     return this.queryBus.execute(new GetEntitiesQuery(PassedSample));
+  //   }
 
-    return this.commandBus.execute(
-      new CreateEntityWithEventCommand(PassedSample, data, PassedSampleEvent),
-    );
-  }
+  //   @TryCatchWrapperAsync()
+  //   @Mutation()
+  //   async newPassedSample(@Args('lable') lable: string): Promise<PassedSample> {
+  //     const data: Option = { lable };
 
-  @TryCatchWrapperAsync()
-  @Mutation()
-  async updatePassedSample(
-    @Args('data') data: PatchOption,
-  ): Promise<PassedSample> {
-    const updateData: PassedSampleBase = data;
+  //     return this.commandBus.execute(
+  //       new CreateEntityWithEventCommand(PassedSample, data, PassedSampleEvent),
+  //     );
+  //   }
 
-    return this.commandBus.execute(
-      new UpdateEntityWithEventCommand(
-        PassedSample,
-        updateData,
-        data.id,
-        PassedSampleEvent,
-      ),
-    );
-  }
+  //   @TryCatchWrapperAsync()
+  //   @Mutation()
+  //   async updatePassedSample(
+  //     @Args('data') data: PatchOption,
+  //   ): Promise<PassedSample> {
+  //     const updateData: PassedSampleBase = data;
+
+  //     return this.commandBus.execute(
+  //       new UpdateEntityWithEventCommand(
+  //         PassedSample,
+  //         updateData,
+  //         data.id,
+  //         PassedSampleEvent,
+  //       ),
+  //     );
+  //   }
 }

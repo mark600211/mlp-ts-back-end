@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+package files_service;
+
+import "google/protobuf/empty.proto";
+
+service FilesService {
+    rpc downloadDoc (docId) returns (stream File);
+}
+
+message docId {
+    string id = 1;
+}
+
+message File {
+    oneof res {
+        bytes chunk = 1;
+        string name = 2;
+    }
+}

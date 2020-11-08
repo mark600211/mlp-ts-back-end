@@ -1,3 +1,6 @@
 export enum Modules {
-  ACTS = 'ACTS',
+  ACTS = 'acts',
+  FILES = 'files',
+  SYN = 'syn',
+  PYTHON = 'python_files',
 }

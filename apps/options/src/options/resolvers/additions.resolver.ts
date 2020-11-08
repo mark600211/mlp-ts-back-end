@@ -1,55 +1,47 @@
-import {
-  CreateEntityWithEventCommand,
-  UpdateEntityWithEventCommand,
-  GetEntitiesQuery,
-} from '@app/cqrs';
-import {
-  Addition,
-  AdditionBase,
-  AdditionEvent,
-  Option,
-  PatchOption,
-  TryCatchWrapper,
-  TryCatchWrapperAsync,
-} from '@app/models';
-import { CommandBus, QueryBus } from '@nestjs/cqrs';
-import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { Addition, AdditionEvent, PatchOption } from '@app/models';
+import { BaseResolver } from '@app/resolvers';
+import { Resolver } from '@nestjs/graphql';
 
 @Resolver(of => Addition)
-export class AdditionResolver {
-  constructor(
-    private readonly queryBus: QueryBus,
-    private readonly commandBus: CommandBus,
-  ) {}
-
-  @TryCatchWrapper()
-  @Query()
-  additions(): Promise<Addition[]> {
-    return this.queryBus.execute(new GetEntitiesQuery(Addition));
+export class AdditionResolver extends BaseResolver(
+  Addition,
+  String,
+  PatchOption,
+  true,
+  AdditionEvent,
+) {
+  constructor() {
+    super();
   }
 
-  @TryCatchWrapperAsync()
-  @Mutation()
-  async newAddition(@Args('lable') lable: string): Promise<Addition> {
-    const data: Option = { lable };
+  //   @TryCatchWrapper()
+  //   @Query()
+  //   additions(): Promise<Addition[]> {
+  //     return this.queryBus.execute(new GetEntitiesQuery(Addition));
+  //   }
 
-    return this.commandBus.execute(
-      new CreateEntityWithEventCommand(Addition, data, AdditionEvent),
-    );
-  }
+  //   @TryCatchWrapperAsync()
+  //   @Mutation()
+  //   async newAddition(@Args('lable') lable: string): Promise<Addition> {
+  //     const data: Option = { lable };
 
-  @TryCatchWrapperAsync()
-  @Mutation()
-  async updateAddition(@Args('data') data: PatchOption): Promise<Addition> {
-    const updateData: AdditionBase = data;
+  //     return this.commandBus.execute(
+  //       new CreateEntityWithEventCommand(Addition, data, AdditionEvent),
+  //     );
+  //   }
 
-    return this.commandBus.execute(
-      new UpdateEntityWithEventCommand(
-        Addition,
-        updateData,
-        data.id,
-        AdditionEvent,
-      ),
-    );
-  }
+  //   @TryCatchWrapperAsync()
+  //   @Mutation()
+  //   async updateAddition(@Args('data') data: PatchOption): Promise<Addition> {
+  //     const updateData: AdditionBase = data;
+
+  //     return this.commandBus.execute(
+  //       new UpdateEntityWithEventCommand(
+  //         Addition,
+  //         updateData,
+  //         data.id,
+  //         AdditionEvent,
+  //       ),
+  //     );
+  //   }
 }

@@ -1,75 +1,71 @@
-import {
-  CreateEntityWithEventCommand,
-  GetEntitiesQuery,
-  UpdateEntityWithEventCommand,
-} from '@app/cqrs';
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import {
   DefinedIndicator,
   DefinedIndicatorEvent,
-  DefinedIndicatorRelations,
   NewDefinedIndicator,
-  TryCatchWrapper,
-  TryCatchWrapperAsync,
+  PatchDefinedIndicator,
 } from '@app/models';
-import { PatchDefinedIndicator } from '@app/models/models/options/dto/patch-defined-indicator.dto';
-import { CommandBus, QueryBus } from '@nestjs/cqrs';
-import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
-import { OptionsService } from '../options.service';
+import { BaseResolver } from '@app/resolvers';
+import { Resolver } from '@nestjs/graphql';
 
 @Resolver(of => DefinedIndicator)
-export class DefinedIndicatorResolver {
-  constructor(
-    private readonly queryBus: QueryBus,
-    private readonly commandBus: CommandBus,
-    private readonly optService: OptionsService,
-  ) {}
-
-  @TryCatchWrapper()
-  @Query()
-  definedIndicators(): Promise<DefinedIndicator[]> {
-    return this.queryBus.execute(new GetEntitiesQuery(DefinedIndicator));
+export class DefinedIndicatorResolver extends BaseResolver(
+  DefinedIndicator,
+  NewDefinedIndicator,
+  PatchDefinedIndicator,
+  true,
+  DefinedIndicatorEvent,
+) {
+  constructor() {
+    super();
   }
 
-  @TryCatchWrapperAsync()
-  @Mutation()
-  async newDefinedIndicator(
-    @Args('data') data: NewDefinedIndicator,
-  ): Promise<DefinedIndicator> {
-    const consumers = await this.optService.getConsumers(data);
+  //   @TryCatchWrapper()
+  //   @Query()
+  //   definedIndicators(): Promise<DefinedIndicator[]> {
+  //     return this.queryBus.execute(new GetEntitiesQuery(DefinedIndicator));
+  //   }
 
-    const newData: DefinedIndicatorRelations = {
-      ...consumers,
-      lable: data.lable,
-    };
+  //   @TryCatchWrapperAsync()
+  //   @Mutation()
+  //   async newDefinedIndicator(
+  //     @Args('data') data: NewDefinedIndicator,
+  //   ): Promise<DefinedIndicator> {
+  //     const consumers = await this.optService.getConsumers(data);
 
-    return this.commandBus.execute(
-      new CreateEntityWithEventCommand(
-        DefinedIndicator,
-        newData,
-        DefinedIndicatorEvent,
-      ),
-    );
-  }
+  //     const newData: DefinedIndicatorRelations = {
+  //       ...consumers,
+  //       lable: data.lable,
+  //     };
 
-  @TryCatchWrapperAsync()
-  @Mutation()
-  async updateDefinedIndicator(
-    @Args('data') data: PatchDefinedIndicator,
-  ): Promise<DefinedIndicator> {
-    const consumers = await this.optService.getConsumers(data);
+  //     return this.commandBus.execute(
+  //       new CreateEntityWithEventCommand(
+  //         DefinedIndicator,
+  //         newData,
+  //         DefinedIndicatorEvent,
+  //       ),
+  //     );
+  //   }
 
-    const updateData: DefinedIndicatorRelations = {
-      ...consumers,
-      lable: data.lable,
-    };
+  //   @TryCatchWrapperAsync()
+  //   @Mutation()
+  //   async updateDefinedIndicator(
+  //     @Args('data') data: PatchDefinedIndicator,
+  //   ): Promise<DefinedIndicator> {
+  //     const consumers = await this.optService.getConsumers(data);
 
-    return this.commandBus.execute(
-      new UpdateEntityWithEventCommand(
-        DefinedIndicator,
-        updateData,
-        data.id,
-        DefinedIndicatorEvent,
-      ),
-    );
-  }
+  //     const updateData: DefinedIndicatorRelations = {
+  //       ...consumers,
+  //       lable: data.lable,
+  //     };
+
+  //     return this.commandBus.execute(
+  //       new UpdateEntityWithEventCommand(
+  //         DefinedIndicator,
+  //         updateData,
+  //         data.id,
+  //         DefinedIndicatorEvent,
+  //       ),
+  //     );
+  //   }
 }
