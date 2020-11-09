@@ -3,6 +3,10 @@ import { Observable } from 'rxjs';
 import { GrpcMethod, GrpcStreamMethod } from '@nestjs/microservices';
 
 
+export interface Test {
+  message: string;
+}
+
 export interface Path {
   path: string;
 }
@@ -13,19 +17,23 @@ export interface File {
 
 export interface PythonFilesServiceClient {
 
-  downloadDoc(request: Path): Observable<File>;
+  downloadFile(request: Path): Observable<File>;
+
+  updloadFile(request: Test): Observable<Test>;
 
 }
 
 export interface PythonFilesServiceController {
 
-  downloadDoc(request: Path): Observable<File>;
+  downloadFile(request: Path): Observable<File>;
+
+  updloadFile(request: Test): Promise<Test> | Observable<Test> | Test;
 
 }
 
 export function PythonFilesServiceControllerMethods() {
   return function (constructor: Function) {
-    const grpcMethods: string[] = ['downloadDoc'];
+    const grpcMethods: string[] = ['downloadFile', 'updloadFile'];
     for (const method of grpcMethods) {
       const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
       GrpcMethod('PythonFilesService', method)(constructor.prototype[method], method, descriptor);

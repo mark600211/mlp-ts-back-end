@@ -1,6 +1,5 @@
 import { ConfigModule } from '@app/config';
 import { Module } from '@nestjs/common';
-import { AppService } from './app.service';
 import { StorageModule } from './storage/storage.module';
 import { SynologyModule } from './synology/synology.module';
 import path from 'path';
@@ -14,10 +13,9 @@ import { DbModule } from '@app/db';
     StorageModule,
     DbModule.forRoot(),
     ConfigModule.register({ folder: path.resolve(__dirname, './config') }),
-    ProtoModule.register([Modules.SYN, Modules.PYTHON], Modules.FILES),
+    ProtoModule.register([Modules.PYTHON], Modules.FILES),
     SynologyModule,
     DocModule,
   ],
-  providers: [AppService],
 })
 export class AppModule {}

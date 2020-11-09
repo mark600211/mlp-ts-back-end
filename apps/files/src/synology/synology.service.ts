@@ -1,9 +1,4 @@
 import { Modules, TryCatchWrapperAsync } from '@app/models';
-import {
-  SynServiceClient,
-  SYN_SERVICE_NAME,
-  Request,
-} from '@app/proto/proto/build/syn';
 import { Inject, Injectable, Logger, OnModuleInit } from '@nestjs/common';
 import { ClientGrpc } from '@nestjs/microservices';
 import { FileData } from '../models/file-data.model';
@@ -12,22 +7,26 @@ import path from 'path';
 import { ReplaySubject } from 'rxjs';
 import { filter, repeat, tap } from 'rxjs/operators';
 import { DocService } from '../doc/doc.service';
+import {
+  PythonFilesServiceClient,
+  PYTHON_FILES_SERVICE_NAME,
+} from '@app/proto/proto/build/python_files';
 
 @Injectable()
 export class SynologyService implements OnModuleInit {
-  synService: SynServiceClient;
+  pythonFileService: PythonFilesServiceClient;
 
   logger = new Logger(this.constructor.name);
 
   constructor(
-    @Inject(Modules.SYN) private synClient: ClientGrpc,
+    @Inject(Modules.PYTHON) private pythonFileClient: ClientGrpc,
     private readonly docService: DocService,
   ) {}
 
   onModuleInit() {
-    this.synService = this.synClient.getService<SynServiceClient>(
-      SYN_SERVICE_NAME,
-    );
+    this.pythonFileService = this.pythonFileClient.getService<
+      PythonFilesServiceClient
+    >(PYTHON_FILES_SERVICE_NAME);
   }
 
   @TryCatchWrapperAsync()
@@ -38,7 +37,10 @@ export class SynologyService implements OnModuleInit {
 
     const fileStream = fs.createReadStream(filePath);
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    this.pythonFileService
+      .updloadFile({ message: file.uploadMetadata.filename })
+      .subscribe(mes => this.logger.log(mes));
+
     let i = 0;
 
     fileStream.on('data', chunk => {

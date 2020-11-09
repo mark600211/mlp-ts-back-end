@@ -22,9 +22,17 @@ export class DocController implements FilesServiceController {
       if (val.name) {
         subject.next({ name: val.name, chunk: undefined });
       }
-      val.observable.subscribe(({ chunk }) => {
-        subject.next({ chunk, name: undefined });
-      });
+      val.observable.subscribe(
+        ({ chunk }) => {
+          subject.next({ chunk, name: undefined });
+        },
+        err => {
+          subject.error(err);
+        },
+        () => {
+          subject.complete();
+        },
+      );
     });
 
     return subject.asObservable();
