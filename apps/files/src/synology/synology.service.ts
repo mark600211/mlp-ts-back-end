@@ -5,11 +5,11 @@ import { FileData } from '../models/file-data.model';
 import fs from 'fs';
 import path from 'path';
 import { ReplaySubject } from 'rxjs';
-import { filter, repeat, tap } from 'rxjs/operators';
 import { DocService } from '../doc/doc.service';
 import {
   PythonFilesServiceClient,
   PYTHON_FILES_SERVICE_NAME,
+  Request,
 } from '@app/proto/proto/build/python_files';
 
 @Injectable()
@@ -37,45 +37,36 @@ export class SynologyService implements OnModuleInit {
 
     const fileStream = fs.createReadStream(filePath);
 
-    this.pythonFileService
-      .updloadFile({ message: file.uploadMetadata.filename })
-      .subscribe(mes => this.logger.log(mes));
-
-    let i = 0;
+    const i = 0;
 
     fileStream.on('data', chunk => {
-      if (i === 0) {
-        req.next({ metadata: file, data: undefined });
-      } else {
-        req.next({ metadata: undefined, data: { chunk: chunk as Uint8Array } });
-      }
-      i++;
+      //   if (i === 0) {
+      //     req.next({ metadata: file, chunk: undefined });
+      //     i++;s
+      //   } else {
+      req.next({ metadata: undefined, chunk: chunk as Uint8Array });
+      //   }
     });
     fileStream.on('error', err => {
       req.error(err);
     });
     fileStream.on('end', () => {
+      req.next({ metadata: file, chunk: undefined });
       req.complete();
     });
 
-    let count = 0;
-
-    this.synService
-      .uploadFile(req.asObservable())
-      .pipe(
-        filter(value => value.error && count <= 5),
-        tap(() => count++),
-        repeat(1),
-      )
-      .subscribe(res => {
-        if (res.error) {
-          throw new Error(res.error);
-        } else {
-          fs.unlink(filePath, err => {
+    this.pythonFileService.uploadFile(req.asObservable()).subscribe(res => {
+      if (res.error) {
+        this.logger.log(res);
+      } else {
+        fs.unlink(filePath, err => {
+          if (err) {
             throw new Error(err.message);
-          });
-          this.docService.fileUploaded(res);
-        }
-      });
+          }
+        });
+        this.logger.log(res);
+        //   this.docService.fileUploaded(res);
+      }
+    });
   }
 }

@@ -4,11 +4,7 @@ package python_files_service;
 
 service PythonFilesService {
     rpc DownloadFile (Path) returns (stream File);
-    rpc UpdloadFile (Test) returns (Test);
-}
-
-message Test {
-    string message = 1;
+    rpc UploadFile (stream Request) returns (Response);
 }
 
 message Path {
@@ -17,4 +13,36 @@ message Path {
 
 message File {
     bytes chunk = 1;
+}
+
+message Response {
+    oneof response {
+        ResData resData = 1;
+        string error = 2;
+    }
+}
+
+message Request {
+    oneof request {
+        bytes chunk = 1;
+        Metadata metadata = 2;
+    }
+}
+
+message Metadata {
+    string id = 1;
+    int64 upload_length = 2;
+    FileMetadata upload_metadata = 3;
+}
+
+message FileMetadata {
+    string actId = 1;
+    string filetype = 2;
+    string filename = 3;
+    string extension = 4;
+}
+
+message ResData {
+    string docId = 1;
+    string synUrl = 2; 
 }

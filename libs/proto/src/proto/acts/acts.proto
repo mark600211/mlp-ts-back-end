@@ -6,6 +6,15 @@ package acts_service;
 
 service ActsService {
     rpc FindAllActs (Id) returns (stream Act);
+    rpc GetFilePath (actId) returns (Path);
+}
+
+message actId {
+    string id = 1;
+}
+
+message Path {
+    string path = 1;
 }
 
 message Id {

@@ -4,16 +4,11 @@ import * as path from 'path';
 import { ConfigService } from '@app/config';
 import { Logger } from '@nestjs/common';
 import { MicroserviceOptions } from '@nestjs/microservices';
-// import { grpcServiceOptions } from './options/grpc-service.options';
-import { KafkaClientOptions } from './options/kafka.client.options';
-import { ProtoService } from '@app/proto';
-import { Modules } from '@app/models';
+import { ServiceModuleService } from '@app/proto';
 
 const configService = new ConfigService({
   folder: path.resolve(__dirname, './config'),
 });
-
-const protoService = new ProtoService({ module: Modules.ACTS, configService });
 
 async function bootstrap() {
   const logger = new Logger('bootstrap');
@@ -22,11 +17,9 @@ async function bootstrap() {
 
   app.enableCors();
 
-  const grpcServiceOptions = protoService.getServiceOptions();
+  const grpcService = app.get(ServiceModuleService);
 
-  logger.verbose(grpcServiceOptions);
-
-  app.connectMicroservice<MicroserviceOptions>(grpcServiceOptions);
+  app.connectMicroservice<MicroserviceOptions>(grpcService.getServiceOptions());
 
   //   const kafkaService = app.get(KafkaClientOptions);
 

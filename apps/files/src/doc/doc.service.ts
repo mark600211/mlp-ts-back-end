@@ -14,7 +14,7 @@ import {
   PythonFilesServiceClient,
   PYTHON_FILES_SERVICE_NAME,
   File as F,
-} from '@app/proto/proto/build/python-files';
+} from '@app/proto/proto/build/python_files';
 import { ClientGrpc } from '@nestjs/microservices';
 import { Observable } from 'rxjs';
 
@@ -41,7 +41,7 @@ export class DocService implements OnModuleInit {
 
     const path = `${doc.synUrl}/${doc.name}`;
 
-    const observable = this.pythonFilesService.downloadDoc({ path });
+    const observable = this.pythonFilesService.downloadFile({ path });
 
     const name = doc.name;
 

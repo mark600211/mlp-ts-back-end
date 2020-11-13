@@ -7,11 +7,14 @@ import { ConfigModule } from '@app/config';
 import { ConsumersModule } from './modules/consumers/consumers.module';
 import { ApplicationModule } from './modules/application/application.module';
 import { DbModule } from '@app/db';
+import { ProtoModule } from '@app/proto';
+import { Modules } from '@app/models';
 
 @Module({
   imports: [
     DbModule.forRoot(),
     ConfigModule.register({ folder: path.resolve(__dirname, './config') }),
+    ProtoModule.register([Modules.ACTS], Modules.ACTS),
     ActsModule,
     ConsumersModule,
     ApplicationModule,

@@ -8,13 +8,18 @@ import { ServiceModuleService } from './service-module.service';
 @Module({})
 export class ProtoModule {
   static register(names: Modules[], serviceName?: Modules): DynamicModule {
-    const clientModules = createClientModules(names);
+    const imports =
+      names.length >= 1
+        ? [ClientsModule.register(createClientModules(names))]
+        : [];
+
+    console.log(serviceName);
 
     const providers = serviceName
       ? [
           {
             provide: 'SERVICE_NAME',
-            useValue: serviceName ? serviceName : null,
+            useValue: serviceName,
           },
           {
             provide: serviceName,
@@ -29,12 +34,12 @@ export class ProtoModule {
       : [];
 
     const exports = serviceName
-      ? [ClientsModule, ServiceModuleService]
-      : [ClientsModule];
+      ? [names.length >= 1 ? ClientsModule : null, ServiceModuleService]
+      : [names.length >= 1 ? ClientsModule : null];
 
     return {
       module: ProtoModule,
-      imports: [ClientsModule.register(clientModules)],
+      imports,
       providers,
       exports,
     };
