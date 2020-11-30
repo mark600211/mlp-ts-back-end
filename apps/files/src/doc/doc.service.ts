@@ -1,22 +1,31 @@
 import { EntitiesService } from '@app/commands';
 import {
   ActIdDoc,
+  CGCTemplateModel,
   Doc,
   DocBase,
   Modules,
   Title,
   TryCatchWrapperAsync,
 } from '@app/models';
-import { Inject, Injectable, OnModuleInit } from '@nestjs/common';
+import {
+  HttpException,
+  HttpStatus,
+  Inject,
+  Injectable,
+  OnModuleInit,
+} from '@nestjs/common';
 import { Response } from '@app/proto/proto/build/syn';
 import { FileData } from '../models/file-data.model';
 import {
   PythonFilesServiceClient,
   PYTHON_FILES_SERVICE_NAME,
+  TemplRes,
   File as F,
 } from '@app/proto/proto/build/python_files';
 import { ClientGrpc } from '@nestjs/microservices';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Injectable()
 export class DocService implements OnModuleInit {
@@ -83,11 +92,54 @@ export class DocService implements OnModuleInit {
       });
     }
     const data: DocBase = {
-      title: file.uploadMetadata.type,
+      title: Title[`${file.uploadMetadata.type}`],
       downloadable: true,
       name: file.uploadMetadata.filename,
       actId: actId,
     };
     await this.entities.createEntity(Doc, data);
+  }
+
+  @TryCatchWrapperAsync()
+  async createDocFromTemplate(
+    actId: string,
+    rules: { path: string; cgc: CGCTemplateModel },
+  ): Promise<Doc> {
+    let act = await this.entities.findOneWhere(ActIdDoc, { id: actId });
+
+    if (!act) {
+      act = await this.entities.createEntity(ActIdDoc, { id: actId });
+    }
+
+    const res = await this.pythonFilesService
+      .createDocFromTemplate({ actId, rules })
+      .pipe(
+        map(res => {
+          if (!res.error) {
+            const data: DocBase = {
+              title: Title[`${res.resTmplData.title}`],
+              downloadable: true,
+              name: res.resTmplData.name,
+              actId: act,
+              synUrl: res.resTmplData.synUrl,
+            };
+            const doc = this.entities.createEntity(Doc, data);
+
+            return doc;
+          } else return res;
+        }),
+      )
+      .toPromise();
+
+    if ((res as TemplRes).error)
+      throw new HttpException(
+        {
+          status: HttpStatus.NO_CONTENT,
+          error: 'PYTHON_MODULE RESPONESE AS ERRRO',
+        },
+        HttpStatus.NO_CONTENT,
+      );
+
+    return res as Doc;
   }
 }

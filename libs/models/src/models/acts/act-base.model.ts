@@ -15,7 +15,7 @@ import { CustomerAct, LabAct, GeneralCustomerAct } from '../consumers';
 import {
   AdditionAct,
   ClimaticEnvironmentalAct,
-  DefinedIndicatorAct,
+  DefinedIndicatorsAct,
   EnvironmentalEngineerAct,
   GoalAct,
   InformationAboutSelectionAct,
@@ -131,6 +131,7 @@ export class ActBase {
   sample?: SampleAct[];
   @Field(type => [PreparationAct])
   @ManyToMany(() => PreparationAct, { cascade: true, eager: true })
+  @JoinTable()
   preparation?: PreparationAct[];
   @Field()
   @ManyToOne(
@@ -139,9 +140,10 @@ export class ActBase {
     { cascade: true, eager: true },
   )
   goal?: GoalAct;
-  //   @Field(type => [DefinedIndicatorAct])
-  //   @ManyToMany(() => DefinedIndicatorAct, { cascade: true, eager: true })
-  //   definedIndicators?: DefinedIndicatorAct[];
+  @Field(type => [DefinedIndicatorsAct])
+  @ManyToMany(() => DefinedIndicatorsAct, { cascade: true, eager: true })
+  @JoinTable()
+  definedIndicators?: DefinedIndicatorsAct[];
   @Field()
   @ManyToOne(
     type => AdditionAct,

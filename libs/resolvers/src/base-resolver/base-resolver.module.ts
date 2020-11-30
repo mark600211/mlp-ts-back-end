@@ -2,7 +2,6 @@ import { EntitiesService } from '@app/commands';
 import { DynamicModule, Module, Type } from '@nestjs/common';
 import { ObjectType } from 'typeorm';
 import { AbstractDataService } from './abstract-data.service';
-import { BaseResolver } from './base-resolver.resolver';
 import {
   createDataProviders,
   createInjectServices,

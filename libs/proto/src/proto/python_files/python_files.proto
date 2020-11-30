@@ -5,6 +5,56 @@ package python_files_service;
 service PythonFilesService {
     rpc DownloadFile (Path) returns (stream File);
     rpc UploadFile (stream Request) returns (Response);
+    rpc CreateDocFromTemplate (TemplReq) returns (stream TemplRes);
+}
+
+message TemplRes {
+    oneof response {
+        ResTmplData resTmplData = 1;
+        string error = 2;
+    }
+}
+
+enum TitleType {
+    UNKNOWN_TITLE_TYPE = 0;
+    ACT = 1;
+    ACT_PDF = 2;
+    PROTOCOL = 3;
+    FINAL_PROTOCOL = 4;
+}
+
+message ResTmplData {
+    string docId = 1;
+    string synUrl = 2;
+    TitleType title = 3;
+    string name = 4;
+}
+
+message TemplReq {
+    string actId = 1;
+    Rules rules = 2;
+}
+
+message Rules {
+    string path = 1;
+    CGC cgc = 2;
+}
+
+enum PrintType {
+    UNKNOWN_PRINT_TYPE = 0;
+    SHORT_CUSTOMER = 1;
+    LONG_CUSTOMER = 2;
+    SHORT_GENERAL_CUSTOMER = 3;
+    LONG_GENERAL_CUSTOMER = 4;
+    EMPTY = 5;
+}
+
+message CGC {
+    string customerId = 1;
+    string generalCustomerId = 2;
+    PrintType printedCustomer = 3;
+    PrintType printedGeneralCustomer = 4;
+    bool isDefault = 5;
 }
 
 message Path {

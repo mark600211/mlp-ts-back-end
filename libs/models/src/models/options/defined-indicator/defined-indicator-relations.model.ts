@@ -1,6 +1,6 @@
 import { ObjectType } from '@nestjs/graphql';
 import { Entity, ManyToOne } from 'typeorm';
-import { DefinedIndicatorBase, LabId } from '.';
+import { DefinedIndicatorsBase, LabId } from '.';
 import { TypeOfSample } from '..';
 import { Option } from '../base-options.model';
 

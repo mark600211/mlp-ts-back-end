@@ -3,6 +3,7 @@ import { CONFIG_OPTIONS } from './constants';
 import { EnvConfig, ConfigModuleOptions } from './interfaces';
 import * as dotenv from 'dotenv';
 import * as fs from 'fs';
+import path from 'path'
 
 @Injectable()
 export class ConfigService {
@@ -13,7 +14,9 @@ export class ConfigService {
   constructor(@Inject(CONFIG_OPTIONS) options: ConfigModuleOptions) {
     const filePath = `${process.env.NODE_ENV || 'development'}.env`;
 
-    const envFile = `${options.folder}/${filePath}`;
+    const envFile = path.join(options.folder, filePath)
+
+    // const envFile = `${options.folder}/${filePath}`;
 
     this.envConfig = dotenv.parse(fs.readFileSync(envFile));
   }

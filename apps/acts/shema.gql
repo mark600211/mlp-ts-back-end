@@ -8,6 +8,7 @@ type Act {
   climaticEnvironmental: ClimaticEnvironmentalAct!
   customer: CustomerAct!
   datetime: DateAndTime!
+  definedIndicators: [DefinedIndicatorsAct!]!
   environmentalEngineer: EnvironmentalEngineerAct!
   generalCustomer: GeneralCustomerAct!
   goal: GoalAct!
@@ -33,7 +34,7 @@ type Act {
 
 type AdditionAct {
   id: ID!
-  lable: String!
+  label: String!
 }
 
 input AddresInput {
@@ -70,7 +71,7 @@ input ApplicationInput {
 
 type ClimaticEnvironmentalAct {
   id: ID!
-  lable: String!
+  label: String!
 }
 
 type CustomerAct {
@@ -97,9 +98,14 @@ input DateTimeInput {
   time: String!
 }
 
+type DefinedIndicatorsAct {
+  id: ID!
+  label: String!
+}
+
 type EnvironmentalEngineerAct {
   id: ID!
-  lable: String!
+  label: String!
 }
 
 type GeneralCustomerAct {
@@ -113,12 +119,12 @@ type GeneralCustomerAct {
 
 type GoalAct {
   id: ID!
-  lable: String!
+  label: String!
 }
 
 type InformationAboutSelectionAct {
   id: ID!
-  lable: String!
+  label: String!
 }
 
 type LabAct {
@@ -132,7 +138,7 @@ type LabAct {
 
 type MethodAct {
   id: ID!
-  lable: String!
+  label: String!
 }
 
 type Mutation {
@@ -176,17 +182,17 @@ input NewActDto {
 
 type NormativeDocumentAct {
   id: ID!
-  lable: String!
+  label: String!
 }
 
 type ObjectNameAct {
   id: ID!
-  lable: String!
+  label: String!
 }
 
 type PassedSampleAct {
   id: ID!
-  lable: String!
+  label: String!
 }
 
 input PatchActDto {
@@ -224,17 +230,17 @@ input PatchAppDto {
 
 type PlaceAct {
   id: ID!
-  lable: String!
+  label: String!
 }
 
 type PlanningAct {
   id: ID!
-  lable: String!
+  label: String!
 }
 
 type PreparationAct {
   id: ID!
-  lable: String!
+  label: String!
 }
 
 type Query {
@@ -254,17 +260,17 @@ type Query {
 
 type RepresentativeAct {
   id: ID!
-  lable: String!
+  label: String!
 }
 
 type SampleAct {
   id: ID!
-  lable: String!
+  label: String!
 }
 
 type SampleTypeAct {
   id: ID!
-  lable: String!
+  label: String!
 }
 
 type Test {
@@ -274,10 +280,10 @@ type Test {
 
 type ToolTypeAct {
   id: ID!
-  lable: String!
+  label: String!
 }
 
 type TypeOfSampleAct {
   id: ID!
-  lable: String!
+  label: String!
 }

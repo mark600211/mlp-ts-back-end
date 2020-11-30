@@ -18,7 +18,7 @@ registerEnumType(Title, {
 export class DocBase {
   @Field()
   @Column({ type: 'enum', enum: Title, nullable: true })
-  title?: string;
+  title?: Title;
   @Field()
   @Column({ nullable: true })
   synUrl?: string;

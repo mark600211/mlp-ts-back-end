@@ -1,7 +1,7 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql';
 import { Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { DefinedIndicatorEvent } from './defined-indicator-event.model';
-import { DefinedIndicatorRelations } from './defined-indicator-relations';
+import { DefinedIndicatorRelations } from './defined-indicator-relations.model';
 
 @Entity()
 @ObjectType()

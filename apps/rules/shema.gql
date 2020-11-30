@@ -4,7 +4,7 @@
 
 type AdditionAct {
   id: ID!
-  lable: String!
+  label: String!
 }
 
 input AddresInput {
@@ -33,9 +33,25 @@ type Application {
   place: String!
 }
 
+input CGCTemplateInput {
+  customerId: ID!
+  generalCustomerId: ID!
+  isDefault: Boolean!
+  printedCustomer: printType
+  printedGeneralCustomer: printType
+}
+
+type CGCTemplateModel {
+  customerId: ID!
+  generalCustomerId: ID!
+  isDefault: Boolean!
+  printedCustomer: printType
+  printedGeneralCustomer: printType
+}
+
 type ClimaticEnvironmentalAct {
   id: ID!
-  lable: String!
+  label: String!
 }
 
 type CustomerAct {
@@ -62,14 +78,24 @@ input DateTimeInput {
   time: String!
 }
 
+type DefinedIndicatorsAct {
+  id: ID!
+  label: String!
+}
+
 type EnvironmentalEngineerAct {
   id: ID!
-  lable: String!
+  label: String!
+}
+
+input FindCGCTemplate {
+  customerId: String!
+  generalCustomerId: String!
 }
 
 input FindLabTypeOfSampleTemplate {
-  labId: String!
-  typeOfSampleId: String!
+  customerId: String!
+  generalCustomerId: String!
 }
 
 type GeneralCustomerAct {
@@ -83,12 +109,12 @@ type GeneralCustomerAct {
 
 type GoalAct {
   id: ID!
-  lable: String!
+  label: String!
 }
 
 type InformationAboutSelectionAct {
   id: ID!
-  lable: String!
+  label: String!
 }
 
 type LabAct {
@@ -108,13 +134,23 @@ type LabTypeOfSampleTemplateModel {
 
 type MethodAct {
   id: ID!
-  lable: String!
+  label: String!
 }
 
 type Mutation {
+  createCGCTemplateModel(data: NewCGCTemplate!): CGCTemplateModel!
   createLabTypeOfSampleTemplateModel(data: NewLabTypeOfSampleTemplate!): LabTypeOfSampleTemplateModel!
+  updateCGCTemplateModel(data: String!, id: String!): CGCTemplateModel!
   updateLabTypeOfSampleTemplateModel(data: String!, id: String!): LabTypeOfSampleTemplateModel!
+  updateWhereCGCTemplateModel(data: UpdateCGCTemplate!, where: FindCGCTemplate!): CGCTemplateModel!
   updateWhereLabTypeOfSampleTemplateModel(data: UpdateLabTypeOfSampleTemplate!, where: FindLabTypeOfSampleTemplate!): LabTypeOfSampleTemplateModel!
+}
+
+input NewCGCTemplate {
+  customerId: String!
+  generalCustoemrId: String!
+  printedCustomer: printType!
+  printedGeneralCustomer: printType!
 }
 
 input NewLabTypeOfSampleTemplate {
@@ -125,64 +161,82 @@ input NewLabTypeOfSampleTemplate {
 
 type NormativeDocumentAct {
   id: ID!
-  lable: String!
+  label: String!
 }
 
 type ObjectNameAct {
   id: ID!
-  lable: String!
+  label: String!
 }
 
 type PassedSampleAct {
   id: ID!
-  lable: String!
+  label: String!
 }
 
 type PlaceAct {
   id: ID!
-  lable: String!
+  label: String!
 }
 
 type PlanningAct {
   id: ID!
-  lable: String!
+  label: String!
 }
 
 type PreparationAct {
   id: ID!
-  lable: String!
+  label: String!
+}
+
+enum printType {
+  EMPTY
+  LONG_CUSTOMER
+  LONG_GENERAL_CUSTOMER
+  SHORT_CUSTOMER
+  SHORT_GENERAL_CUSTOMER
 }
 
 type Query {
+  findAllCGCTemplateModel: [CGCTemplateModel!]!
   findAllLabTypeOfSampleTemplateModel: [LabTypeOfSampleTemplateModel!]!
+  findByIdCGCTemplateModel(id: String!): CGCTemplateModel!
   findByIdLabTypeOfSampleTemplateModel(id: String!): LabTypeOfSampleTemplateModel!
+  findManyWhereCGCTemplateModel(where: String!): [CGCTemplateModel!]!
   findManyWhereLabTypeOfSampleTemplateModel(where: String!): [LabTypeOfSampleTemplateModel!]!
+  findOneWhereCGCTemplateModel(where: FindCGCTemplate!): CGCTemplateModel!
   findOneWhereLabTypeOfSampleTemplateModel(where: FindLabTypeOfSampleTemplate!): LabTypeOfSampleTemplateModel!
+  findOrCreateCGCRule(findCGCData: FindCGCTemplate!): CGCTemplateModel!
 }
 
 type RepresentativeAct {
   id: ID!
-  lable: String!
+  label: String!
 }
 
 type SampleAct {
   id: ID!
-  lable: String!
+  label: String!
 }
 
 type SampleTypeAct {
   id: ID!
-  lable: String!
+  label: String!
 }
 
 type ToolTypeAct {
   id: ID!
-  lable: String!
+  label: String!
 }
 
 type TypeOfSampleAct {
   id: ID!
-  lable: String!
+  label: String!
+}
+
+input UpdateCGCTemplate {
+  printedCustomer: printType!
+  printedGeneralCustomer: printType!
 }
 
 input UpdateLabTypeOfSampleTemplate {

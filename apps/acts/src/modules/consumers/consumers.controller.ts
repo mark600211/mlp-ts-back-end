@@ -7,8 +7,8 @@ import {
   CustomerAct,
   CustomerBase,
   DefinedIndicator,
-  DefinedIndicatorAct,
-  DefinedIndicatorBase,
+  DefinedIndicatorsAct,
+  DefinedIndicatorsBase,
   EnvironmentalEngineerAct,
   EnvironmentalEngineerBase,
   GeneralCustomerAct,
@@ -389,13 +389,13 @@ export class ConsumersController {
 
   @createConsumerEventPattern(CONSUMERS.DEFINED_INDICATORS)
   handleNewDefinedIndicator(
-    @Payload() message: MessageConsumerController<DefinedIndicatorBase>,
+    @Payload() message: MessageConsumerController<DefinedIndicatorsBase>,
   ): void {
     const {
       value: { payload },
     } = message;
 
-    this.entities.createEntity(DefinedIndicatorAct, payload);
+    this.entities.createEntity(DefinedIndicatorsAct, payload);
   }
 
   @updateConsumerEventPattern(CONSUMERS.DEFINED_INDICATORS)
@@ -406,7 +406,7 @@ export class ConsumersController {
       value: { payload },
     } = message;
 
-    this.entities.updateEntityById(DefinedIndicatorAct, payload, payload.id);
+    this.entities.updateEntityById(DefinedIndicatorsAct, payload, payload.id);
   }
 
   @createConsumerEventPattern(CONSUMERS.ADDITIONS)

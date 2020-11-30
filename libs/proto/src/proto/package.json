@@ -2,7 +2,9 @@
     "scripts": {
         "compile:syn": "./node_modules/protoc/protoc/bin/protoc --plugin=./node_modules/.bin/protoc-gen-ts_proto --ts_proto_out=./build ./syn/*.proto --ts_proto_opt=nestJs=true",
         "compile:files": "./node_modules/protoc/protoc/bin/protoc --plugin=./node_modules/.bin/protoc-gen-ts_proto --ts_proto_out=./build ./files/*.proto --ts_proto_opt=nestJs=true",
-        "compile:py": "./node_modules/protoc/protoc/bin/protoc --plugin=./node_modules/.bin/protoc-gen-ts_proto --ts_proto_out=./build ./python_files/*.proto --ts_proto_opt=nestJs=true"
+        "compile:py": "./node_modules/protoc/protoc/bin/protoc --plugin=./node_modules/.bin/protoc-gen-ts_proto.cmd --ts_proto_out=./build ./python_files/*.proto --ts_proto_opt=nestJs=true",
+        "compile:acts": "./node_modules/protoc/protoc/bin/protoc --plugin=./node_modules/.bin/protoc-gen-ts_proto.cmd --ts_proto_out=./build ./acts/*.proto --ts_proto_opt=nestJs=true",
+        "compile:rules": "./node_modules/protoc/protoc/bin/protoc --plugin=./node_modules/.bin/protoc-gen-ts_proto.cmd --ts_proto_out=./build ./rules/*.proto --ts_proto_opt=nestJs=true"
     },
     "dependencies": {
         "ts-proto": "^1.38.0",

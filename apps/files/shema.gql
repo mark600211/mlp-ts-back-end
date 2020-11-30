@@ -4,7 +4,7 @@
 
 type AdditionAct {
   id: ID!
-  lable: String!
+  label: String!
 }
 
 input AddresInput {
@@ -33,9 +33,17 @@ type Application {
   place: String!
 }
 
+input CGCTemplateInput {
+  customerId: ID!
+  generalCustomerId: ID!
+  isDefault: Boolean!
+  printedCustomer: printType
+  printedGeneralCustomer: printType
+}
+
 type ClimaticEnvironmentalAct {
   id: ID!
-  lable: String!
+  label: String!
 }
 
 type CustomerAct {
@@ -62,6 +70,11 @@ input DateTimeInput {
   time: String!
 }
 
+type DefinedIndicatorsAct {
+  id: ID!
+  label: String!
+}
+
 type Doc {
   createdAt: DateTime!
   downloadable: Boolean!
@@ -73,7 +86,7 @@ type Doc {
 
 type EnvironmentalEngineerAct {
   id: ID!
-  lable: String!
+  label: String!
 }
 
 type GeneralCustomerAct {
@@ -87,12 +100,12 @@ type GeneralCustomerAct {
 
 type GoalAct {
   id: ID!
-  lable: String!
+  label: String!
 }
 
 type InformationAboutSelectionAct {
   id: ID!
-  lable: String!
+  label: String!
 }
 
 type LabAct {
@@ -106,37 +119,49 @@ type LabAct {
 
 type MethodAct {
   id: ID!
-  lable: String!
+  label: String!
+}
+
+type Mutation {
+  createDocFromTemplate(actId: String!, rules: RulesDto!): Doc
 }
 
 type NormativeDocumentAct {
   id: ID!
-  lable: String!
+  label: String!
 }
 
 type ObjectNameAct {
   id: ID!
-  lable: String!
+  label: String!
 }
 
 type PassedSampleAct {
   id: ID!
-  lable: String!
+  label: String!
 }
 
 type PlaceAct {
   id: ID!
-  lable: String!
+  label: String!
 }
 
 type PlanningAct {
   id: ID!
-  lable: String!
+  label: String!
 }
 
 type PreparationAct {
   id: ID!
-  lable: String!
+  label: String!
+}
+
+enum printType {
+  EMPTY
+  LONG_CUSTOMER
+  LONG_GENERAL_CUSTOMER
+  SHORT_CUSTOMER
+  SHORT_GENERAL_CUSTOMER
 }
 
 type Query {
@@ -145,17 +170,22 @@ type Query {
 
 type RepresentativeAct {
   id: ID!
-  lable: String!
+  label: String!
+}
+
+input RulesDto {
+  cgc: CGCTemplateInput!
+  path: String!
 }
 
 type SampleAct {
   id: ID!
-  lable: String!
+  label: String!
 }
 
 type SampleTypeAct {
   id: ID!
-  lable: String!
+  label: String!
 }
 
 enum Title {
@@ -167,10 +197,10 @@ enum Title {
 
 type ToolTypeAct {
   id: ID!
-  lable: String!
+  label: String!
 }
 
 type TypeOfSampleAct {
   id: ID!
-  lable: String!
+  label: String!
 }

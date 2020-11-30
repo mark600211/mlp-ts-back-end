@@ -4,7 +4,7 @@
 
 type AdditionAct {
   id: ID!
-  lable: String!
+  label: String!
 }
 
 input AddresInput {
@@ -35,7 +35,7 @@ type Application {
 
 type ClimaticEnvironmentalAct {
   id: ID!
-  lable: String!
+  label: String!
 }
 
 input CreateConsumerDto {
@@ -79,9 +79,14 @@ input DateTimeInput {
   time: String!
 }
 
+type DefinedIndicatorsAct {
+  id: ID!
+  label: String!
+}
+
 type EnvironmentalEngineerAct {
   id: ID!
-  lable: String!
+  label: String!
 }
 
 type GeneralCustomer {
@@ -104,12 +109,12 @@ type GeneralCustomerAct {
 
 type GoalAct {
   id: ID!
-  lable: String!
+  label: String!
 }
 
 type InformationAboutSelectionAct {
   id: ID!
-  lable: String!
+  label: String!
 }
 
 type Lab {
@@ -132,7 +137,7 @@ type LabAct {
 
 type MethodAct {
   id: ID!
-  lable: String!
+  label: String!
 }
 
 type Mutation {
@@ -149,17 +154,17 @@ type Mutation {
 
 type NormativeDocumentAct {
   id: ID!
-  lable: String!
+  label: String!
 }
 
 type ObjectNameAct {
   id: ID!
-  lable: String!
+  label: String!
 }
 
 type PassedSampleAct {
   id: ID!
-  lable: String!
+  label: String!
 }
 
 input PatchConsumerDto {
@@ -173,17 +178,17 @@ input PatchConsumerDto {
 
 type PlaceAct {
   id: ID!
-  lable: String!
+  label: String!
 }
 
 type PlanningAct {
   id: ID!
-  lable: String!
+  label: String!
 }
 
 type PreparationAct {
   id: ID!
-  lable: String!
+  label: String!
 }
 
 type Query {
@@ -203,25 +208,25 @@ type Query {
 
 type RepresentativeAct {
   id: ID!
-  lable: String!
+  label: String!
 }
 
 type SampleAct {
   id: ID!
-  lable: String!
+  label: String!
 }
 
 type SampleTypeAct {
   id: ID!
-  lable: String!
+  label: String!
 }
 
 type ToolTypeAct {
   id: ID!
-  lable: String!
+  label: String!
 }
 
 type TypeOfSampleAct {
   id: ID!
-  lable: String!
+  label: String!
 }

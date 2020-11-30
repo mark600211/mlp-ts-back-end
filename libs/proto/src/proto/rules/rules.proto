@@ -1,0 +1,34 @@
+syntax = "proto3";
+
+package rules_service;
+
+service RulesService {
+    rpc GetLabTOSRule (LabTOSReq) returns (Path);
+    rpc GetCGCRule (CGCReq) returns (CGCRes);
+}
+
+message LabTOSReq {
+    string labId = 1;
+    string typeOfSampleId = 2;
+}
+
+message Path {
+    string path = 1;
+}
+
+message CGCReq {
+    string customerId = 1;
+    string generalCustomerId = 2;
+}
+
+message CGCRes {
+    oneof res {
+        bool is_default = 1;
+        Print print = 2;
+    }
+}
+
+message Print {
+    string printedCustomer = 1;
+    string printedGeneralCustomer = 2;
+}

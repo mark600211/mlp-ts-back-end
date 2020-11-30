@@ -16,6 +16,7 @@ import { DbModule } from '@app/db';
     ProtoModule.register([Modules.PYTHON], Modules.FILES),
     SynologyModule,
     DocModule,
+    // TemplaterModule,
   ],
 })
 export class AppModule {}

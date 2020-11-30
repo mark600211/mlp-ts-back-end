@@ -108,10 +108,7 @@
             "entryFile": "main",
             "sourceRoot": "apps/files/src",
             "compilerOptions": {
-                "tsConfigPath": "apps/files/tsconfig.app.json",
-                "assets": [
-                    "tmp/**/*"
-                ]
+                "tsConfigPath": "apps/files/tsconfig.app.json"
             }
         }
     }

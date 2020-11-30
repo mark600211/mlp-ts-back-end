@@ -40,12 +40,7 @@ export class SynologyService implements OnModuleInit {
     const i = 0;
 
     fileStream.on('data', chunk => {
-      //   if (i === 0) {
-      //     req.next({ metadata: file, chunk: undefined });
-      //     i++;s
-      //   } else {
       req.next({ metadata: undefined, chunk: chunk as Uint8Array });
-      //   }
     });
     fileStream.on('error', err => {
       req.error(err);

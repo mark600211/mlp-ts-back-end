@@ -84,16 +84,17 @@ export class DbService {
     return newEtity;
   }
 
-  async findEntityByIdWithException<T>(
+  async findEntityByIdWithException<T, R>(
     entity: ObjectType<T>,
     id: string,
+    relations?: Array<keyof T & string>
   ): Promise<T> {
     this.logger.verbose('find entity');
 
     try {
       const repository = this.getRepository<T>(entity);
 
-      const newEntity = repository.findOne(id);
+      const newEntity = repository.findOne(id, { relations });
 
       if (!newEntity) throw new EntityNotFound<T>();
 

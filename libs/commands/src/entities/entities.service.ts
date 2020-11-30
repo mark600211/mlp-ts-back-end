@@ -17,8 +17,9 @@ export class EntitiesService {
   findEntityByIdWithException<T>(
     entity: ObjectType<T>,
     id: string,
+    relations?: Array<keyof T & string>
   ): Promise<T> {
-    return this.service.findEntityByIdWithException(entity, id);
+    return this.service.findEntityByIdWithException(entity, id, relations);
   }
 
   @TryCatchWrapper()

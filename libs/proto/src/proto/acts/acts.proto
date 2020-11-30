@@ -5,7 +5,7 @@ import "google/protobuf/timestamp.proto";
 package acts_service;
 
 service ActsService {
-    rpc FindAllActs (Id) returns (stream Act);
+    rpc getActForTemplater (actId) returns (Act);
     rpc GetFilePath (actId) returns (Path);
 }
 
@@ -17,41 +17,32 @@ message Path {
     string path = 1;
 }
 
-message Id {
-    int32 id = 1;
-}
-
 message Act {
     string id = 1;
     string name = 2;
-    string customer = 3;
-    string generalCustomer = 4;
-    string lab = 5;
-    TypeOfSample typeOfSample = 6;
-    string objectName = 7;
-    string place = 8;
+    Consumer customer = 3;
+    Consumer generalCustomer = 4;
+    Consumer lab = 5;
+    Option typeOfSample = 6;
+    Option objectName = 7;
+    Option place = 8;
     DateTime datetime = 9;
-    string method = 10;
-    string toolType = 11;
-    string climaticEnvironmental = 12;
-    string planning = 13;
-    repeated string normativeDocument = 14;
-    string sampleType = 15;
-    repeated string sample = 16;
-    repeated string preparation = 17;
-    string goal = 18;
-    repeated string definedIndicators = 19;
-    string additions = 20;
-    string informationAboutSelection = 21;
-    string environmentalEngineer = 22;
-    string representative = 23;
-    string passedSample = 24;
-    Application application = 25;
-}
-
-message TypeOfSample {
-    string habitan = 1;
-    string types = 2;
+    Option method = 10;
+    Option toolType = 11;
+    Option climaticEnvironmental = 12;
+    Option planning = 13;
+    repeated Option normativeDocuments = 14;
+    Option sampleType = 15;
+    repeated Option sample = 16;
+    repeated Option preparation = 17;
+    Option goal = 18;
+    repeated Option definedIndicators = 19;
+    Option additions = 20;
+    Option informationAboutSelection = 21;
+    Option environmentalEngineer = 22;
+    Option representative = 23;
+    Option passedSample = 24;
+    repeated Application applications = 25;
 }
 
 message DateTime {
@@ -62,4 +53,28 @@ message DateTime {
 message Application {
     string place = 1;
     DateTime datetime = 2;
+}
+
+message Consumer {
+    string id = 1;
+    string fullname = 2;
+    string label = 3;
+    Address address = 4;
+    string tel = 5;
+    string email = 6;
+}
+
+message Address {
+    string zip = 1;
+    string country = 2;
+    string region = 3;
+    string city = 4;
+    string street = 5;
+    string building = 6;
+    string room = 7;
+}
+
+message Option {
+    string id = 1;
+    string label = 2;
 }

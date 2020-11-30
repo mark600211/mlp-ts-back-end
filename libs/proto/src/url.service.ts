@@ -1,20 +1,16 @@
 import { Modules } from '@app/models';
 
-function envCondition(): boolean {
+function getHost(): string {
   if (process.env.NODE_ENV === 'development') {
-    return false;
+    return '0.0.0.0';
   } else {
-    return true;
+    return '0.0.0.0';
   }
 }
 
 export function getUrl(name: string): string {
   switch (name) {
     case Modules.PYTHON:
-      if (envCondition()) {
-        return '0.0.0.0:50150';
-      } else {
-        return '0.0.0.0:50150';
-      }
+        return `${getHost()}:50150`;
   }
 }

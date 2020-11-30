@@ -4,12 +4,12 @@
 
 type Addition {
   id: ID!
-  lable: String!
+  label: String!
 }
 
 type AdditionAct {
   id: ID!
-  lable: String!
+  label: String!
 }
 
 input AddresInput {
@@ -40,12 +40,12 @@ type Application {
 
 type ClimaticEnvironmental {
   id: ID!
-  lable: String!
+  label: String!
 }
 
 type ClimaticEnvironmentalAct {
   id: ID!
-  lable: String!
+  label: String!
 }
 
 type CustomerAct {
@@ -74,17 +74,22 @@ input DateTimeInput {
 
 type DefinedIndicator {
   id: ID!
-  lable: String!
+  label: String!
+}
+
+type DefinedIndicatorsAct {
+  id: ID!
+  label: String!
 }
 
 type EnvironmentalEngineer {
   id: ID!
-  lable: String!
+  label: String!
 }
 
 type EnvironmentalEngineerAct {
   id: ID!
-  lable: String!
+  label: String!
 }
 
 type GeneralCustomerAct {
@@ -98,22 +103,22 @@ type GeneralCustomerAct {
 
 type Goal {
   id: ID!
-  lable: String!
+  label: String!
 }
 
 type GoalAct {
   id: ID!
-  lable: String!
+  label: String!
 }
 
 type InformationAboutSelection {
   id: ID!
-  lable: String!
+  label: String!
 }
 
 type InformationAboutSelectionAct {
   id: ID!
-  lable: String!
+  label: String!
 }
 
 type LabAct {
@@ -127,12 +132,12 @@ type LabAct {
 
 type Method {
   id: ID!
-  lable: String!
+  label: String!
 }
 
 type MethodAct {
   id: ID!
-  lable: String!
+  label: String!
 }
 
 type Mutation {
@@ -172,6 +177,24 @@ type Mutation {
   updateSampleType(data: PatchOption!, id: String!): SampleType!
   updateToolType(data: PatchOption!, id: String!): ToolType!
   updateTypeOfSample(data: PatchOption!, id: String!): TypeOfSample!
+  updateWhereAddition(data: String!, where: String!): Addition!
+  updateWhereClimaticEnvironmental(data: String!, where: String!): ClimaticEnvironmental!
+  updateWhereDefinedIndicator(data: String!, where: String!): DefinedIndicator!
+  updateWhereEnvironmentalEngineer(data: String!, where: String!): EnvironmentalEngineer!
+  updateWhereGoal(data: String!, where: String!): Goal!
+  updateWhereInformationAboutSelection(data: String!, where: String!): InformationAboutSelection!
+  updateWhereMethod(data: String!, where: String!): Method!
+  updateWhereNormativeDocument(data: String!, where: String!): NormativeDocument!
+  updateWhereObjectName(data: String!, where: String!): ObjectName!
+  updateWherePassedSample(data: String!, where: String!): PassedSample!
+  updateWherePlace(data: String!, where: String!): Place!
+  updateWherePlanning(data: String!, where: String!): Planning!
+  updateWherePreparation(data: String!, where: String!): Preparation!
+  updateWhereRepresentative(data: String!, where: String!): Representative!
+  updateWhereSample(data: String!, where: String!): Sample!
+  updateWhereSampleType(data: String!, where: String!): SampleType!
+  updateWhereToolType(data: String!, where: String!): ToolType!
+  updateWhereTypeOfSample(data: String!, where: String!): TypeOfSample!
 }
 
 input NewDefinedIndicator {
@@ -182,32 +205,32 @@ input NewDefinedIndicator {
 
 type NormativeDocument {
   id: ID!
-  lable: String!
+  label: String!
 }
 
 type NormativeDocumentAct {
   id: ID!
-  lable: String!
+  label: String!
 }
 
 type ObjectName {
   id: ID!
-  lable: String!
+  label: String!
 }
 
 type ObjectNameAct {
   id: ID!
-  lable: String!
+  label: String!
 }
 
 type PassedSample {
   id: ID!
-  lable: String!
+  label: String!
 }
 
 type PassedSampleAct {
   id: ID!
-  lable: String!
+  label: String!
 }
 
 input PatchDefinedIndicator {
@@ -224,32 +247,32 @@ input PatchOption {
 
 type Place {
   id: ID!
-  lable: String!
+  label: String!
 }
 
 type PlaceAct {
   id: ID!
-  lable: String!
+  label: String!
 }
 
 type Planning {
   id: ID!
-  lable: String!
+  label: String!
 }
 
 type PlanningAct {
   id: ID!
-  lable: String!
+  label: String!
 }
 
 type Preparation {
   id: ID!
-  lable: String!
+  label: String!
 }
 
 type PreparationAct {
   id: ID!
-  lable: String!
+  label: String!
 }
 
 type Query {
@@ -289,54 +312,90 @@ type Query {
   findByIdSampleType(id: String!): SampleType!
   findByIdToolType(id: String!): ToolType!
   findByIdTypeOfSample(id: String!): TypeOfSample!
+  findManyWhereAddition(where: String!): [Addition!]!
+  findManyWhereClimaticEnvironmental(where: String!): [ClimaticEnvironmental!]!
+  findManyWhereDefinedIndicator(where: String!): [DefinedIndicator!]!
+  findManyWhereEnvironmentalEngineer(where: String!): [EnvironmentalEngineer!]!
+  findManyWhereGoal(where: String!): [Goal!]!
+  findManyWhereInformationAboutSelection(where: String!): [InformationAboutSelection!]!
+  findManyWhereMethod(where: String!): [Method!]!
+  findManyWhereNormativeDocument(where: String!): [NormativeDocument!]!
+  findManyWhereObjectName(where: String!): [ObjectName!]!
+  findManyWherePassedSample(where: String!): [PassedSample!]!
+  findManyWherePlace(where: String!): [Place!]!
+  findManyWherePlanning(where: String!): [Planning!]!
+  findManyWherePreparation(where: String!): [Preparation!]!
+  findManyWhereRepresentative(where: String!): [Representative!]!
+  findManyWhereSample(where: String!): [Sample!]!
+  findManyWhereSampleType(where: String!): [SampleType!]!
+  findManyWhereToolType(where: String!): [ToolType!]!
+  findManyWhereTypeOfSample(where: String!): [TypeOfSample!]!
+  findOneWhereAddition(where: String!): Addition!
+  findOneWhereClimaticEnvironmental(where: String!): ClimaticEnvironmental!
+  findOneWhereDefinedIndicator(where: String!): DefinedIndicator!
+  findOneWhereEnvironmentalEngineer(where: String!): EnvironmentalEngineer!
+  findOneWhereGoal(where: String!): Goal!
+  findOneWhereInformationAboutSelection(where: String!): InformationAboutSelection!
+  findOneWhereMethod(where: String!): Method!
+  findOneWhereNormativeDocument(where: String!): NormativeDocument!
+  findOneWhereObjectName(where: String!): ObjectName!
+  findOneWherePassedSample(where: String!): PassedSample!
+  findOneWherePlace(where: String!): Place!
+  findOneWherePlanning(where: String!): Planning!
+  findOneWherePreparation(where: String!): Preparation!
+  findOneWhereRepresentative(where: String!): Representative!
+  findOneWhereSample(where: String!): Sample!
+  findOneWhereSampleType(where: String!): SampleType!
+  findOneWhereToolType(where: String!): ToolType!
+  findOneWhereTypeOfSample(where: String!): TypeOfSample!
 }
 
 type Representative {
   id: ID!
-  lable: String!
+  label: String!
 }
 
 type RepresentativeAct {
   id: ID!
-  lable: String!
+  label: String!
 }
 
 type Sample {
   id: ID!
-  lable: String!
+  label: String!
 }
 
 type SampleAct {
   id: ID!
-  lable: String!
+  label: String!
 }
 
 type SampleType {
   id: ID!
-  lable: String!
+  label: String!
 }
 
 type SampleTypeAct {
   id: ID!
-  lable: String!
+  label: String!
 }
 
 type ToolType {
   id: ID!
-  lable: String!
+  label: String!
 }
 
 type ToolTypeAct {
   id: ID!
-  lable: String!
+  label: String!
 }
 
 type TypeOfSample {
   id: ID!
-  lable: String!
+  label: String!
 }
 
 type TypeOfSampleAct {
   id: ID!
-  lable: String!
+  label: String!
 }

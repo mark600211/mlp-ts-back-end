@@ -11,6 +11,7 @@ import { Test } from './test.model';
 import { BaseResolverModule } from '@app/resolvers';
 import { TestService } from './test.service';
 import { EntitiesModule } from '@app/commands/entities/entities.module';
+import { PathSercvice } from './path.service';
 
 @Module({
   imports: [
@@ -29,7 +30,7 @@ import { EntitiesModule } from '@app/commands/entities/entities.module';
       },
     ]),
   ],
-  providers: [ActsService, ActResolver, TestResolver],
+  providers: [ActsService, PathSercvice, ActResolver, TestResolver],
   controllers: [ActsController],
 })
 export class ActsModule {}

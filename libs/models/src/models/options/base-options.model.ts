@@ -6,7 +6,7 @@ import { ObjectType, Field } from '@nestjs/graphql';
 export class Option {
   @Field()
   @Column()
-  lable: string;
+  label: string;
   @CreateDateColumn()
   createdAt?: Date;
   @UpdateDateColumn()

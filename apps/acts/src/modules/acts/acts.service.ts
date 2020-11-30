@@ -40,6 +40,11 @@ export class ActsService extends AbstractDataService {
   }
 
   @TryCatchWrapper()
+  findActByIdWithRelations(id: string, relations: Array<keyof Act & string>): Promise<Act> {
+    return this.entities.findEntityByIdWithException(Act, id, relations)
+  }
+
+  @TryCatchWrapper()
   async updateData(data: PatchActDto): Promise<ActBase> {
     const consumers = this.consumerService.findAllConsumers<AllConsumersPatch>(
       data,

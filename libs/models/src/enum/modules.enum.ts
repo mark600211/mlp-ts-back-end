@@ -3,4 +3,5 @@ export enum Modules {
   FILES = 'files',
   SYN = 'syn',
   PYTHON = 'python_files',
+  RULES = 'rules'
 }

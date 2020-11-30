@@ -6,8 +6,8 @@ import {
   ClimaticEnvironmentalAct,
   Consumer,
   CustomerAct,
-  DefinedIndicatorAct,
-  DefinedIndicatorBase,
+  DefinedIndicatorsAct,
+  DefinedIndicatorsBase,
   EnvironmentalEngineerAct,
   GeneralCustomerAct,
   GoalAct,
@@ -47,7 +47,7 @@ export class SwitchTypes {
     | typeof SampleAct
     | typeof PreparationAct
     | typeof GoalAct
-    | typeof DefinedIndicatorAct
+    | typeof DefinedIndicatorsAct
     | typeof AdditionAct
     | typeof InformationAboutSelectionAct
     | typeof EnvironmentalEngineerAct
@@ -55,7 +55,7 @@ export class SwitchTypes {
     | typeof PassedSampleAct
     | typeof Application;
 
-  dataType: Consumer | Option | ApplicationBase | DefinedIndicatorBase;
+  dataType: Consumer | Option | ApplicationBase | DefinedIndicatorsBase;
 
   constructor(key: TypeKey) {
     this.key = key;
@@ -125,8 +125,8 @@ export class SwitchTypes {
         this.dataType = new Option();
         break;
       case TypeKey.DEFINED_INDICATORS:
-        this.entityType = DefinedIndicatorAct;
-        this.dataType = new DefinedIndicatorBase();
+        this.entityType = DefinedIndicatorsAct;
+        this.dataType = new DefinedIndicatorsBase();
         break;
       case TypeKey.ADDITIONS:
         this.entityType = AdditionAct;

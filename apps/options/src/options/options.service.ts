@@ -29,14 +29,14 @@ export class OptionsService extends AbstractDataService {
 
       const updatedData: DefinedIndicatorRelations = {
         ...consumers,
-        lable: newData.lable,
+        label: newData.lable,
       };
 
       return updatedData;
     } else {
       const newData = data as string;
 
-      return { lable: newData };
+      return { label: newData };
     }
   }
 
@@ -51,7 +51,7 @@ export class OptionsService extends AbstractDataService {
 
       const updateData: DefinedIndicatorRelations = {
         ...consumers,
-        lable: newData.lable,
+        label: newData.lable,
       };
 
       return updateData;

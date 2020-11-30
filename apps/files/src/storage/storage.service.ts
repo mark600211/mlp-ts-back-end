@@ -43,7 +43,7 @@ export class StorageService implements OnModuleInit {
         upload_metadata,
       );
 
-      //   this.docService.createDoc(file);
+      this.docService.createDoc(file);
       this.synologyService.uploadFile(file);
     });
   }

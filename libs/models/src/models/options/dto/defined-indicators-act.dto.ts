@@ -1,5 +1,5 @@
 import { Option } from '../base-options.model';
 
-export class DefinedIndicatorsAct extends Option {
+export class DefinedIndicatorsActDto extends Option {
   id: string;
 }

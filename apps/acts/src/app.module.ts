@@ -14,7 +14,7 @@ import { Modules } from '@app/models';
   imports: [
     DbModule.forRoot(),
     ConfigModule.register({ folder: path.resolve(__dirname, './config') }),
-    ProtoModule.register([Modules.ACTS], Modules.ACTS),
+    ProtoModule.register([], Modules.ACTS),
     ActsModule,
     ConsumersModule,
     ApplicationModule,

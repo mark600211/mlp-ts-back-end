@@ -12,7 +12,7 @@ import {
   SampleAct,
   PreparationAct,
   GoalAct,
-  DefinedIndicatorAct,
+  DefinedIndicatorsAct,
   AdditionAct,
   InformationAboutSelectionAct,
   EnvironmentalEngineerAct,
@@ -39,7 +39,7 @@ export interface AllConsumersPatch {
   sample?: SampleAct[];
   preparation?: PreparationAct[];
   goal?: GoalAct;
-  definedIndicators?: DefinedIndicatorAct[];
+  definedIndicators?: DefinedIndicatorsAct[];
   additions?: AdditionAct;
   informationAboutSelection?: InformationAboutSelectionAct;
   environmentalEngineer?: EnvironmentalEngineerAct;
