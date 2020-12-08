@@ -145,6 +145,9 @@ type Mutation {
   createAct(data: NewActDto!): Act!
   createApplication(data: PatchAppDto!): Application!
   createTest(data: String!): Test!
+  deleteByIdAct(id: String!): Act
+  deleteByIdApplication(id: String!): Application
+  deleteByIdTest(id: String!): Test
   updateAct(data: PatchActDto!, id: String!): Act!
   updateApplication(data: PatchAppDto!, id: String!): Application!
   updateTest(data: String!, id: String!): Test!
@@ -154,29 +157,29 @@ type Mutation {
 }
 
 input NewActDto {
-  additions: String!
+  additions: String
   applications: [ApplicationInput!]
-  climaticEnvironmental: String!
+  climaticEnvironmental: String
   customer: String!
-  datetime: DateTimeInput!
-  definedIndicators: [String!]!
-  environmentalEngineer: String!
+  datetime: DateTimeInput
+  definedIndicators: [String!]
+  environmentalEngineer: String
   generalCustomer: String!
-  goal: String!
-  informationAboutSelection: String!
+  goal: String
+  informationAboutSelection: String
   lab: String!
-  method: String!
+  method: String
   name: String!
-  normativeDocument: [String!]!
-  objectName: String!
-  passedSample: String!
-  place: String!
-  planning: String!
-  preparation: [String!]!
-  representative: String!
-  sample: [String!]!
-  sampleType: String!
-  toolType: String!
+  normativeDocument: [String!]
+  objectName: String
+  passedSample: String
+  place: String
+  planning: String
+  preparation: [String!]
+  representative: String
+  sample: [String!]
+  sampleType: String
+  toolType: String
   typeOfSample: String!
 }
 
@@ -196,31 +199,31 @@ type PassedSampleAct {
 }
 
 input PatchActDto {
-  additions: String!
+  additions: String
   applications: [ApplicationInput!]
-  climaticEnvironmental: String!
-  customer: String!
-  datetime: DateTimeInput!
-  definedIndicators: [String!]!
-  environmentalEngineer: String!
-  generalCustomer: String!
-  goal: String!
+  climaticEnvironmental: String
+  customer: String
+  datetime: DateTimeInput
+  definedIndicators: [String!]
+  environmentalEngineer: String
+  generalCustomer: String
+  goal: String
   id: String!
-  informationAboutSelection: String!
-  lab: String!
-  method: String!
-  name: String!
-  normativeDocument: [String!]!
-  objectName: String!
-  passedSample: String!
-  place: String!
-  planning: String!
-  preparation: [String!]!
-  representative: String!
-  sample: [String!]!
-  sampleType: String!
-  toolType: String!
-  typeOfSample: String!
+  informationAboutSelection: String
+  lab: String
+  method: String
+  name: String
+  normativeDocument: [String!]
+  objectName: String
+  passedSample: String
+  place: String
+  planning: String
+  preparation: [String!]
+  representative: String
+  sample: [String!]
+  sampleType: String
+  toolType: String
+  typeOfSample: String
 }
 
 input PatchAppDto {

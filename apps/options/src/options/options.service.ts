@@ -3,6 +3,7 @@ import {
   DefinedIndicatorRelations,
   LabId,
   NewDefinedIndicator,
+  NewOption,
   Option,
   PatchOption,
   TryCatchWrapperAsync,
@@ -20,7 +21,7 @@ export class OptionsService extends AbstractDataService {
 
   @TryCatchWrapperAsync()
   async newData(
-    data: NewDefinedIndicator | string,
+    data: NewDefinedIndicator | NewOption,
   ): Promise<DefinedIndicatorRelations | Option> {
     if (typeof data === typeof NewDefinedIndicator) {
       const newData = data as NewDefinedIndicator;
@@ -34,9 +35,9 @@ export class OptionsService extends AbstractDataService {
 
       return updatedData;
     } else {
-      const newData = data as string;
+      const newData = data as NewOption;
 
-      return { label: newData };
+      return newData;
     }
   }
 
@@ -51,7 +52,7 @@ export class OptionsService extends AbstractDataService {
 
       const updateData: DefinedIndicatorRelations = {
         ...consumers,
-        label: newData.lable,
+        label: newData.label,
       };
 
       return updateData;

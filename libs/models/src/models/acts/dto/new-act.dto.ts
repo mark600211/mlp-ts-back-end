@@ -16,42 +16,42 @@ export class NewActDto {
   lab: string;
   @Field()
   typeOfSample: string;
-  @Field()
+  @Field({ nullable: true })
   objectName?: string;
-  @Field()
+  @Field({ nullable: true })
   place?: string;
-  @Field()
+  @Field({ nullable: true })
   datetime: DateAndTime;
-  @Field()
+  @Field({ nullable: true })
   method?: string;
-  @Field()
+  @Field({ nullable: true })
   toolType?: string;
-  @Field()
+  @Field({ nullable: true })
   climaticEnvironmental?: string;
-  @Field()
+  @Field({ nullable: true })
   planning?: string;
-  @Field(type => [String])
+  @Field((type) => [String], { nullable: true })
   normativeDocument?: string[];
-  @Field()
+  @Field({ nullable: true })
   sampleType?: string;
-  @Field(type => [String])
+  @Field((type) => [String], { nullable: true })
   sample?: string[];
-  @Field(type => [String])
+  @Field((type) => [String], { nullable: true })
   preparation?: string[];
-  @Field()
+  @Field({ nullable: true })
   goal?: string;
-  @Field(type => [String])
+  @Field((type) => [String], { nullable: true })
   definedIndicators?: string[];
-  @Field()
+  @Field({ nullable: true })
   additions?: string;
-  @Field()
+  @Field({ nullable: true })
   informationAboutSelection?: string;
-  @Field()
+  @Field({ nullable: true })
   environmentalEngineer?: string;
-  @Field()
+  @Field({ nullable: true })
   representative?: string;
-  @Field()
+  @Field({ nullable: true })
   passedSample?: string;
-  @Field(type => [ApplicationBase], { nullable: true })
+  @Field((type) => [ApplicationBase], { nullable: true })
   applications?: ApplicationBase[];
 }

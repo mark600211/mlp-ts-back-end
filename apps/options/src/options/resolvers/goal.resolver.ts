@@ -1,11 +1,11 @@
-import { Goal, GoalEvent, PatchOption } from '@app/models';
+import { Goal, GoalEvent, NewOption, PatchOption } from '@app/models';
 import { BaseResolver } from '@app/resolvers';
 import { Resolver } from '@nestjs/graphql';
 
 @Resolver(of => Goal)
 export class GoalResolver extends BaseResolver(
   Goal,
-  String,
+  NewOption,
   PatchOption,
   true,
   GoalEvent,

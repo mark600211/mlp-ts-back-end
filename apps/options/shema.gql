@@ -141,24 +141,42 @@ type MethodAct {
 }
 
 type Mutation {
-  createAddition(data: String!): Addition!
-  createClimaticEnvironmental(data: String!): ClimaticEnvironmental!
+  createAddition(data: NewOption!): Addition!
+  createClimaticEnvironmental(data: NewOption!): ClimaticEnvironmental!
   createDefinedIndicator(data: NewDefinedIndicator!): DefinedIndicator!
-  createEnvironmentalEngineer(data: String!): EnvironmentalEngineer!
-  createGoal(data: String!): Goal!
-  createInformationAboutSelection(data: String!): InformationAboutSelection!
-  createMethod(data: String!): Method!
-  createNormativeDocument(data: String!): NormativeDocument!
-  createObjectName(data: String!): ObjectName!
-  createPassedSample(data: String!): PassedSample!
-  createPlace(data: String!): Place!
-  createPlanning(data: String!): Planning!
-  createPreparation(data: String!): Preparation!
-  createRepresentative(data: String!): Representative!
-  createSample(data: String!): Sample!
-  createSampleType(data: String!): SampleType!
-  createToolType(data: String!): ToolType!
-  createTypeOfSample(data: String!): TypeOfSample!
+  createEnvironmentalEngineer(data: NewOption!): EnvironmentalEngineer!
+  createGoal(data: NewOption!): Goal!
+  createInformationAboutSelection(data: NewOption!): InformationAboutSelection!
+  createMethod(data: NewOption!): Method!
+  createNormativeDocument(data: NewOption!): NormativeDocument!
+  createObjectName(data: NewOption!): ObjectName!
+  createPassedSample(data: NewOption!): PassedSample!
+  createPlace(data: NewOption!): Place!
+  createPlanning(data: NewOption!): Planning!
+  createPreparation(data: NewOption!): Preparation!
+  createRepresentative(data: NewOption!): Representative!
+  createSample(data: NewOption!): Sample!
+  createSampleType(data: NewOption!): SampleType!
+  createToolType(data: NewOption!): ToolType!
+  createTypeOfSample(data: NewOption!): TypeOfSample!
+  deleteByIdAddition(id: String!): Addition
+  deleteByIdClimaticEnvironmental(id: String!): ClimaticEnvironmental
+  deleteByIdDefinedIndicator(id: String!): DefinedIndicator
+  deleteByIdEnvironmentalEngineer(id: String!): EnvironmentalEngineer
+  deleteByIdGoal(id: String!): Goal
+  deleteByIdInformationAboutSelection(id: String!): InformationAboutSelection
+  deleteByIdMethod(id: String!): Method
+  deleteByIdNormativeDocument(id: String!): NormativeDocument
+  deleteByIdObjectName(id: String!): ObjectName
+  deleteByIdPassedSample(id: String!): PassedSample
+  deleteByIdPlace(id: String!): Place
+  deleteByIdPlanning(id: String!): Planning
+  deleteByIdPreparation(id: String!): Preparation
+  deleteByIdRepresentative(id: String!): Representative
+  deleteByIdSample(id: String!): Sample
+  deleteByIdSampleType(id: String!): SampleType
+  deleteByIdToolType(id: String!): ToolType
+  deleteByIdTypeOfSample(id: String!): TypeOfSample
   updateAddition(data: PatchOption!, id: String!): Addition!
   updateClimaticEnvironmental(data: PatchOption!, id: String!): ClimaticEnvironmental!
   updateDefinedIndicator(data: PatchDefinedIndicator!, id: String!): DefinedIndicator!
@@ -203,6 +221,10 @@ input NewDefinedIndicator {
   tos: String!
 }
 
+input NewOption {
+  label: String!
+}
+
 type NormativeDocument {
   id: ID!
   label: String!
@@ -236,13 +258,13 @@ type PassedSampleAct {
 input PatchDefinedIndicator {
   id: String!
   lab: String!
-  lable: String!
+  label: String!
   tos: String!
 }
 
 input PatchOption {
   id: String!
-  lable: String!
+  label: String!
 }
 
 type Place {

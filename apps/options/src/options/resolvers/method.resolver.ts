@@ -1,11 +1,11 @@
-import { Method, MethodEvent, PatchOption } from '@app/models';
+import { Method, MethodEvent, NewOption, PatchOption } from '@app/models';
 import { BaseResolver } from '@app/resolvers';
 import { Resolver } from '@nestjs/graphql';
 
 @Resolver(of => Method)
 export class MethodResolver extends BaseResolver(
   Method,
-  String,
+  NewOption,
   PatchOption,
   true,
   MethodEvent,

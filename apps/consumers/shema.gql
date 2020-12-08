@@ -144,6 +144,9 @@ type Mutation {
   createCustomer(data: CreateConsumerDto!): Customer!
   createGeneralCustomer(data: CreateConsumerDto!): GeneralCustomer!
   createLab(data: CreateConsumerDto!): Lab!
+  deleteByIdCustomer(id: String!): Customer
+  deleteByIdGeneralCustomer(id: String!): GeneralCustomer
+  deleteByIdLab(id: String!): Lab
   updateCustomer(data: PatchConsumerDto!, id: String!): Customer!
   updateGeneralCustomer(data: PatchConsumerDto!, id: String!): GeneralCustomer!
   updateLab(data: PatchConsumerDto!, id: String!): Lab!

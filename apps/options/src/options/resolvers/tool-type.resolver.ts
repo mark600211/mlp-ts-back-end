@@ -1,11 +1,11 @@
-import { PatchOption, ToolType, ToolTypeEvent } from '@app/models';
+import { NewOption, PatchOption, ToolType, ToolTypeEvent } from '@app/models';
 import { BaseResolver } from '@app/resolvers';
 import { Resolver } from '@nestjs/graphql';
 
 @Resolver(of => ToolType)
 export class ToolTypeResolver extends BaseResolver(
   ToolType,
-  String,
+  NewOption,
   PatchOption,
   true,
   ToolTypeEvent,

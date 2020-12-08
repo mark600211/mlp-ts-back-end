@@ -1,6 +1,7 @@
 import {
   ClimaticEnvironmental,
   ClimaticEnvironmentalEvent,
+  NewOption,
   PatchOption,
 } from '@app/models';
 import { BaseResolver } from '@app/resolvers';
@@ -9,7 +10,7 @@ import { Resolver } from '@nestjs/graphql';
 @Resolver(of => ClimaticEnvironmental)
 export class ClimaticEnvironmentalResolver extends BaseResolver(
   ClimaticEnvironmental,
-  String,
+  NewOption,
   PatchOption,
   true,
   ClimaticEnvironmentalEvent,

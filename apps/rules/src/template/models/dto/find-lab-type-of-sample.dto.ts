@@ -3,7 +3,7 @@ import { InputType, Field } from '@nestjs/graphql';
 @InputType()
 export class FindLabTypeOfSampleTemplate {
   @Field()
-  customerId: string;
+  labId: string;
   @Field()
-  generalCustomerId: string;
+  typeOfSampleId: string;
 }

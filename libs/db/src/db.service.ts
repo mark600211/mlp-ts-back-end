@@ -55,11 +55,15 @@ export class DbService {
     this.logger.verbose('update entity');
 
     try {
+      this.logger.log(data);
+
       const repository: Repository<T> = this.getRepository<T>(entity);
 
-      const newEntity = await this.findEntityByIdWithException(entity, id);
+      const newEntity = await repository.save(data);
 
-      await repository.save(newEntity, data);
+      this.logger.log(newEntity);
+
+      if (!newEntity) throw new EntityNotFound<T>();
 
       return newEntity;
     } catch (error) {
@@ -75,11 +79,9 @@ export class DbService {
   ): Promise<T> {
     const repository = this.getRepository(entity);
 
-    const newEtity = await repository.findOne(where);
+    const newEtity = await repository.save(data);
 
     if (!newEtity) throw new EntityNotFound<T>();
-
-    await repository.save(newEtity, data);
 
     return newEtity;
   }
@@ -87,7 +89,7 @@ export class DbService {
   async findEntityByIdWithException<T, R>(
     entity: ObjectType<T>,
     id: string,
-    relations?: Array<keyof T & string>
+    relations?: Array<keyof T & string>,
   ): Promise<T> {
     this.logger.verbose('find entity');
 

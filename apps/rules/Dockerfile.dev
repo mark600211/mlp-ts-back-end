@@ -2,4 +2,4 @@ FROM mark600/mlp-ts-builder AS builder
 
 ENV NODE_ENV=development
 
-CMD ["yarn", "start", "options", "--watch"]
+CMD ["yarn", "start", "rules", "--watch"]

@@ -1,6 +1,5 @@
-FROM node:alpine
-WORKDIR /app
-COPY ../package.json /app
-RUN npm install
-COPY . /app
-CMD ["npm", "run", "start:dev"]
+FROM mark600/mlp-ts-builder AS builder
+
+ENV NODE_ENV=development
+
+CMD ["yarn", "start", "acts", "--watch"]

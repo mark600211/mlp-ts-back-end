@@ -42,7 +42,7 @@ export function BaseResolver<
     @Query(type => classRef, { name: `findById${classRef.name}` })
     @TryCatchWrapperAsync()
     async findById(@Args('id') id: string): Promise<T> {
-      return this.entities.findEntityByIdWithException(classRef, id);
+      return await this.entities.findEntityByIdWithException(classRef, id);
     }
 
     @Query(type => [classRef], { name: `findManyWhere${classRef.name}` })
@@ -53,7 +53,7 @@ export function BaseResolver<
       })
       where: FM,
     ): Promise<T[]> {
-      return this.entities.findManyWhere(classRef, where);
+      return await this.entities.findManyWhere(classRef, where);
     }
 
     @Query(type => classRef, { name: `findOneWhere${classRef.name}` })
@@ -64,7 +64,7 @@ export function BaseResolver<
       })
       where: FO,
     ): Promise<T> {
-      return this.entities.findOneWhere(classRef, where);
+      return await this.entities.findOneWhere(classRef, where);
     }
 
     @Mutation(type => classRef, { name: `create${classRef.name}` })
@@ -82,7 +82,7 @@ export function BaseResolver<
           eventClassRef,
         );
       } else {
-        return this.entities.createEntity(classRef, newData);
+        return await this.entities.createEntity(classRef, newData);
       }
     }
 
@@ -103,7 +103,7 @@ export function BaseResolver<
           eventClassRef,
         );
       } else {
-        return this.entities.updateEntityById(classRef, updateData, id);
+        return await this.entities.updateEntityById(classRef, updateData, id);
       }
     }
 
@@ -117,7 +117,16 @@ export function BaseResolver<
       })
       data: UWD,
     ) {
-      return this.entities.updateWere(classRef, where, data);
+      return await this.entities.updateWere(classRef, where, data);
+    }
+
+    @Mutation(type => classRef, {
+      name: `deleteById${classRef.name}`,
+      nullable: true,
+    })
+    @TryCatchWrapperAsync()
+    async deleteById(@Args('id') id: string): Promise<void> {
+      this.entities.deleteEntityById(classRef, id);
     }
   }
 

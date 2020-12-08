@@ -1,11 +1,11 @@
-import { Addition, AdditionEvent, PatchOption } from '@app/models';
+import { Addition, AdditionEvent, NewOption, PatchOption } from '@app/models';
 import { BaseResolver } from '@app/resolvers';
 import { Resolver } from '@nestjs/graphql';
 
 @Resolver(of => Addition)
 export class AdditionResolver extends BaseResolver(
   Addition,
-  String,
+  NewOption,
   PatchOption,
   true,
   AdditionEvent,

@@ -1,11 +1,16 @@
-import { PatchOption, Representative, RepresentativeEvent } from '@app/models';
+import {
+  NewOption,
+  PatchOption,
+  Representative,
+  RepresentativeEvent,
+} from '@app/models';
 import { BaseResolver } from '@app/resolvers';
 import { Resolver } from '@nestjs/graphql';
 
 @Resolver(of => Representative)
 export class RepresentativeResolver extends BaseResolver(
   Representative,
-  String,
+  NewOption,
   PatchOption,
   true,
   RepresentativeEvent,

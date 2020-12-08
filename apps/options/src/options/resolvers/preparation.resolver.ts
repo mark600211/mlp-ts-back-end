@@ -1,11 +1,16 @@
-import { PatchOption, Preparation, PreparationEvent } from '@app/models';
+import {
+  NewOption,
+  PatchOption,
+  Preparation,
+  PreparationEvent,
+} from '@app/models';
 import { BaseResolver } from '@app/resolvers';
 import { Resolver } from '@nestjs/graphql';
 
 @Resolver(of => Preparation)
 export class PreparationResolver extends BaseResolver(
   Preparation,
-  String,
+  NewOption,
   PatchOption,
   true,
   PreparationEvent,

@@ -1,4 +1,5 @@
 import {
+  NewOption,
   NormativeDocument,
   NormativeDocumentEvent,
   PatchOption,
@@ -9,7 +10,7 @@ import { Resolver } from '@nestjs/graphql';
 @Resolver(of => NormativeDocument)
 export class NormativeDocumentResolver extends BaseResolver(
   NormativeDocument,
-  String,
+  NewOption,
   PatchOption,
   true,
   NormativeDocumentEvent,

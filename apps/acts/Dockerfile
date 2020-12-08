@@ -1,8 +1,10 @@
-FROM mark600/mbcl-ts-builder AS builder
+FROM mark600/mlp-ts-builder AS builder
 
 RUN yarn build acts
 
-FROM node
+FROM node:alpine
+
+RUN yarn global add @nestjs/cli
 
 WORKDIR /app
 
@@ -14,4 +16,4 @@ COPY --from=builder tmp/dist/apps/acts /app/dist/acts
 
 # COPY . .
 
-CMD ["yarn", "start", "acts"]
+CMD ["yarn", "start", "acts", "--watch"]

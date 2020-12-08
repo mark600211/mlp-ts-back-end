@@ -1,11 +1,11 @@
-import { PatchOption, Sample, SampleEvent } from '@app/models';
+import { NewOption, PatchOption, Sample, SampleEvent } from '@app/models';
 import { BaseResolver } from '@app/resolvers';
 import { Resolver } from '@nestjs/graphql';
 
 @Resolver(of => Sample)
 export class SampleResolver extends BaseResolver(
   Sample,
-  String,
+  NewOption,
   PatchOption,
   true,
   SampleEvent,

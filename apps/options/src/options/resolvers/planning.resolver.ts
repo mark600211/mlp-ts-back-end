@@ -1,11 +1,11 @@
-import { PatchOption, Planning, PlanningEvent } from '@app/models';
+import { NewOption, PatchOption, Planning, PlanningEvent } from '@app/models';
 import { BaseResolver } from '@app/resolvers';
 import { Resolver } from '@nestjs/graphql';
 
 @Resolver(of => Planning)
 export class PlanningResolver extends BaseResolver(
   Planning,
-  String,
+  NewOption,
   PatchOption,
   true,
   PlanningEvent,

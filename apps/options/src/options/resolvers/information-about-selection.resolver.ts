@@ -1,6 +1,7 @@
 import {
   InformationAboutSelection,
   InformationAboutSelectionEvent,
+  NewOption,
   PatchOption,
 } from '@app/models';
 import { BaseResolver } from '@app/resolvers';
@@ -9,7 +10,7 @@ import { Resolver } from '@nestjs/graphql';
 @Resolver(of => InformationAboutSelection)
 export class InformationAboutSelectionResolver extends BaseResolver(
   InformationAboutSelection,
-  String,
+  NewOption,
   PatchOption,
   true,
   InformationAboutSelectionEvent,

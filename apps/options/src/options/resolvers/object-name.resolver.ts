@@ -1,11 +1,16 @@
-import { ObjectName, ObjectNameEvent, PatchOption } from '@app/models';
+import {
+  NewOption,
+  ObjectName,
+  ObjectNameEvent,
+  PatchOption,
+} from '@app/models';
 import { BaseResolver } from '@app/resolvers';
 import { Resolver } from '@nestjs/graphql';
 
 @Resolver(of => ObjectName)
 export class ObjectNameResolver extends BaseResolver(
   ObjectName,
-  String,
+  NewOption,
   PatchOption,
   true,
   ObjectNameEvent,
