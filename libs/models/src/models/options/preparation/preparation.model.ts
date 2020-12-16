@@ -1,15 +1,15 @@
 import { ObjectType } from '@nestjs/graphql';
-import { Entity, OneToMany } from 'typeorm';
+import { Entity, ManyToMany } from 'typeorm';
+import { Act } from '../..';
 import { PreparationBase } from './preparation-base.model';
-import { PreparationEvent } from './preparation-event.model';
 
 @Entity()
 @ObjectType()
 export class Preparation extends PreparationBase {
-  @OneToMany(
-    type => PreparationEvent,
-    events => events.payload,
+  @ManyToMany(
+    type => Act,
+    acts => acts.preparation,
     { nullable: true },
   )
-  events: PreparationEvent[];
+  acts: Act[];
 }

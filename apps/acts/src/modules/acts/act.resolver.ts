@@ -1,51 +1,23 @@
-import { Resolver } from '@nestjs/graphql';
-import { Act, NewActDto, PatchActDto } from '@app/models';
+import { Args, Query, Resolver } from '@nestjs/graphql';
+import { Act, NewActDto, PatchActDto, TryCatchWrapperAsync } from '@app/models';
 import { BaseResolver } from '@app/resolvers';
 import { Logger } from '@nestjs/common';
+import { TableContent } from './models/table-content.model';
+import { TableConditions } from './models/table-conditions.dto';
+import { ActsService } from './acts.service';
 
 @Resolver(of => Act)
-export class ActResolver extends BaseResolver(
-  Act,
-  NewActDto,
-  PatchActDto,
-  false,
-) {
+export class ActResolver extends BaseResolver(Act, NewActDto, PatchActDto) {
   logger = new Logger('tst');
-  constructor() {
+  constructor(private actsService: ActsService) {
     super();
   }
 
-  //   @TryCatchWrapperAsync()
-  //   @Query(returns => [Act], { nullable: 'itemsAndList' })
-  //   async getActs(): Promise<Act[]> {
-  //     this.logger.verbose('atga');
-
-  //     return this.queryBus.execute(new GetEntitiesQuery(Act));
-  //   }
-
-  //   @TryCatchWrapperAsync()
-  //   @Query(returns => Act)
-  //   async getAct(@Args('id') id: string): Promise<Act> {
-  //     return this.commandBus.execute(new GetEntityQuery(Act, id));
-  //   }
-
-  //   @TryCatchWrapperAsync()
-  //   @Mutation(returns => Act)
-  //   async createAct(@Args('newActData') newActData: NewActDto): Promise<Act> {
-  //     const data = this.actService.newActData(newActData);
-
-  //     return await this.commandBus.execute(new CreateEntityCommand(Act, data));
-  //   }
-
-  //   @TryCatchWrapperAsync()
-  //   @Mutation(returns => Act)
-  //   async updateAct(
-  //     @Args('updateActData') updateActData: PatchActDto,
-  //   ): Promise<Act> {
-  //     const data = this.actService.updateActData(updateActData);
-
-  //     return await this.commandBus.execute(
-  //       new UpdateEntityCommand(Act, data, updateActData.id),
-  //     );
-  //   }
+  @Query(type => TableContent)
+  @TryCatchWrapperAsync()
+  async getTableContent(
+    @Args('conditions') tableConditions: TableConditions,
+  ): Promise<TableContent> {
+    return this.actsService.getTableContent(tableConditions);
+  }
 }

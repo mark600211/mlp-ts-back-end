@@ -30,17 +30,17 @@ export class NewActDto {
   climaticEnvironmental?: string;
   @Field({ nullable: true })
   planning?: string;
-  @Field((type) => [String], { nullable: true })
+  @Field(type => [String], { nullable: true })
   normativeDocument?: string[];
   @Field({ nullable: true })
   sampleType?: string;
-  @Field((type) => [String], { nullable: true })
-  sample?: string[];
-  @Field((type) => [String], { nullable: true })
+  @Field(type => String, { nullable: true })
+  sample?: string;
+  @Field(type => [String], { nullable: true })
   preparation?: string[];
   @Field({ nullable: true })
   goal?: string;
-  @Field((type) => [String], { nullable: true })
+  @Field(type => [String], { nullable: true })
   definedIndicators?: string[];
   @Field({ nullable: true })
   additions?: string;
@@ -52,6 +52,6 @@ export class NewActDto {
   representative?: string;
   @Field({ nullable: true })
   passedSample?: string;
-  @Field((type) => [ApplicationBase], { nullable: true })
+  @Field(type => [ApplicationBase], { nullable: true })
   applications?: ApplicationBase[];
 }

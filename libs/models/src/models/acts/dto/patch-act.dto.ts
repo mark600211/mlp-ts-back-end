@@ -34,8 +34,8 @@ export class PatchActDto {
   normativeDocument?: string[];
   @Field({ nullable: true })
   sampleType?: string;
-  @Field(type => [String], { nullable: true })
-  sample?: string[];
+  @Field(type => String, { nullable: true })
+  sample?: string;
   @Field(type => [String], { nullable: true })
   preparation?: string[];
   @Field({ nullable: true })

@@ -1,49 +1,46 @@
 import {
-  CustomerAct,
-  GeneralCustomerAct,
-  LabAct,
-  PlaceAct,
-  TypeOfSampleAct,
-  ObjectNameAct,
-  MethodAct,
-  ToolTypeAct,
-  ClimaticEnvironmentalAct,
-  SampleTypeAct,
-  SampleAct,
-  PreparationAct,
-  GoalAct,
-  DefinedIndicatorsAct,
-  AdditionAct,
-  InformationAboutSelectionAct,
-  EnvironmentalEngineerAct,
-  RepresentativeAct,
-  PassedSampleAct,
+  Customer,
+  GeneralCustomer,
+  Lab,
+  Place,
+  TypeOfSample,
+  ObjectName,
+  Method,
+  ToolType,
+  ClimaticEnvironmental,
+  SampleType,
+  Preparation,
+  Goal,
+  DefinedIndicator,
+  EnvironmentalEngineer,
+  Representative,
+  PassedSample,
   Application,
-  PlanningAct,
-  NormativeDocumentAct,
+  Planning,
+  NormativeDocument,
 } from '@app/models';
 
 export interface AllConsumersPatch {
-  customer: CustomerAct;
-  generalCustomer: GeneralCustomerAct;
-  lab: LabAct;
-  typeOfSample: TypeOfSampleAct;
-  objectName?: ObjectNameAct;
-  place?: PlaceAct;
-  method?: MethodAct;
-  toolType?: ToolTypeAct;
-  climaticEnvironmental?: ClimaticEnvironmentalAct;
-  planning?: PlanningAct;
-  normativeDocument?: NormativeDocumentAct[];
-  sampleType?: SampleTypeAct;
-  sample?: SampleAct[];
-  preparation?: PreparationAct[];
-  goal?: GoalAct;
-  definedIndicators?: DefinedIndicatorsAct[];
-  additions?: AdditionAct;
-  informationAboutSelection?: InformationAboutSelectionAct;
-  environmentalEngineer?: EnvironmentalEngineerAct;
-  representative?: RepresentativeAct;
-  passedSample?: PassedSampleAct;
+  customer: Customer;
+  generalCustomer: GeneralCustomer;
+  lab: Lab;
+  typeOfSample: TypeOfSample;
+  objectName?: ObjectName;
+  place?: Place;
+  method?: Method;
+  toolType?: ToolType;
+  climaticEnvironmental?: ClimaticEnvironmental;
+  planning?: Planning;
+  normativeDocument?: NormativeDocument[];
+  sampleType?: SampleType;
+  sample?: string;
+  preparation?: Preparation[];
+  goal?: Goal;
+  definedIndicators?: DefinedIndicator[];
+  additions?: string;
+  informationAboutSelection?: string;
+  environmentalEngineer?: EnvironmentalEngineer;
+  representative?: Representative;
+  passedSample?: PassedSample;
   applications: Application[];
 }

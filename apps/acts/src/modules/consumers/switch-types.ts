@@ -1,61 +1,48 @@
 import { TypeKey } from './enum/type-key';
 import {
-  AdditionAct,
   Application,
   ApplicationBase,
-  ClimaticEnvironmentalAct,
   Consumer,
-  CustomerAct,
-  DefinedIndicatorsAct,
-  DefinedIndicatorsBase,
-  EnvironmentalEngineerAct,
-  GeneralCustomerAct,
-  GoalAct,
-  InformationAboutSelectionAct,
-  LabAct,
-  MethodAct,
-  NormativeDocumentAct,
-  ObjectNameAct,
+  Customer,
+  DefinedIndicator,
+  EnvironmentalEngineer,
+  GeneralCustomer,
+  Goal,
+  Lab,
+  Method,
+  NormativeDocument,
   Option,
-  PassedSampleAct,
-  PlaceAct,
-  PlanningAct,
-  PreparationAct,
-  RepresentativeAct,
-  SampleAct,
-  SampleTypeAct,
-  ToolTypeAct,
-  TypeOfSampleAct,
+  PassedSample,
+  Place,
+  Preparation,
+  Representative,
+  SampleType,
+  ToolType,
+  TypeOfSample,
 } from '@app/models';
 
 export class SwitchTypes {
   private key: TypeKey;
 
   entityType:
-    | typeof CustomerAct
-    | typeof GeneralCustomerAct
-    | typeof LabAct
-    | typeof TypeOfSampleAct
-    | typeof ObjectNameAct
-    | typeof PlaceAct
-    | typeof MethodAct
-    | typeof ToolTypeAct
-    | typeof ClimaticEnvironmentalAct
-    | typeof PlanningAct
-    | typeof NormativeDocumentAct
-    | typeof SampleTypeAct
-    | typeof SampleAct
-    | typeof PreparationAct
-    | typeof GoalAct
-    | typeof DefinedIndicatorsAct
-    | typeof AdditionAct
-    | typeof InformationAboutSelectionAct
-    | typeof EnvironmentalEngineerAct
-    | typeof RepresentativeAct
-    | typeof PassedSampleAct
+    | Customer
+    | typeof GeneralCustomer
+    | typeof Lab
+    | typeof TypeOfSample
+    | typeof Place
+    | typeof Method
+    | typeof ToolType
+    | typeof NormativeDocument
+    | typeof SampleType
+    | typeof Preparation
+    | typeof Goal
+    | typeof DefinedIndicator
+    | typeof EnvironmentalEngineer
+    | typeof Representative
+    | typeof PassedSample
     | typeof Application;
 
-  dataType: Consumer | Option | ApplicationBase | DefinedIndicatorsBase;
+  dataType: Consumer | Option | ApplicationBase | DefinedIndicator;
 
   constructor(key: TypeKey) {
     this.key = key;
@@ -65,86 +52,63 @@ export class SwitchTypes {
   private handleEntityType() {
     switch (this.key) {
       case TypeKey.GENERAL_CUSTOMER:
-        this.entityType = GeneralCustomerAct;
+        this.entityType = GeneralCustomer;
         this.dataType = new Consumer();
         break;
       case TypeKey.CUSTOMER:
-        this.entityType = CustomerAct;
+        this.entityType = Customer;
         this.dataType = new Consumer();
         break;
       case TypeKey.LAB:
-        this.entityType = LabAct;
+        this.entityType = Lab;
         this.dataType = new Consumer();
         break;
       case TypeKey.TYPE_OF_SAMPLE:
-        this.entityType = TypeOfSampleAct;
-        this.dataType = new Option();
-        break;
-      case TypeKey.OBJECT_NAME:
-        this.entityType = ObjectNameAct;
+        this.entityType = TypeOfSample;
         this.dataType = new Option();
         break;
       case TypeKey.PLACE:
-        this.entityType = PlaceAct;
+        this.entityType = Place;
         this.dataType = new Option();
         break;
       case TypeKey.METHOD:
-        this.entityType = MethodAct;
+        this.entityType = Method;
         this.dataType = new Option();
         break;
       case TypeKey.TOOL_TYPE:
-        this.entityType = ToolTypeAct;
-        this.dataType = new Option();
-        break;
-      case TypeKey.CLIMATIC_ENVIRONMENTAL:
-        this.entityType = ClimaticEnvironmentalAct;
-        this.dataType = new Option();
-        break;
-      case TypeKey.PLANNING:
-        this.entityType = PlanningAct;
+        this.entityType = ToolType;
         this.dataType = new Option();
         break;
       case TypeKey.NORMATIVE_DOCUMENT:
-        this.entityType = NormativeDocumentAct;
+        this.entityType = NormativeDocument;
         this.dataType = new Option();
         break;
       case TypeKey.SAMPLE_TYPE:
-        this.entityType = SampleTypeAct;
-        this.dataType = new Option();
-        break;
-      case TypeKey.SAMPLE:
-        this.entityType = SampleAct;
+        this.entityType = SampleType;
         this.dataType = new Option();
         break;
       case TypeKey.PREPARATION:
-        this.entityType = PreparationAct;
+        this.entityType = Preparation;
         this.dataType = new Option();
         break;
       case TypeKey.GOAL:
-        this.entityType = GoalAct;
+        this.entityType = Goal;
         this.dataType = new Option();
         break;
       case TypeKey.DEFINED_INDICATORS:
-        this.entityType = DefinedIndicatorsAct;
-        this.dataType = new DefinedIndicatorsBase();
-        break;
-      case TypeKey.ADDITIONS:
-        this.entityType = AdditionAct;
-        this.dataType = new Option();
-      case TypeKey.INFORMATION_ABOUT_SELECTION:
-        this.entityType = InformationAboutSelectionAct;
-        this.dataType = new Option();
+        this.entityType = DefinedIndicator;
+        this.dataType = new DefinedIndicator();
         break;
       case TypeKey.ENVIRONMENTAL_ENGINEER:
-        this.entityType = EnvironmentalEngineerAct;
+        this.entityType = EnvironmentalEngineer;
         this.dataType = new Option();
         break;
       case TypeKey.REPRESENTATIVE:
-        this.entityType = RepresentativeAct;
+        this.entityType = Representative;
         this.dataType = new Option();
         break;
       case TypeKey.PASSED_SAMPLE:
-        this.entityType = PassedSampleAct;
+        this.entityType = PassedSample;
         this.dataType = new Option();
         break;
       case TypeKey.APPLICATION:

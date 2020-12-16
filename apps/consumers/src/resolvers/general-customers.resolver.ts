@@ -1,7 +1,6 @@
 import {
   CreateConsumerDto,
   GeneralCustomer,
-  GeneralCustomerEvent,
   PatchConsumerDto,
 } from '@app/models';
 import { BaseResolver } from '@app/resolvers';
@@ -12,6 +11,4 @@ export class GeneralCustomerResolver extends BaseResolver(
   GeneralCustomer,
   CreateConsumerDto,
   PatchConsumerDto,
-  true,
-  GeneralCustomerEvent,
 ) {}

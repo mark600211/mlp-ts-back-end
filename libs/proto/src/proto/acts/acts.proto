@@ -33,12 +33,12 @@ message Act {
     Option planning = 13;
     repeated Option normativeDocuments = 14;
     Option sampleType = 15;
-    repeated Option sample = 16;
+    string sample = 16;
     repeated Option preparation = 17;
     Option goal = 18;
     repeated Option definedIndicators = 19;
-    Option additions = 20;
-    Option informationAboutSelection = 21;
+    string additions = 20;
+    string informationAboutSelection = 21;
     Option environmentalEngineer = 22;
     Option representative = 23;
     Option passedSample = 24;

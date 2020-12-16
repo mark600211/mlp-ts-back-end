@@ -11,4 +11,12 @@ export class ApplicationService extends AbstractDataService {
   async updateData(data: PatchAppDto): Promise<PatchAppDto> {
     return data;
   }
+
+  async populateWhere(data: any): Promise<any> {
+    return data;
+  }
+
+  async createDistinctForOption(data: any): Promise<any> {
+    return data;
+  }
 }

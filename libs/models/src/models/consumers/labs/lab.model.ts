@@ -1,15 +1,19 @@
 import { ObjectType } from '@nestjs/graphql';
 import { Entity, OneToMany } from 'typeorm';
-import { LabEvent } from './lab-event.model';
-import { LabBase } from './lab.base.model';
+import { Act, DefinedIndicator } from '../..';
+import { Consumer } from '../consumer.model';
 
 @Entity()
 @ObjectType()
-export class Lab extends LabBase {
+export class Lab extends Consumer {
   @OneToMany(
-    type => LabEvent,
-    events => events.payload,
-    { nullable: true },
+    type => Act,
+    acts => acts.lab,
   )
-  events: LabEvent[];
+  acts: Act[];
+  @OneToMany(
+    type => DefinedIndicator,
+    definedIndicators => definedIndicators.lab,
+  )
+  definedIndicators: DefinedIndicator[];
 }

@@ -1,15 +1,15 @@
 import { ObjectType } from '@nestjs/graphql';
 import { Entity, OneToMany } from 'typeorm';
-import { MethodEvent } from './method-event.model';
 import { MethodBase } from './method-base.model';
+import { Act } from '../..';
 
 @Entity()
 @ObjectType()
 export class Method extends MethodBase {
   @OneToMany(
-    type => MethodEvent,
-    events => events.payload,
+    type => Act,
+    acts => acts.method,
     { nullable: true },
   )
-  events: MethodEvent[];
+  acts: Act[];
 }

@@ -1,15 +1,15 @@
 import { ObjectType } from '@nestjs/graphql';
 import { Entity, OneToMany } from 'typeorm';
+import { Act } from '../..';
 import { GoalBase } from './goal-base.model';
-import { GoalEvent } from './goal-event.model';
 
 @Entity()
 @ObjectType()
 export class Goal extends GoalBase {
   @OneToMany(
-    type => GoalEvent,
-    events => events.payload,
+    type => Act,
+    acts => acts.goal,
     { nullable: true },
   )
-  events: GoalEvent[];
+  acts: Act[];
 }

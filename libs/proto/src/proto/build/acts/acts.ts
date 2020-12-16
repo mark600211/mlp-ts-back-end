@@ -28,12 +28,12 @@ export interface Act {
   planning: Option | undefined;
   normativeDocuments: Option[];
   sampleType: Option | undefined;
-  sample: Option[];
+  sample: string;
   preparation: Option[];
   goal: Option | undefined;
   definedIndicators: Option[];
-  additions: Option | undefined;
-  informationAboutSelection: Option | undefined;
+  additions: string;
+  informationAboutSelection: string;
   environmentalEngineer: Option | undefined;
   representative: Option | undefined;
   passedSample: Option | undefined;

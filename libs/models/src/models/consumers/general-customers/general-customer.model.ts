@@ -1,15 +1,14 @@
 import { ObjectType } from '@nestjs/graphql';
 import { Entity, OneToMany } from 'typeorm';
-import { GeneralCustomerEvent } from './general-customer-event.model';
-import { GeneralCustomerBase } from './general-customer-base.model';
+import { Act } from '../..';
+import { Consumer } from '../consumer.model';
 
 @Entity()
 @ObjectType()
-export class GeneralCustomer extends GeneralCustomerBase {
+export class GeneralCustomer extends Consumer {
   @OneToMany(
-    type => GeneralCustomerEvent,
-    events => events.payload,
-    { nullable: true },
+    type => Act,
+    act => act.generalCustomer,
   )
-  events: GeneralCustomerEvent[];
+  acts: Act[];
 }

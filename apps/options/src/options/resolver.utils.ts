@@ -1,10 +1,8 @@
 import {
-  Addition,
   ClimaticEnvironmental,
   DefinedIndicator,
   EnvironmentalEngineer,
   Goal,
-  InformationAboutSelection,
   Method,
   NormativeDocument,
   ObjectName,
@@ -21,12 +19,10 @@ import {
 import { OptionsService } from './options.service';
 
 const types = [
-  Addition,
   ClimaticEnvironmental,
   DefinedIndicator,
   EnvironmentalEngineer,
   Goal,
-  InformationAboutSelection,
   Method,
   NormativeDocument,
   ObjectName,
@@ -35,8 +31,8 @@ const types = [
   Planning,
   Preparation,
   Representative,
-  SampleType,
   Sample,
+  SampleType,
   ToolType,
   TypeOfSample,
 ];

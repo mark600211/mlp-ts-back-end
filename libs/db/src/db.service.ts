@@ -1,5 +1,9 @@
-import { EntityNotFound, TryCatchWrapperAsync } from '@app/models';
-import { Injectable, Logger } from '@nestjs/common';
+import {
+  DefinedIndicator,
+  EntityNotFound,
+  TryCatchWrapperAsync,
+} from '@app/models';
+import { Injectable, Logger, Type } from '@nestjs/common';
 import { Repository, getRepository, ObjectType, FindConditions } from 'typeorm';
 
 @Injectable()
@@ -19,13 +23,24 @@ export class DbService {
     }
   }
 
-  async findEntitiess<T>(entity: ObjectType<T>): Promise<T[]> {
+  async findEntitiess<T>(
+    entity: ObjectType<T>,
+    relations?: Array<keyof T & string>,
+  ): Promise<T[]> {
     this.logger.verbose('find-entities');
 
     try {
       const repository: Repository<T> = this.getRepository<T>(entity);
 
-      const entities = await repository.find();
+      let entities: T[];
+
+      if (relations) {
+        entities = await repository.find({
+          relations,
+        });
+      } else {
+        entities = await repository.find();
+      }
 
       return entities;
     } catch (error) {
@@ -39,6 +54,9 @@ export class DbService {
     try {
       const repository: Repository<T> = this.getRepository<T>(entity);
 
+      let res = this.getRepository(DefinedIndicator);
+      res.find({ where: {} });
+
       const newEntity = repository.save({ ...data });
 
       return newEntity;
@@ -48,22 +66,18 @@ export class DbService {
   }
 
   async updateEntityById<T extends U, U>(
-    entity: ObjectType<T>,
+    entity: Type<T>,
     data: U,
     id: string,
   ): Promise<T> {
     this.logger.verbose('update entity');
 
     try {
-      this.logger.log(data);
-
       const repository: Repository<T> = this.getRepository<T>(entity);
 
       const newEntity = await repository.save(data);
 
-      this.logger.log(newEntity);
-
-      if (!newEntity) throw new EntityNotFound<T>();
+      if (!newEntity) throw new EntityNotFound<T>(entity);
 
       return newEntity;
     } catch (error) {
@@ -73,7 +87,7 @@ export class DbService {
 
   @TryCatchWrapperAsync()
   async updateWhere<T extends D, W, D>(
-    entity: ObjectType<T>,
+    entity: Type<T>,
     where: W,
     data: D,
   ): Promise<T> {
@@ -81,13 +95,13 @@ export class DbService {
 
     const newEtity = await repository.save(data);
 
-    if (!newEtity) throw new EntityNotFound<T>();
+    if (!newEtity) throw new EntityNotFound<T>(entity);
 
     return newEtity;
   }
 
   async findEntityByIdWithException<T, R>(
-    entity: ObjectType<T>,
+    entity: Type<T>,
     id: string,
     relations?: Array<keyof T & string>,
   ): Promise<T> {
@@ -96,9 +110,9 @@ export class DbService {
     try {
       const repository = this.getRepository<T>(entity);
 
-      const newEntity = repository.findOne(id, { relations });
+      const newEntity = await repository.findOne(id, { relations });
 
-      if (!newEntity) throw new EntityNotFound<T>();
+      if (!newEntity) throw new EntityNotFound<T>(entity);
 
       return newEntity;
     } catch (error) {
@@ -138,7 +152,7 @@ export class DbService {
     return findedEntity;
   }
 
-  async deleteEntityById<T>(entity: ObjectType<T>, id: string): Promise<void> {
+  async deleteEntityById<T>(entity: Type<T>, id: string): Promise<void> {
     this.logger.verbose('delete entity');
 
     try {

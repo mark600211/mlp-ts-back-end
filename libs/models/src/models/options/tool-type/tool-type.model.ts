@@ -1,15 +1,15 @@
 import { ObjectType } from '@nestjs/graphql';
 import { Entity, OneToMany } from 'typeorm';
+import { Act } from '../..';
 import { ToolTypeBase } from './tool-type-base.model';
-import { ToolTypeEvent } from './tool-type-event.model';
 
 @Entity()
 @ObjectType()
 export class ToolType extends ToolTypeBase {
   @OneToMany(
-    type => ToolTypeEvent,
-    events => events.payload,
+    type => Act,
+    acts => acts.toolType,
     { nullable: true },
   )
-  events: ToolTypeEvent[];
+  acts: Act[];
 }

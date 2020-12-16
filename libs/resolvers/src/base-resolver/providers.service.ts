@@ -4,7 +4,7 @@ import { AbstractDataService } from './abstract-data.service';
 import { BaseResolver } from './base-resolver.resolver';
 import { getDataServiceToken, getResolverToken } from './token.service';
 
-function createResolverProvider(classRef: ObjectType<unknown>): Provider {
+function createResolverProvider(classRef: Type<any>): Provider {
   return {
     provide: getResolverToken(classRef.name),
     useClass: BaseResolver(classRef),
@@ -22,7 +22,7 @@ function createDataProvider(option: {
 }
 
 export function createResolverProviders(
-  classRefs: ObjectType<unknown>[],
+  classRefs: Type<unknown>[],
 ): Array<Provider> {
   return classRefs.map(option => createResolverProvider(option));
 }

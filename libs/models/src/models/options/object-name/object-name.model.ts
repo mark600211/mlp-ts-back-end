@@ -1,15 +1,5 @@
 import { ObjectType } from '@nestjs/graphql';
-import { Entity, OneToMany } from 'typeorm';
-import { ObjectNameBase } from './object-name-base.model';
-import { ObjectNameEvent } from './object-name-event.model';
+import { Option } from '../base-options.model';
 
-@Entity()
 @ObjectType()
-export class ObjectName extends ObjectNameBase {
-  @OneToMany(
-    type => ObjectNameEvent,
-    events => events.payload,
-    { nullable: true },
-  )
-  events: ObjectNameEvent[];
-}
+export class ObjectName extends Option {}

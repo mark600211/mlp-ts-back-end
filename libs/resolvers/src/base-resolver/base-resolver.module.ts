@@ -13,7 +13,7 @@ import { getDataServiceTokens, getResolverTokens } from './token.service';
 export class BaseResolverModule {
   static register(
     options: {
-      classRef: ObjectType<unknown>;
+      classRef: Type<unknown>;
       serviceDataRef: Type<AbstractDataService>;
       injectServices?: Type<unknown>[];
     }[],

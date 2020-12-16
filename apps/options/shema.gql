@@ -2,16 +2,6 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type Addition {
-  id: ID!
-  label: String!
-}
-
-type AdditionAct {
-  id: ID!
-  label: String!
-}
-
 input AddresInput {
   building: String
   city: String
@@ -39,16 +29,10 @@ type Application {
 }
 
 type ClimaticEnvironmental {
-  id: ID!
   label: String!
 }
 
-type ClimaticEnvironmentalAct {
-  id: ID!
-  label: String!
-}
-
-type CustomerAct {
+type Customer {
   address: Address!
   email: String
   fullname: String!
@@ -77,22 +61,12 @@ type DefinedIndicator {
   label: String!
 }
 
-type DefinedIndicatorsAct {
-  id: ID!
-  label: String!
-}
-
 type EnvironmentalEngineer {
   id: ID!
   label: String!
 }
 
-type EnvironmentalEngineerAct {
-  id: ID!
-  label: String!
-}
-
-type GeneralCustomerAct {
+type GeneralCustomer {
   address: Address!
   email: String
   fullname: String!
@@ -106,22 +80,7 @@ type Goal {
   label: String!
 }
 
-type GoalAct {
-  id: ID!
-  label: String!
-}
-
-type InformationAboutSelection {
-  id: ID!
-  label: String!
-}
-
-type InformationAboutSelectionAct {
-  id: ID!
-  label: String!
-}
-
-type LabAct {
+type Lab {
   address: Address!
   email: String
   fullname: String!
@@ -135,36 +94,27 @@ type Method {
   label: String!
 }
 
-type MethodAct {
-  id: ID!
-  label: String!
-}
-
 type Mutation {
-  createAddition(data: NewOption!): Addition!
-  createClimaticEnvironmental(data: NewOption!): ClimaticEnvironmental!
+  createClimaticEnvironmental(data: String!): ClimaticEnvironmental!
   createDefinedIndicator(data: NewDefinedIndicator!): DefinedIndicator!
   createEnvironmentalEngineer(data: NewOption!): EnvironmentalEngineer!
   createGoal(data: NewOption!): Goal!
-  createInformationAboutSelection(data: NewOption!): InformationAboutSelection!
   createMethod(data: NewOption!): Method!
   createNormativeDocument(data: NewOption!): NormativeDocument!
-  createObjectName(data: NewOption!): ObjectName!
+  createObjectName(data: String!): ObjectName!
   createPassedSample(data: NewOption!): PassedSample!
   createPlace(data: NewOption!): Place!
-  createPlanning(data: NewOption!): Planning!
+  createPlanning(data: String!): Planning!
   createPreparation(data: NewOption!): Preparation!
   createRepresentative(data: NewOption!): Representative!
-  createSample(data: NewOption!): Sample!
+  createSample(data: String!): Sample!
   createSampleType(data: NewOption!): SampleType!
   createToolType(data: NewOption!): ToolType!
   createTypeOfSample(data: NewOption!): TypeOfSample!
-  deleteByIdAddition(id: String!): Addition
   deleteByIdClimaticEnvironmental(id: String!): ClimaticEnvironmental
   deleteByIdDefinedIndicator(id: String!): DefinedIndicator
   deleteByIdEnvironmentalEngineer(id: String!): EnvironmentalEngineer
   deleteByIdGoal(id: String!): Goal
-  deleteByIdInformationAboutSelection(id: String!): InformationAboutSelection
   deleteByIdMethod(id: String!): Method
   deleteByIdNormativeDocument(id: String!): NormativeDocument
   deleteByIdObjectName(id: String!): ObjectName
@@ -177,30 +127,26 @@ type Mutation {
   deleteByIdSampleType(id: String!): SampleType
   deleteByIdToolType(id: String!): ToolType
   deleteByIdTypeOfSample(id: String!): TypeOfSample
-  updateAddition(data: PatchOption!, id: String!): Addition!
-  updateClimaticEnvironmental(data: PatchOption!, id: String!): ClimaticEnvironmental!
+  updateClimaticEnvironmental(data: String!, id: String!): ClimaticEnvironmental!
   updateDefinedIndicator(data: PatchDefinedIndicator!, id: String!): DefinedIndicator!
   updateEnvironmentalEngineer(data: PatchOption!, id: String!): EnvironmentalEngineer!
   updateGoal(data: PatchOption!, id: String!): Goal!
-  updateInformationAboutSelection(data: PatchOption!, id: String!): InformationAboutSelection!
   updateMethod(data: PatchOption!, id: String!): Method!
   updateNormativeDocument(data: PatchOption!, id: String!): NormativeDocument!
-  updateObjectName(data: PatchOption!, id: String!): ObjectName!
+  updateObjectName(data: String!, id: String!): ObjectName!
   updatePassedSample(data: PatchOption!, id: String!): PassedSample!
   updatePlace(data: PatchOption!, id: String!): Place!
-  updatePlanning(data: PatchOption!, id: String!): Planning!
+  updatePlanning(data: String!, id: String!): Planning!
   updatePreparation(data: PatchOption!, id: String!): Preparation!
   updateRepresentative(data: PatchOption!, id: String!): Representative!
-  updateSample(data: PatchOption!, id: String!): Sample!
+  updateSample(data: String!, id: String!): Sample!
   updateSampleType(data: PatchOption!, id: String!): SampleType!
   updateToolType(data: PatchOption!, id: String!): ToolType!
   updateTypeOfSample(data: PatchOption!, id: String!): TypeOfSample!
-  updateWhereAddition(data: String!, where: String!): Addition!
   updateWhereClimaticEnvironmental(data: String!, where: String!): ClimaticEnvironmental!
   updateWhereDefinedIndicator(data: String!, where: String!): DefinedIndicator!
   updateWhereEnvironmentalEngineer(data: String!, where: String!): EnvironmentalEngineer!
   updateWhereGoal(data: String!, where: String!): Goal!
-  updateWhereInformationAboutSelection(data: String!, where: String!): InformationAboutSelection!
   updateWhereMethod(data: String!, where: String!): Method!
   updateWhereNormativeDocument(data: String!, where: String!): NormativeDocument!
   updateWhereObjectName(data: String!, where: String!): ObjectName!
@@ -217,8 +163,8 @@ type Mutation {
 
 input NewDefinedIndicator {
   lab: String!
-  lable: String!
-  tos: String!
+  label: String!
+  typeOfSample: String!
 }
 
 input NewOption {
@@ -230,18 +176,7 @@ type NormativeDocument {
   label: String!
 }
 
-type NormativeDocumentAct {
-  id: ID!
-  label: String!
-}
-
 type ObjectName {
-  id: ID!
-  label: String!
-}
-
-type ObjectNameAct {
-  id: ID!
   label: String!
 }
 
@@ -250,16 +185,11 @@ type PassedSample {
   label: String!
 }
 
-type PassedSampleAct {
-  id: ID!
-  label: String!
-}
-
 input PatchDefinedIndicator {
   id: String!
   lab: String!
   label: String!
-  tos: String!
+  typeOfSample: String!
 }
 
 input PatchOption {
@@ -272,18 +202,7 @@ type Place {
   label: String!
 }
 
-type PlaceAct {
-  id: ID!
-  label: String!
-}
-
 type Planning {
-  id: ID!
-  label: String!
-}
-
-type PlanningAct {
-  id: ID!
   label: String!
 }
 
@@ -292,36 +211,27 @@ type Preparation {
   label: String!
 }
 
-type PreparationAct {
-  id: ID!
-  label: String!
-}
-
 type Query {
-  findAllAddition: [Addition!]!
-  findAllClimaticEnvironmental: [ClimaticEnvironmental!]!
-  findAllDefinedIndicator: [DefinedIndicator!]!
-  findAllEnvironmentalEngineer: [EnvironmentalEngineer!]!
-  findAllGoal: [Goal!]!
-  findAllInformationAboutSelection: [InformationAboutSelection!]!
-  findAllMethod: [Method!]!
-  findAllNormativeDocument: [NormativeDocument!]!
-  findAllObjectName: [ObjectName!]!
-  findAllPassedSample: [PassedSample!]!
-  findAllPlace: [Place!]!
-  findAllPlanning: [Planning!]!
-  findAllPreparation: [Preparation!]!
-  findAllRepresentative: [Representative!]!
-  findAllSample: [Sample!]!
-  findAllSampleType: [SampleType!]!
-  findAllToolType: [ToolType!]!
-  findAllTypeOfSample: [TypeOfSample!]!
-  findByIdAddition(id: String!): Addition!
+  findAllClimaticEnvironmental(field: String, relations: [String!]): [ClimaticEnvironmental!]!
+  findAllDefinedIndicator(field: String, relations: [String!]): [DefinedIndicator!]!
+  findAllEnvironmentalEngineer(field: String, relations: [String!]): [EnvironmentalEngineer!]!
+  findAllGoal(field: String, relations: [String!]): [Goal!]!
+  findAllMethod(field: String, relations: [String!]): [Method!]!
+  findAllNormativeDocument(field: String, relations: [String!]): [NormativeDocument!]!
+  findAllObjectName(field: String, relations: [String!]): [ObjectName!]!
+  findAllPassedSample(field: String, relations: [String!]): [PassedSample!]!
+  findAllPlace(field: String, relations: [String!]): [Place!]!
+  findAllPlanning(field: String, relations: [String!]): [Planning!]!
+  findAllPreparation(field: String, relations: [String!]): [Preparation!]!
+  findAllRepresentative(field: String, relations: [String!]): [Representative!]!
+  findAllSample(field: String, relations: [String!]): [Sample!]!
+  findAllSampleType(field: String, relations: [String!]): [SampleType!]!
+  findAllToolType(field: String, relations: [String!]): [ToolType!]!
+  findAllTypeOfSample(field: String, relations: [String!]): [TypeOfSample!]!
   findByIdClimaticEnvironmental(id: String!): ClimaticEnvironmental!
   findByIdDefinedIndicator(id: String!): DefinedIndicator!
   findByIdEnvironmentalEngineer(id: String!): EnvironmentalEngineer!
   findByIdGoal(id: String!): Goal!
-  findByIdInformationAboutSelection(id: String!): InformationAboutSelection!
   findByIdMethod(id: String!): Method!
   findByIdNormativeDocument(id: String!): NormativeDocument!
   findByIdObjectName(id: String!): ObjectName!
@@ -334,12 +244,10 @@ type Query {
   findByIdSampleType(id: String!): SampleType!
   findByIdToolType(id: String!): ToolType!
   findByIdTypeOfSample(id: String!): TypeOfSample!
-  findManyWhereAddition(where: String!): [Addition!]!
   findManyWhereClimaticEnvironmental(where: String!): [ClimaticEnvironmental!]!
-  findManyWhereDefinedIndicator(where: String!): [DefinedIndicator!]!
+  findManyWhereDefinedIndicator(where: WhereDefinedIndicator!): [DefinedIndicator!]!
   findManyWhereEnvironmentalEngineer(where: String!): [EnvironmentalEngineer!]!
   findManyWhereGoal(where: String!): [Goal!]!
-  findManyWhereInformationAboutSelection(where: String!): [InformationAboutSelection!]!
   findManyWhereMethod(where: String!): [Method!]!
   findManyWhereNormativeDocument(where: String!): [NormativeDocument!]!
   findManyWhereObjectName(where: String!): [ObjectName!]!
@@ -352,12 +260,10 @@ type Query {
   findManyWhereSampleType(where: String!): [SampleType!]!
   findManyWhereToolType(where: String!): [ToolType!]!
   findManyWhereTypeOfSample(where: String!): [TypeOfSample!]!
-  findOneWhereAddition(where: String!): Addition!
   findOneWhereClimaticEnvironmental(where: String!): ClimaticEnvironmental!
   findOneWhereDefinedIndicator(where: String!): DefinedIndicator!
   findOneWhereEnvironmentalEngineer(where: String!): EnvironmentalEngineer!
   findOneWhereGoal(where: String!): Goal!
-  findOneWhereInformationAboutSelection(where: String!): InformationAboutSelection!
   findOneWhereMethod(where: String!): Method!
   findOneWhereNormativeDocument(where: String!): NormativeDocument!
   findOneWhereObjectName(where: String!): ObjectName!
@@ -377,27 +283,11 @@ type Representative {
   label: String!
 }
 
-type RepresentativeAct {
-  id: ID!
-  label: String!
-}
-
 type Sample {
-  id: ID!
-  label: String!
-}
-
-type SampleAct {
-  id: ID!
   label: String!
 }
 
 type SampleType {
-  id: ID!
-  label: String!
-}
-
-type SampleTypeAct {
   id: ID!
   label: String!
 }
@@ -407,17 +297,12 @@ type ToolType {
   label: String!
 }
 
-type ToolTypeAct {
-  id: ID!
-  label: String!
-}
-
 type TypeOfSample {
   id: ID!
   label: String!
 }
 
-type TypeOfSampleAct {
-  id: ID!
-  label: String!
+input WhereDefinedIndicator {
+  lab: String!
+  typeOfSample: String!
 }

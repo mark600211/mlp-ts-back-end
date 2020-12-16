@@ -1,7 +1,8 @@
 import { EntitiesService } from '@app/commands';
 import {
+  Act,
   DefinedIndicatorRelations,
-  LabId,
+  Lab,
   NewDefinedIndicator,
   NewOption,
   Option,
@@ -11,7 +12,8 @@ import {
 } from '@app/models';
 import { PatchDefinedIndicator } from '@app/models/models/options/dto/patch-defined-indicator.dto';
 import { AbstractDataService } from '@app/resolvers/base-resolver/abstract-data.service';
-import { Injectable } from '@nestjs/common';
+import { Injectable, Type } from '@nestjs/common';
+import { raw } from 'express';
 
 @Injectable()
 export class OptionsService extends AbstractDataService {
@@ -23,14 +25,14 @@ export class OptionsService extends AbstractDataService {
   async newData(
     data: NewDefinedIndicator | NewOption,
   ): Promise<DefinedIndicatorRelations | Option> {
-    if (typeof data === typeof NewDefinedIndicator) {
+    if (data['lab']) {
       const newData = data as NewDefinedIndicator;
 
       const consumers = await this.getConsumers(newData);
 
       const updatedData: DefinedIndicatorRelations = {
         ...consumers,
-        label: newData.lable,
+        label: newData.label,
       };
 
       return updatedData;
@@ -45,7 +47,7 @@ export class OptionsService extends AbstractDataService {
   async updateData(
     data: PatchOption | PatchDefinedIndicator,
   ): Promise<DefinedIndicatorRelations | PatchOption> {
-    if (typeof data === typeof PatchDefinedIndicator) {
+    if (data['lab']) {
       const newData = data as PatchDefinedIndicator;
 
       const consumers = await this.getConsumers(newData);
@@ -62,17 +64,41 @@ export class OptionsService extends AbstractDataService {
   }
 
   @TryCatchWrapperAsync()
+  async createDistinctForOption<T>(
+    classRef: Type<T>,
+    field: string,
+  ): Promise<T[]> {
+    const repository = this.entities.getRepository(Act);
+
+    const raw = await repository
+      .createQueryBuilder('act')
+      .select(`act.${field}`, 'label')
+      .distinct()
+      .orderBy(`act.${field}`)
+      .getRawMany();
+
+    return raw.filter(r => r.label);
+  }
+
+  @TryCatchWrapperAsync()
+  async populateWhere(data: PatchDefinedIndicator | any) {
+    const where = await this.getConsumers(data);
+    return where;
+  }
+
+  @TryCatchWrapperAsync()
   async getConsumers(
     data: PatchDefinedIndicator | NewDefinedIndicator,
-  ): Promise<{ lab: LabId; typeOfSample: TypeOfSample }> {
-    const lab = await this.entities.findEntityByIdWithException(
-      LabId,
-      data.lab,
-    );
+  ): Promise<{ lab: Lab; typeOfSample: TypeOfSample }> {
+    console.log(data);
+
+    const lab = await this.entities.findEntityByIdWithException(Lab, data.lab);
+
+    console.log(lab);
 
     const typeOfSample = await this.entities.findEntityByIdWithException(
       TypeOfSample,
-      data.tos,
+      data.typeOfSample,
     );
 
     return {

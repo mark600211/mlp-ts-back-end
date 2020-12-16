@@ -1,15 +1,15 @@
 import { ObjectType } from '@nestjs/graphql';
 import { Entity, OneToMany } from 'typeorm';
+import { Act } from '../..';
 import { EnvironmentalEngineerBase } from './environmental-engineer-base.model';
-import { EnvironmentalEngineerEvent } from './environmental-engineer-event.model';
 
 @Entity()
 @ObjectType()
 export class EnvironmentalEngineer extends EnvironmentalEngineerBase {
   @OneToMany(
-    type => EnvironmentalEngineerEvent,
-    events => events.payload,
+    type => Act,
+    acts => acts.environmentalEngineer,
     { nullable: true },
   )
-  events: EnvironmentalEngineerEvent[];
+  acts: Act[];
 }

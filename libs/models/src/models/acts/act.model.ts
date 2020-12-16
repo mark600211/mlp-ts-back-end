@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/camelcase */
-import { Entity, Column, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 import { ObjectType, Field, ID } from '@nestjs/graphql';
-import { ActEvent } from './act-event.model';
 import { ActBase } from './act-base.model';
 
 export enum ActStatus {
@@ -23,10 +22,4 @@ export class Act extends ActBase {
   @Field(type => Boolean)
   @Column({ type: 'boolean', default: true })
   isCorrect: boolean;
-  @OneToMany(
-    type => ActEvent,
-    events => events.act,
-    { cascade: true },
-  )
-  events?: ActEvent[];
 }

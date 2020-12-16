@@ -8,7 +8,7 @@ import { ConsumersModule } from './modules/consumers/consumers.module';
 import { ApplicationModule } from './modules/application/application.module';
 import { DbModule } from '@app/db';
 import { ProtoModule } from '@app/proto';
-import { Modules } from '@app/models';
+import { ModelsModule, Modules } from '@app/models';
 
 @Module({
   imports: [

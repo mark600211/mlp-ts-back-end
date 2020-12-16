@@ -1,23 +1,31 @@
 /* eslint-disable @typescript-eslint/camelcase */
 import { DbService } from '@app/db';
 import { EventDto, TryCatchWrapper, TryCatchWrapperAsync } from '@app/models';
-import { Inject, Injectable } from '@nestjs/common';
-import { FindConditions, ObjectType } from 'typeorm';
+import { Inject, Injectable, Type } from '@nestjs/common';
+import { FindConditions, ObjectType, Repository } from 'typeorm';
 
 @Injectable()
 export class EntitiesService {
   constructor(@Inject(DbService) private readonly service: DbService) {}
 
   @TryCatchWrapper()
-  findEntities<T>(entity: ObjectType<T>): Promise<T[]> {
-    return this.service.findEntitiess(entity);
+  getRepository<T>(classRef: Type<T>): Repository<T> {
+    return this.service.getRepository(classRef);
+  }
+
+  @TryCatchWrapper()
+  findEntities<T>(
+    entity: Type<T>,
+    relations?: Array<keyof T & string>,
+  ): Promise<T[]> {
+    return this.service.findEntitiess(entity, relations);
   }
 
   @TryCatchWrapper()
   findEntityByIdWithException<T>(
-    entity: ObjectType<T>,
+    entity: Type<T>,
     id: string,
-    relations?: Array<keyof T & string>
+    relations?: Array<keyof T & string>,
   ): Promise<T> {
     return this.service.findEntityByIdWithException(entity, id, relations);
   }
@@ -39,7 +47,7 @@ export class EntitiesService {
     order: { [P in keyof T]?: 'ASC' | 'DESC' },
     take: number,
   ): Promise<T[]> {
-    return this.findWhereOrederedTaken(entity, where, order, take);
+    return this.service.findWhereOrederedTaken(entity, where, order, take);
   }
 
   @TryCatchWrapper()
@@ -49,7 +57,7 @@ export class EntitiesService {
 
   @TryCatchWrapper()
   updateEntityById<T extends U, U>(
-    entity: ObjectType<T>,
+    entity: Type<T>,
     data: U,
     id: string,
   ): Promise<T> {
@@ -58,7 +66,7 @@ export class EntitiesService {
 
   @TryCatchWrapper()
   updateWere<T extends D, W, D>(
-    entity: ObjectType<T>,
+    entity: Type<T>,
     where: W,
     data: D,
   ): Promise<T> {
@@ -105,7 +113,7 @@ export class EntitiesService {
 
   @TryCatchWrapperAsync()
   async updateEntityByIdWithEvent<T extends U, U, E>(
-    entity: ObjectType<T>,
+    entity: Type<T>,
     data: U,
     id: string,
     eventEntity: ObjectType<E>,
@@ -143,7 +151,7 @@ export class EntitiesService {
   }
 
   @TryCatchWrapper()
-  deleteEntityById<T>(entity: ObjectType<T>, id: string): void {
+  deleteEntityById<T>(entity: Type<T>, id: string): void {
     this.service.deleteEntityById(entity, id);
   }
 }

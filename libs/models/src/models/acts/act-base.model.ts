@@ -11,26 +11,20 @@ import {
 } from 'typeorm';
 import { ObjectType, Field } from '@nestjs/graphql';
 
-import { CustomerAct, LabAct, GeneralCustomerAct } from '../consumers';
+import { Customer, Lab, GeneralCustomer } from '../consumers';
 import {
-  AdditionAct,
-  ClimaticEnvironmentalAct,
-  DefinedIndicatorsAct,
-  EnvironmentalEngineerAct,
-  GoalAct,
-  InformationAboutSelectionAct,
-  MethodAct,
-  NormativeDocumentAct,
-  ObjectNameAct,
-  PassedSampleAct,
-  PlaceAct,
-  PlanningAct,
-  PreparationAct,
-  RepresentativeAct,
-  SampleAct,
-  SampleTypeAct,
-  ToolTypeAct,
-  TypeOfSampleAct,
+  DefinedIndicator,
+  EnvironmentalEngineer,
+  Goal,
+  Method,
+  NormativeDocument,
+  PassedSample,
+  Place,
+  Preparation,
+  Representative,
+  SampleType,
+  ToolType,
+  TypeOfSample,
 } from '../options';
 import { DateAndTime } from '../date-time.model';
 import { Application } from '../application';
@@ -41,149 +35,128 @@ export class ActBase {
   @Field(type => String)
   @Column()
   name: string;
-  @Field(type => CustomerAct)
+  @Field(type => Customer)
   @ManyToOne(
-    type => CustomerAct,
+    type => Customer,
     coustomer => coustomer.acts,
-    { cascade: true, onUpdate: 'CASCADE', eager: true },
+    { cascade: true, onUpdate: 'CASCADE' },
   )
-  customer: CustomerAct;
-  @Field(type => GeneralCustomerAct)
+  customer: Customer;
+  @Field(type => GeneralCustomer)
   @ManyToOne(
-    type => GeneralCustomerAct,
+    type => GeneralCustomer,
     general_customer => general_customer.acts,
-    { cascade: true, onUpdate: 'CASCADE', eager: true },
+    { cascade: true, onUpdate: 'CASCADE' },
   )
-  generalCustomer: GeneralCustomerAct;
-  @Field(type => LabAct)
+  generalCustomer: GeneralCustomer;
+  @Field(type => Lab)
   @ManyToOne(
-    type => LabAct,
+    type => Lab,
     lab => lab.acts,
-    { cascade: true, onUpdate: 'CASCADE', eager: true },
+    { cascade: true, onUpdate: 'CASCADE' },
   )
-  lab: LabAct;
-  @Field(type => TypeOfSampleAct)
+  lab: Lab;
+  @Field(type => TypeOfSample)
   @ManyToOne(
-    type => TypeOfSampleAct,
+    type => TypeOfSample,
     tos => tos.acts,
-    { cascade: true, eager: true },
+    { cascade: true },
   )
-  typeOfSample: TypeOfSampleAct;
+  typeOfSample: TypeOfSample;
+  @Field()
+  @Column('text', { nullable: true })
+  objectName?: string;
   @Field()
   @ManyToOne(
-    type => ObjectNameAct,
-    objectName => objectName.acts,
-    { cascade: true, eager: true },
-  )
-  objectName?: ObjectNameAct;
-  @Field()
-  @ManyToOne(
-    type => PlaceAct,
+    type => Place,
     place => place.acts,
-    { cascade: true, eager: true },
+    { cascade: true },
   )
-  place?: PlaceAct;
+  place?: Place;
   @Field(type => DateAndTime)
   @Column(type => DateAndTime)
   datetime: DateAndTime;
   @Field()
   @ManyToOne(
-    type => MethodAct,
+    type => Method,
     method => method.acts,
-    { cascade: true, eager: true },
+    { cascade: true },
   )
-  method?: MethodAct;
+  method?: Method;
   @Field()
   @ManyToOne(
-    type => ToolTypeAct,
+    type => ToolType,
     toolType => toolType.acts,
-    { cascade: true, eager: true },
+    { cascade: true },
   )
-  toolType?: ToolTypeAct;
+  toolType?: ToolType;
   @Field()
-  @ManyToOne(
-    type => ClimaticEnvironmentalAct,
-    climaticEnvironmental => climaticEnvironmental.acts,
-    { cascade: true, eager: true },
-  )
-  climaticEnvironmental?: ClimaticEnvironmentalAct;
+  @Column('text', { nullable: true })
+  climaticEnvironmental?: string;
   @Field()
-  @ManyToOne(
-    type => PlanningAct,
-    planningAct => planningAct.acts,
-    { cascade: true, eager: true },
-  )
-  planning?: PlanningAct;
-  @Field(type => [NormativeDocumentAct])
-  @ManyToMany(() => NormativeDocumentAct, { cascade: true, eager: true })
+  @Column('text', { nullable: true })
+  planning?: string;
+  @Field(type => [NormativeDocument])
+  @ManyToMany(() => NormativeDocument, { cascade: true })
   @JoinTable()
-  normativeDocuments?: NormativeDocumentAct[];
+  normativeDocuments?: NormativeDocument[];
   @Field()
   @ManyToOne(
-    type => SampleTypeAct,
+    type => SampleType,
     sampleType => sampleType.acts,
-    { cascade: true, eager: true },
+    { cascade: true },
   )
-  sampleType?: SampleTypeAct;
-  @Field(type => [SampleAct])
-  @ManyToMany(() => SampleAct, { cascade: true, eager: true })
+  sampleType?: SampleType;
+  @Field(type => String)
+  @Column('text', { nullable: true })
+  sample?: string;
+  @Field(type => [Preparation])
+  @ManyToMany(() => Preparation, { cascade: true })
   @JoinTable()
-  sample?: SampleAct[];
-  @Field(type => [PreparationAct])
-  @ManyToMany(() => PreparationAct, { cascade: true, eager: true })
-  @JoinTable()
-  preparation?: PreparationAct[];
+  preparation?: Preparation[];
   @Field()
   @ManyToOne(
-    type => GoalAct,
+    type => Goal,
     goalAct => goalAct.acts,
-    { cascade: true, eager: true },
+    { cascade: true },
   )
-  goal?: GoalAct;
-  @Field(type => [DefinedIndicatorsAct])
-  @ManyToMany(() => DefinedIndicatorsAct, { cascade: true, eager: true })
+  goal?: Goal;
+  @Field(type => [DefinedIndicator])
+  @ManyToMany(() => DefinedIndicator, { cascade: true })
   @JoinTable()
-  definedIndicators?: DefinedIndicatorsAct[];
+  definedIndicators?: DefinedIndicator[];
+  @Field()
+  @Column('text', { nullable: true })
+  additions?: string;
+  @Field()
+  @Column('text', { nullable: true })
+  informationAboutSelection?: string;
   @Field()
   @ManyToOne(
-    type => AdditionAct,
-    additions => additions.acts,
-    { cascade: true, eager: true },
-  )
-  additions?: AdditionAct;
-  @Field()
-  @ManyToOne(
-    type => InformationAboutSelectionAct,
-    informationAboutSelection => informationAboutSelection.acts,
-    { cascade: true, eager: true },
-  )
-  informationAboutSelection?: InformationAboutSelectionAct;
-  @Field()
-  @ManyToOne(
-    type => EnvironmentalEngineerAct,
+    type => EnvironmentalEngineer,
     environmentalEngineer => environmentalEngineer.acts,
-    { cascade: true, eager: true },
+    { cascade: true },
   )
-  environmentalEngineer?: EnvironmentalEngineerAct;
+  environmentalEngineer?: EnvironmentalEngineer;
   @Field()
   @ManyToOne(
-    type => RepresentativeAct,
+    type => Representative,
     representative => representative.acts,
-    { cascade: true, eager: true },
+    { cascade: true },
   )
-  representative?: RepresentativeAct;
+  representative?: Representative;
   @Field()
   @ManyToOne(
-    type => PassedSampleAct,
+    type => PassedSample,
     passedSample => passedSample.acts,
-    { cascade: true, eager: true },
+    { cascade: true },
   )
-  passedSample?: PassedSampleAct;
+  passedSample?: PassedSample;
   @Field(type => [Application])
   @OneToMany(
     type => Application,
     applications => applications.act,
-    { deferrable: 'INITIALLY DEFERRED', eager: true },
+    { deferrable: 'INITIALLY DEFERRED' },
   )
   applications?: Application[];
   @CreateDateColumn()

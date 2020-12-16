@@ -3,38 +3,33 @@
 # ------------------------------------------------------
 
 type Act {
-  additions: AdditionAct!
+  additions: String!
   applications: [Application!]!
-  climaticEnvironmental: ClimaticEnvironmentalAct!
-  customer: CustomerAct!
+  climaticEnvironmental: String!
+  customer: Customer!
   datetime: DateAndTime!
-  definedIndicators: [DefinedIndicatorsAct!]!
-  environmentalEngineer: EnvironmentalEngineerAct!
-  generalCustomer: GeneralCustomerAct!
-  goal: GoalAct!
+  definedIndicators: [DefinedIndicator!]!
+  environmentalEngineer: EnvironmentalEngineer!
+  generalCustomer: GeneralCustomer!
+  goal: Goal!
   id: ID!
-  informationAboutSelection: InformationAboutSelectionAct!
+  informationAboutSelection: String!
   isCorrect: Boolean!
-  lab: LabAct!
-  method: MethodAct!
+  lab: Lab!
+  method: Method!
   name: String!
-  normativeDocuments: [NormativeDocumentAct!]!
-  objectName: ObjectNameAct!
-  passedSample: PassedSampleAct!
-  place: PlaceAct!
-  planning: PlanningAct!
-  preparation: [PreparationAct!]!
-  representative: RepresentativeAct!
-  sample: [SampleAct!]!
-  sampleType: SampleTypeAct!
+  normativeDocuments: [NormativeDocument!]!
+  objectName: String!
+  passedSample: PassedSample!
+  place: Place!
+  planning: String!
+  preparation: [Preparation!]!
+  representative: Representative!
+  sample: String!
+  sampleType: SampleType!
   status: String!
-  toolType: ToolTypeAct!
-  typeOfSample: TypeOfSampleAct!
-}
-
-type AdditionAct {
-  id: ID!
-  label: String!
+  toolType: ToolType!
+  typeOfSample: TypeOfSample!
 }
 
 input AddresInput {
@@ -69,12 +64,7 @@ input ApplicationInput {
   place: String!
 }
 
-type ClimaticEnvironmentalAct {
-  id: ID!
-  label: String!
-}
-
-type CustomerAct {
+type Customer {
   address: Address!
   email: String
   fullname: String!
@@ -98,17 +88,17 @@ input DateTimeInput {
   time: String!
 }
 
-type DefinedIndicatorsAct {
+type DefinedIndicator {
   id: ID!
   label: String!
 }
 
-type EnvironmentalEngineerAct {
+type EnvironmentalEngineer {
   id: ID!
   label: String!
 }
 
-type GeneralCustomerAct {
+type GeneralCustomer {
   address: Address!
   email: String
   fullname: String!
@@ -117,17 +107,12 @@ type GeneralCustomerAct {
   tel: String
 }
 
-type GoalAct {
+type Goal {
   id: ID!
   label: String!
 }
 
-type InformationAboutSelectionAct {
-  id: ID!
-  label: String!
-}
-
-type LabAct {
+type Lab {
   address: Address!
   email: String
   fullname: String!
@@ -136,7 +121,7 @@ type LabAct {
   tel: String
 }
 
-type MethodAct {
+type Method {
   id: ID!
   label: String!
 }
@@ -144,16 +129,12 @@ type MethodAct {
 type Mutation {
   createAct(data: NewActDto!): Act!
   createApplication(data: PatchAppDto!): Application!
-  createTest(data: String!): Test!
   deleteByIdAct(id: String!): Act
   deleteByIdApplication(id: String!): Application
-  deleteByIdTest(id: String!): Test
   updateAct(data: PatchActDto!, id: String!): Act!
   updateApplication(data: PatchAppDto!, id: String!): Application!
-  updateTest(data: String!, id: String!): Test!
   updateWhereAct(data: String!, where: String!): Act!
   updateWhereApplication(data: String!, where: String!): Application!
-  updateWhereTest(data: String!, where: String!): Test!
 }
 
 input NewActDto {
@@ -177,23 +158,18 @@ input NewActDto {
   planning: String
   preparation: [String!]
   representative: String
-  sample: [String!]
+  sample: String
   sampleType: String
   toolType: String
   typeOfSample: String!
 }
 
-type NormativeDocumentAct {
+type NormativeDocument {
   id: ID!
   label: String!
 }
 
-type ObjectNameAct {
-  id: ID!
-  label: String!
-}
-
-type PassedSampleAct {
+type PassedSample {
   id: ID!
   label: String!
 }
@@ -220,7 +196,7 @@ input PatchActDto {
   planning: String
   preparation: [String!]
   representative: String
-  sample: [String!]
+  sample: String
   sampleType: String
   toolType: String
   typeOfSample: String
@@ -231,62 +207,68 @@ input PatchAppDto {
   place: String!
 }
 
-type PlaceAct {
+type Place {
   id: ID!
   label: String!
 }
 
-type PlanningAct {
-  id: ID!
-  label: String!
-}
-
-type PreparationAct {
+type Preparation {
   id: ID!
   label: String!
 }
 
 type Query {
-  findAllAct: [Act!]!
-  findAllApplication: [Application!]!
-  findAllTest: [Test!]!
+  findAllAct(field: String, relations: [String!]): [Act!]!
+  findAllApplication(field: String, relations: [String!]): [Application!]!
   findByIdAct(id: String!): Act!
   findByIdApplication(id: String!): Application!
-  findByIdTest(id: String!): Test!
   findManyWhereAct(where: String!): [Act!]!
   findManyWhereApplication(where: String!): [Application!]!
-  findManyWhereTest(where: String!): [Test!]!
   findOneWhereAct(where: String!): Act!
   findOneWhereApplication(where: String!): Application!
-  findOneWhereTest(where: String!): Test!
+  getTableContent(conditions: TableConditions!): TableContent!
 }
 
-type RepresentativeAct {
+type Representative {
   id: ID!
   label: String!
 }
 
-type SampleAct {
+type SampleType {
   id: ID!
   label: String!
 }
 
-type SampleTypeAct {
+input TableConditions {
+  dateRangeEnd: DateTime
+  dateRangeStart: DateTime
+  skip: Int!
+  sort: String
+  sortDirection: String
+  take: Int!
+  wheres: [Where!]
+}
+
+type TableContent {
+  acts: [Act!]!
+  totalCount: Int!
+  uniqCustomers: [ID!]!
+  uniqGeneralCustomers: [ID!]!
+  uniqLabs: [ID!]!
+  uniqTypeOfSamples: [ID!]!
+}
+
+type ToolType {
   id: ID!
   label: String!
 }
 
-type Test {
-  id: ID!
-  test: String!
-}
-
-type ToolTypeAct {
+type TypeOfSample {
   id: ID!
   label: String!
 }
 
-type TypeOfSampleAct {
-  id: ID!
-  label: String!
+input Where {
+  ids: [ID!]!
+  relation: String!
 }

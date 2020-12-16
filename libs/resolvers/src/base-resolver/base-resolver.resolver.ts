@@ -1,26 +1,15 @@
 import { Type } from '@nestjs/common';
-import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { Args, Context, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { TryCatchWrapperAsync } from '@app/models';
 import { AbstractDataService } from './abstract-data.service';
 import { ObjectType } from 'typeorm';
 import { EntitiesService } from 'libs/commands/src';
 import { dataService } from './data-service.decorator';
 
-export function BaseResolver<
-  T extends ObjectType<T>,
-  ND extends Type<unknown>,
-  UD extends Type<unknown>,
-  E extends ObjectType<E>,
-  FM extends Type<unknown>,
-  FO extends Type<unknown>,
-  UWW extends Type<unknown>,
-  UWD extends Type<unknown>
->(
-  classRef: T,
+export function BaseResolver<T extends UWD, ND, UD, FM, FO, UWW, UWD>(
+  classRef: Type<T>,
   newDataDto?: ND,
   updateDataDto?: UD,
-  eventCondition = false,
-  eventClassRef?: E,
   findManyWhereDto?: FM,
   findOneWhereDto?: FO,
   updateWhereDto?: UWW,
@@ -35,8 +24,21 @@ export function BaseResolver<
 
     @Query(type => [classRef], { name: `findAll${classRef.name}` })
     @TryCatchWrapperAsync()
-    async findAll(): Promise<T[]> {
-      return await this.entities.findEntities(classRef);
+    async findAll(
+      @Args('field', { nullable: true }) field: string,
+      @Args('relations', { nullable: true, type: () => [String] })
+      relations: string[],
+    ): Promise<T[]> {
+      if (field) {
+        return this.service.createDistinctForOption(classRef, field);
+      }
+
+      const entities = await this.entities.findEntities(
+        classRef,
+        relations as Array<keyof T & string>,
+      );
+
+      return entities;
     }
 
     @Query(type => classRef, { name: `findById${classRef.name}` })
@@ -53,7 +55,9 @@ export function BaseResolver<
       })
       where: FM,
     ): Promise<T[]> {
-      return await this.entities.findManyWhere(classRef, where);
+      const populateWhere = await this.service.populateWhere(where);
+
+      return await this.entities.findManyWhere(classRef, populateWhere);
     }
 
     @Query(type => classRef, { name: `findOneWhere${classRef.name}` })
@@ -75,15 +79,7 @@ export function BaseResolver<
     ): Promise<T> {
       const newData = await this.service.newData(data);
 
-      if (eventCondition) {
-        return this.entities.createEntityWithEvent(
-          classRef,
-          newData,
-          eventClassRef,
-        );
-      } else {
-        return await this.entities.createEntity(classRef, newData);
-      }
+      return await this.entities.createEntity(classRef, newData);
     }
 
     @Mutation(type => classRef, { name: `update${classRef.name}` })
@@ -95,16 +91,7 @@ export function BaseResolver<
     ): Promise<T> {
       const updateData = await this.service.updateData(data);
 
-      if (eventCondition) {
-        return this.entities.updateEntityByIdWithEvent(
-          classRef,
-          updateData,
-          id,
-          eventClassRef,
-        );
-      } else {
-        return await this.entities.updateEntityById(classRef, updateData, id);
-      }
+      return await this.entities.updateEntityById(classRef, updateData, id);
     }
 
     @Mutation(type => classRef, { name: `updateWhere${classRef.name}` })

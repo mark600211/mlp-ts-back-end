@@ -1,15 +1,15 @@
 import { ObjectType } from '@nestjs/graphql';
-import { Entity, OneToMany } from 'typeorm';
+import { Entity, ManyToMany } from 'typeorm';
+import { Act } from '../..';
 import { SampleTypeBase } from './sample-type-base.model';
-import { SampleTypeEvent } from './sample-type-event.model';
 
 @Entity()
 @ObjectType()
 export class SampleType extends SampleTypeBase {
-  @OneToMany(
-    type => SampleTypeEvent,
-    events => events.payload,
+  @ManyToMany(
+    type => Act,
+    acts => acts.sampleType,
     { nullable: true },
   )
-  events: SampleTypeEvent[];
+  acts: Act[];
 }

@@ -2,11 +2,6 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type AdditionAct {
-  id: ID!
-  label: String!
-}
-
 input AddresInput {
   building: String
   city: String
@@ -33,11 +28,6 @@ type Application {
   place: String!
 }
 
-type ClimaticEnvironmentalAct {
-  id: ID!
-  label: String!
-}
-
 input CreateConsumerDto {
   address: AddresInput
   email: String
@@ -47,15 +37,6 @@ input CreateConsumerDto {
 }
 
 type Customer {
-  address: Address!
-  email: String
-  fullname: String!
-  id: ID!
-  label: String!
-  tel: String
-}
-
-type CustomerAct {
   address: Address!
   email: String
   fullname: String!
@@ -79,12 +60,12 @@ input DateTimeInput {
   time: String!
 }
 
-type DefinedIndicatorsAct {
+type DefinedIndicator {
   id: ID!
   label: String!
 }
 
-type EnvironmentalEngineerAct {
+type EnvironmentalEngineer {
   id: ID!
   label: String!
 }
@@ -98,21 +79,7 @@ type GeneralCustomer {
   tel: String
 }
 
-type GeneralCustomerAct {
-  address: Address!
-  email: String
-  fullname: String!
-  id: ID!
-  label: String!
-  tel: String
-}
-
-type GoalAct {
-  id: ID!
-  label: String!
-}
-
-type InformationAboutSelectionAct {
+type Goal {
   id: ID!
   label: String!
 }
@@ -126,16 +93,7 @@ type Lab {
   tel: String
 }
 
-type LabAct {
-  address: Address!
-  email: String
-  fullname: String!
-  id: ID!
-  label: String!
-  tel: String
-}
-
-type MethodAct {
+type Method {
   id: ID!
   label: String!
 }
@@ -155,17 +113,12 @@ type Mutation {
   updateWhereLab(data: String!, where: String!): Lab!
 }
 
-type NormativeDocumentAct {
+type NormativeDocument {
   id: ID!
   label: String!
 }
 
-type ObjectNameAct {
-  id: ID!
-  label: String!
-}
-
-type PassedSampleAct {
+type PassedSample {
   id: ID!
   label: String!
 }
@@ -179,25 +132,20 @@ input PatchConsumerDto {
   tel: String
 }
 
-type PlaceAct {
+type Place {
   id: ID!
   label: String!
 }
 
-type PlanningAct {
-  id: ID!
-  label: String!
-}
-
-type PreparationAct {
+type Preparation {
   id: ID!
   label: String!
 }
 
 type Query {
-  findAllCustomer: [Customer!]!
-  findAllGeneralCustomer: [GeneralCustomer!]!
-  findAllLab: [Lab!]!
+  findAllCustomer(field: String, relations: [String!]): [Customer!]!
+  findAllGeneralCustomer(field: String, relations: [String!]): [GeneralCustomer!]!
+  findAllLab(field: String, relations: [String!]): [Lab!]!
   findByIdCustomer(id: String!): Customer!
   findByIdGeneralCustomer(id: String!): GeneralCustomer!
   findByIdLab(id: String!): Lab!
@@ -209,27 +157,22 @@ type Query {
   findOneWhereLab(where: String!): Lab!
 }
 
-type RepresentativeAct {
+type Representative {
   id: ID!
   label: String!
 }
 
-type SampleAct {
+type SampleType {
   id: ID!
   label: String!
 }
 
-type SampleTypeAct {
+type ToolType {
   id: ID!
   label: String!
 }
 
-type ToolTypeAct {
-  id: ID!
-  label: String!
-}
-
-type TypeOfSampleAct {
+type TypeOfSample {
   id: ID!
   label: String!
 }
