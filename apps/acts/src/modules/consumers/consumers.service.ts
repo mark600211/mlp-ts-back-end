@@ -1,10 +1,9 @@
 import { EntitiesService } from '@app/commands';
 import {
-  Act,
-  Application,
   ApplicationBase,
   NewActDto,
-  TryCatchWrapper,
+  PatchAppDto,
+  Place,
   TryCatchWrapperAsync,
 } from '@app/models';
 import { Injectable, Logger } from '@nestjs/common';
@@ -32,8 +31,6 @@ export class ConsumersService {
             const entityType = switcher.entityType as any;
 
             if (data[key] && !Array.isArray(data[key])) {
-              this.logger.log(entityType);
-
               const consumer = await this.entities.findEntityByIdWithException(
                 entityType,
                 data[key],
@@ -51,13 +48,27 @@ export class ConsumersService {
 
               const consumerArr: any[] = data[key];
 
-              if (consumerArr[0] instanceof ApplicationBase) {
-                consumerArr.forEach(async (app: ApplicationBase) => {
+              if (consumerArr[0].place) {
+                consumerArr.forEach(async (app: PatchAppDto) => {
                   try {
                     if (app) {
+                      const place = await this.entities.findEntityByIdWithException(
+                        Place,
+                        app.place,
+                      );
+                      const data = {
+                        id: app.id,
+                        datetime: app.datetime,
+                        place,
+                      } as ApplicationBase;
+
+                      console.log('application');
+
+                      console.log(data);
+
                       const consumer = await this.entities.updateEntityById(
-                        Application,
-                        app,
+                        ApplicationBase,
+                        data,
                         app.id,
                       );
                       consumerFoundArr.push(consumer);
@@ -74,7 +85,6 @@ export class ConsumersService {
                         entityType,
                         id,
                       );
-
                       consumerFoundArr.push(consumer);
                     }
                   } catch (error) {

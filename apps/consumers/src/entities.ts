@@ -1,6 +1,6 @@
 import {
   Act,
-  Application,
+  ApplicationBase,
   Customer,
   DefinedIndicator,
   EnvironmentalEngineer,
@@ -20,7 +20,7 @@ import {
 
 export const Entities = [
   Act,
-  Application,
+  ApplicationBase,
   Customer,
   GeneralCustomer,
   Lab,

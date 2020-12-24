@@ -47,20 +47,7 @@ export class OptionsService extends AbstractDataService {
   async updateData(
     data: PatchOption | PatchDefinedIndicator,
   ): Promise<DefinedIndicatorRelations | PatchOption> {
-    if (data['lab']) {
-      const newData = data as PatchDefinedIndicator;
-
-      const consumers = await this.getConsumers(newData);
-
-      const updateData: DefinedIndicatorRelations = {
-        ...consumers,
-        label: newData.label,
-      };
-
-      return updateData;
-    } else {
-      return data as PatchOption;
-    }
+    return data;
   }
 
   @TryCatchWrapperAsync()
@@ -88,13 +75,9 @@ export class OptionsService extends AbstractDataService {
 
   @TryCatchWrapperAsync()
   async getConsumers(
-    data: PatchDefinedIndicator | NewDefinedIndicator,
+    data: NewDefinedIndicator,
   ): Promise<{ lab: Lab; typeOfSample: TypeOfSample }> {
-    console.log(data);
-
     const lab = await this.entities.findEntityByIdWithException(Lab, data.lab);
-
-    console.log(lab);
 
     const typeOfSample = await this.entities.findEntityByIdWithException(
       TypeOfSample,

@@ -1,6 +1,5 @@
 import { TypeKey } from './enum/type-key';
 import {
-  Application,
   ApplicationBase,
   Consumer,
   Customer,
@@ -40,7 +39,7 @@ export class SwitchTypes {
     | typeof EnvironmentalEngineer
     | typeof Representative
     | typeof PassedSample
-    | typeof Application;
+    | typeof ApplicationBase;
 
   dataType: Consumer | Option | ApplicationBase | DefinedIndicator;
 
@@ -112,7 +111,7 @@ export class SwitchTypes {
         this.dataType = new Option();
         break;
       case TypeKey.APPLICATION:
-        this.entityType = Application;
+        this.entityType = ApplicationBase;
         this.dataType = new ApplicationBase();
         break;
     }

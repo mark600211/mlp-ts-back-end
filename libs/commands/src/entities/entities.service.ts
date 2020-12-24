@@ -22,6 +22,15 @@ export class EntitiesService {
   }
 
   @TryCatchWrapper()
+  findManyByIds<T>(
+    entity: Type<T>,
+    ids: string[],
+    relations: Array<keyof T & string>,
+  ): Promise<T[]> {
+    return this.service.findManyByIds(entity, ids, relations);
+  }
+
+  @TryCatchWrapper()
   findEntityByIdWithException<T>(
     entity: Type<T>,
     id: string,
@@ -53,6 +62,11 @@ export class EntitiesService {
   @TryCatchWrapper()
   createEntity<T extends U, U>(entity: ObjectType<T>, data: U): Promise<T> {
     return this.service.creatEntity(entity, data);
+  }
+
+  @TryCatchWrapper()
+  saveEntity<T, U>(entity: Type<T>, data: U): Promise<T> {
+    return this.service.saveEntity(entity, data);
   }
 
   @TryCatchWrapper()

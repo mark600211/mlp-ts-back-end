@@ -22,10 +22,16 @@ type Address {
   zip: String
 }
 
-type Application {
-  datetime: DateAndTime!
+type ApplicationBase {
+  datetime: DateAndTime
   id: ID!
-  place: String!
+  place: Place
+}
+
+input ApplicationInput {
+  datetime: DateTimeInput
+  id: ID!
+  place: InputPlace
 }
 
 input CreateConsumerDto {
@@ -46,8 +52,8 @@ type Customer {
 }
 
 type DateAndTime {
-  date: DateTime!
-  time: String!
+  date: DateTime
+  time: String
 }
 
 """
@@ -56,8 +62,8 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 scalar DateTime
 
 input DateTimeInput {
-  date: DateTime!
-  time: String!
+  date: DateTime
+  time: String
 }
 
 type DefinedIndicator {
@@ -82,6 +88,10 @@ type GeneralCustomer {
 type Goal {
   id: ID!
   label: String!
+}
+
+input InputPlace {
+  id: ID!
 }
 
 type Lab {
@@ -146,9 +156,12 @@ type Query {
   findAllCustomer(field: String, relations: [String!]): [Customer!]!
   findAllGeneralCustomer(field: String, relations: [String!]): [GeneralCustomer!]!
   findAllLab(field: String, relations: [String!]): [Lab!]!
-  findByIdCustomer(id: String!): Customer!
-  findByIdGeneralCustomer(id: String!): GeneralCustomer!
-  findByIdLab(id: String!): Lab!
+  findByIdCustomer(id: String!, relations: [String!]): Customer!
+  findByIdGeneralCustomer(id: String!, relations: [String!]): GeneralCustomer!
+  findByIdLab(id: String!, relations: [String!]): Lab!
+  findManyByIdsCustomer(ids: [String!]!, relations: [String!]): [Customer!]!
+  findManyByIdsGeneralCustomer(ids: [String!]!, relations: [String!]): [GeneralCustomer!]!
+  findManyByIdsLab(ids: [String!]!, relations: [String!]): [Lab!]!
   findManyWhereCustomer(where: String!): [Customer!]!
   findManyWhereGeneralCustomer(where: String!): [GeneralCustomer!]!
   findManyWhereLab(where: String!): [Lab!]!

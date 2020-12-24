@@ -4,7 +4,13 @@ import {
   TryCatchWrapperAsync,
 } from '@app/models';
 import { Injectable, Logger, Type } from '@nestjs/common';
-import { Repository, getRepository, ObjectType, FindConditions } from 'typeorm';
+import {
+  Repository,
+  getRepository,
+  ObjectType,
+  FindConditions,
+  In,
+} from 'typeorm';
 
 @Injectable()
 export class DbService {
@@ -48,21 +54,46 @@ export class DbService {
     }
   }
 
-  creatEntity<T, U>(entity: ObjectType<T>, data: U): Promise<T> {
+  @TryCatchWrapperAsync()
+  async findManyByIds<T>(
+    entity: Type<T>,
+    ids: string[],
+    relations: Array<keyof T & string>,
+  ): Promise<T[]> {
+    const repository: Repository<T> = this.getRepository<T>(entity);
+
+    let entities: Promise<T[]>;
+
+    if (!relations) {
+      entities = repository.find({ where: { id: In(ids) } });
+    } else {
+      entities = repository.find({ where: { id: In(ids) }, relations });
+    }
+
+    return entities;
+  }
+
+  async creatEntity<T, U>(entity: ObjectType<T>, data: U): Promise<T> {
     this.logger.verbose('create entity');
 
     try {
       const repository: Repository<T> = this.getRepository<T>(entity);
 
-      let res = this.getRepository(DefinedIndicator);
-      res.find({ where: {} });
+      const newEntity = repository.create(data);
 
-      const newEntity = repository.save({ ...data });
+      await repository.save(newEntity);
 
       return newEntity;
     } catch (error) {
       this.logger.error(error);
     }
+  }
+
+  @TryCatchWrapperAsync()
+  async saveEntity<T, U>(entity: Type<T>, data: U): Promise<T> {
+    const repository = this.getRepository(entity);
+
+    return repository.save(data);
   }
 
   async updateEntityById<T extends U, U>(
@@ -110,7 +141,13 @@ export class DbService {
     try {
       const repository = this.getRepository<T>(entity);
 
-      const newEntity = await repository.findOne(id, { relations });
+      let newEntity: T;
+
+      if (relations) {
+        newEntity = await repository.findOne(id, { relations });
+      } else {
+        newEntity = await repository.findOne(id);
+      }
 
       if (!newEntity) throw new EntityNotFound<T>(entity);
 

@@ -41,10 +41,38 @@ export function BaseResolver<T extends UWD, ND, UD, FM, FO, UWW, UWD>(
       return entities;
     }
 
+    @Query(type => [classRef], { name: `findManyByIds${classRef.name}` })
+    @TryCatchWrapperAsync()
+    async findManyByIds(
+      @Args('ids', { type: () => [String] }) ids: string[],
+      @Args('relations', { nullable: true, type: () => [String] })
+      relations: string[],
+    ) {
+      const entities = await this.entities.findManyByIds(
+        classRef,
+        ids,
+        relations as Array<keyof T & string>,
+      );
+
+      console.log(entities);
+
+      return entities;
+    }
+
     @Query(type => classRef, { name: `findById${classRef.name}` })
     @TryCatchWrapperAsync()
-    async findById(@Args('id') id: string): Promise<T> {
-      return await this.entities.findEntityByIdWithException(classRef, id);
+    async findById(
+      @Args('id') id: string,
+      @Args('relations', { nullable: true, type: () => [String] })
+      relations: string[],
+    ): Promise<T> {
+      const entity = await this.entities.findEntityByIdWithException(
+        classRef,
+        id,
+        relations as Array<keyof T & string>,
+      );
+
+      return entity;
     }
 
     @Query(type => [classRef], { name: `findManyWhere${classRef.name}` })

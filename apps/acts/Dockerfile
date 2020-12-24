@@ -4,16 +4,13 @@ RUN yarn build acts
 
 FROM node:alpine
 
-RUN yarn global add @nestjs/cli
-
 WORKDIR /app
 
 COPY --from=builder tmp/package.json /app
 
+RUN yarn install
+RUN yarn global add @nestjs/cli
+
 COPY --from=builder tmp/dist/apps/acts /app/dist/acts
 
-# RUN yarn install --immutable
-
-# COPY . .
-
-CMD ["yarn", "start", "acts", "--watch"]
+CMD ["yarn", "start", "acts"]

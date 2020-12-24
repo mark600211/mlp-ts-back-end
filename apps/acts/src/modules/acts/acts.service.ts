@@ -2,6 +2,7 @@ import {
   Act,
   ActBase,
   ActStatus,
+  ApplicationBase,
   Customer,
   DocType,
   GeneralCustomer,
@@ -55,14 +56,13 @@ export class ActsService extends AbstractDataService {
 
   @TryCatchWrapper()
   async updateData(data: PatchActDto): Promise<any> {
-    const consumers = this.consumerService.findAllConsumers<AllConsumersPatch>(
-      data,
-    );
+    const consumers = await this.consumerService.findAllConsumers<
+      AllConsumersPatch
+    >(data);
 
     const updateData = {
+      ...data,
       ...consumers,
-      name: data.name,
-      datetime: data.datetime,
     };
 
     return updateData;
@@ -118,8 +118,6 @@ export class ActsService extends AbstractDataService {
   async getTableContent(
     tableConditions: TableConditions,
   ): Promise<TableContent> {
-    this.logger.log(tableConditions);
-
     const qb = this.entities.getRepository(Act).createQueryBuilder('act');
 
     const subCustomer = this.entities
@@ -147,12 +145,9 @@ export class ActsService extends AbstractDataService {
     )?.ids;
 
     if (tableConditions.wheres && generalCustomerIds?.length >= 1) {
-      this.logger.log('g');
       subGeneralCustomer.where('id IN (:...gCustomerIds)', {
         gCustomerIds: [...generalCustomerIds],
       });
-
-      this.logger.log(await subGeneralCustomer.getRawMany());
     }
 
     const subLab = this.entities
@@ -268,8 +263,66 @@ export class ActsService extends AbstractDataService {
       totalCount,
     };
 
-    this.logger.log(acts);
-
     return tableContent;
+  }
+
+  @TryCatchWrapperAsync()
+  async copyManyActsByIds(ids: string[], num: number): Promise<boolean> {
+    const acts = ids
+      .map(id => {
+        return this.entities.findEntityByIdWithException(Act, id, [
+          'customer',
+          'generalCustomer',
+          'lab',
+          'typeOfSample',
+          'place',
+          'method',
+          'toolType',
+          'normativeDocuments',
+          'sampleType',
+          'preparations',
+          'goal',
+          'definedIndicators',
+          'environmentalEngineer',
+          'representative',
+          'passedSample',
+          'applications',
+        ]);
+      })
+      .map(async act => {
+        let _act = await act;
+        delete _act.id;
+        delete _act.createdAt;
+        delete _act.updatedAt;
+
+        const apps = await Promise.all(
+          _act.applications.map(async app => {
+            delete app.id;
+            const newApp = await this.entities.createEntity(
+              ApplicationBase,
+              app,
+            );
+            return newApp;
+          }),
+        );
+
+        const copies = new Array(num).fill(undefined).map(async () => {
+          const newAct = await this.entities.createEntity(Act, _act);
+
+          newAct.applications = apps;
+
+          this.entities.saveEntity(Act, newAct);
+
+          if (newAct) {
+            return true;
+          } else {
+            return false;
+          }
+        });
+
+        return copies.every(async val => (await val) === true);
+      });
+
+    return acts.every(async val => (await val) === true);
   }
 }

@@ -22,10 +22,16 @@ type Address {
   zip: String
 }
 
-type Application {
-  datetime: DateAndTime!
+type ApplicationBase {
+  datetime: DateAndTime
   id: ID!
-  place: String!
+  place: Place
+}
+
+input ApplicationInput {
+  datetime: DateTimeInput
+  id: ID!
+  place: InputPlace
 }
 
 type ClimaticEnvironmental {
@@ -42,8 +48,8 @@ type Customer {
 }
 
 type DateAndTime {
-  date: DateTime!
-  time: String!
+  date: DateTime
+  time: String
 }
 
 """
@@ -52,8 +58,8 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 scalar DateTime
 
 input DateTimeInput {
-  date: DateTime!
-  time: String!
+  date: DateTime
+  time: String
 }
 
 type DefinedIndicator {
@@ -78,6 +84,10 @@ type GeneralCustomer {
 type Goal {
   id: ID!
   label: String!
+}
+
+input InputPlace {
+  id: ID!
 }
 
 type Lab {
@@ -187,9 +197,7 @@ type PassedSample {
 
 input PatchDefinedIndicator {
   id: String!
-  lab: String!
   label: String!
-  typeOfSample: String!
 }
 
 input PatchOption {
@@ -228,22 +236,38 @@ type Query {
   findAllSampleType(field: String, relations: [String!]): [SampleType!]!
   findAllToolType(field: String, relations: [String!]): [ToolType!]!
   findAllTypeOfSample(field: String, relations: [String!]): [TypeOfSample!]!
-  findByIdClimaticEnvironmental(id: String!): ClimaticEnvironmental!
-  findByIdDefinedIndicator(id: String!): DefinedIndicator!
-  findByIdEnvironmentalEngineer(id: String!): EnvironmentalEngineer!
-  findByIdGoal(id: String!): Goal!
-  findByIdMethod(id: String!): Method!
-  findByIdNormativeDocument(id: String!): NormativeDocument!
-  findByIdObjectName(id: String!): ObjectName!
-  findByIdPassedSample(id: String!): PassedSample!
-  findByIdPlace(id: String!): Place!
-  findByIdPlanning(id: String!): Planning!
-  findByIdPreparation(id: String!): Preparation!
-  findByIdRepresentative(id: String!): Representative!
-  findByIdSample(id: String!): Sample!
-  findByIdSampleType(id: String!): SampleType!
-  findByIdToolType(id: String!): ToolType!
-  findByIdTypeOfSample(id: String!): TypeOfSample!
+  findByIdClimaticEnvironmental(id: String!, relations: [String!]): ClimaticEnvironmental!
+  findByIdDefinedIndicator(id: String!, relations: [String!]): DefinedIndicator!
+  findByIdEnvironmentalEngineer(id: String!, relations: [String!]): EnvironmentalEngineer!
+  findByIdGoal(id: String!, relations: [String!]): Goal!
+  findByIdMethod(id: String!, relations: [String!]): Method!
+  findByIdNormativeDocument(id: String!, relations: [String!]): NormativeDocument!
+  findByIdObjectName(id: String!, relations: [String!]): ObjectName!
+  findByIdPassedSample(id: String!, relations: [String!]): PassedSample!
+  findByIdPlace(id: String!, relations: [String!]): Place!
+  findByIdPlanning(id: String!, relations: [String!]): Planning!
+  findByIdPreparation(id: String!, relations: [String!]): Preparation!
+  findByIdRepresentative(id: String!, relations: [String!]): Representative!
+  findByIdSample(id: String!, relations: [String!]): Sample!
+  findByIdSampleType(id: String!, relations: [String!]): SampleType!
+  findByIdToolType(id: String!, relations: [String!]): ToolType!
+  findByIdTypeOfSample(id: String!, relations: [String!]): TypeOfSample!
+  findManyByIdsClimaticEnvironmental(ids: [String!]!, relations: [String!]): [ClimaticEnvironmental!]!
+  findManyByIdsDefinedIndicator(ids: [String!]!, relations: [String!]): [DefinedIndicator!]!
+  findManyByIdsEnvironmentalEngineer(ids: [String!]!, relations: [String!]): [EnvironmentalEngineer!]!
+  findManyByIdsGoal(ids: [String!]!, relations: [String!]): [Goal!]!
+  findManyByIdsMethod(ids: [String!]!, relations: [String!]): [Method!]!
+  findManyByIdsNormativeDocument(ids: [String!]!, relations: [String!]): [NormativeDocument!]!
+  findManyByIdsObjectName(ids: [String!]!, relations: [String!]): [ObjectName!]!
+  findManyByIdsPassedSample(ids: [String!]!, relations: [String!]): [PassedSample!]!
+  findManyByIdsPlace(ids: [String!]!, relations: [String!]): [Place!]!
+  findManyByIdsPlanning(ids: [String!]!, relations: [String!]): [Planning!]!
+  findManyByIdsPreparation(ids: [String!]!, relations: [String!]): [Preparation!]!
+  findManyByIdsRepresentative(ids: [String!]!, relations: [String!]): [Representative!]!
+  findManyByIdsSample(ids: [String!]!, relations: [String!]): [Sample!]!
+  findManyByIdsSampleType(ids: [String!]!, relations: [String!]): [SampleType!]!
+  findManyByIdsToolType(ids: [String!]!, relations: [String!]): [ToolType!]!
+  findManyByIdsTypeOfSample(ids: [String!]!, relations: [String!]): [TypeOfSample!]!
   findManyWhereClimaticEnvironmental(where: String!): [ClimaticEnvironmental!]!
   findManyWhereDefinedIndicator(where: WhereDefinedIndicator!): [DefinedIndicator!]!
   findManyWhereEnvironmentalEngineer(where: String!): [EnvironmentalEngineer!]!

@@ -52,7 +52,7 @@ export class ActsController implements ActsServiceController {
       'passedSample',
       'place',
       'planning',
-      'preparation',
+      'preparations',
       'representative',
       'sampleType',
       'toolType',

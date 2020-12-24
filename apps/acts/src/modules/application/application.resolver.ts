@@ -1,10 +1,10 @@
 import { Resolver } from '@nestjs/graphql';
-import { Application, PatchAppDto } from '@app/models';
+import { ApplicationBase, NewAppDto, PatchAppDto } from '@app/models';
 import { BaseResolver } from '@app/resolvers';
 
-@Resolver(of => Application)
+@Resolver(of => ApplicationBase)
 export class ApplicationResolver extends BaseResolver(
-  Application,
-  PatchAppDto,
+  ApplicationBase,
+  NewAppDto,
   PatchAppDto,
 ) {}

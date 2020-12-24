@@ -1,4 +1,4 @@
-import { Args, Query, Resolver } from '@nestjs/graphql';
+import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { Act, NewActDto, PatchActDto, TryCatchWrapperAsync } from '@app/models';
 import { BaseResolver } from '@app/resolvers';
 import { Logger } from '@nestjs/common';
@@ -19,5 +19,14 @@ export class ActResolver extends BaseResolver(Act, NewActDto, PatchActDto) {
     @Args('conditions') tableConditions: TableConditions,
   ): Promise<TableContent> {
     return this.actsService.getTableContent(tableConditions);
+  }
+
+  @Mutation(type => Boolean)
+  @TryCatchWrapperAsync()
+  async copyManyActsByIds(
+    @Args('ids', { type: () => [String] }) ids: [string],
+    @Args('num') num: number,
+  ): Promise<boolean> {
+    return this.actsService.copyManyActsByIds(ids, num);
   }
 }

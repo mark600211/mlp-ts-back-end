@@ -15,9 +15,9 @@ import {
   EnvironmentalEngineer,
   Representative,
   PassedSample,
-  Application,
   Planning,
   NormativeDocument,
+  ApplicationBase,
 } from '@app/models';
 
 export interface AllConsumersPatch {
@@ -42,5 +42,5 @@ export interface AllConsumersPatch {
   environmentalEngineer?: EnvironmentalEngineer;
   representative?: Representative;
   passedSample?: PassedSample;
-  applications: Application[];
+  applications: ApplicationBase[];
 }

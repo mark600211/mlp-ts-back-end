@@ -27,7 +27,7 @@ import {
   TypeOfSample,
 } from '../options';
 import { DateAndTime } from '../date-time.model';
-import { Application } from '../application';
+import { ApplicationBase } from '../application';
 
 @Entity()
 @ObjectType()
@@ -63,10 +63,10 @@ export class ActBase {
     { cascade: true },
   )
   typeOfSample: TypeOfSample;
-  @Field()
+  @Field({ nullable: true })
   @Column('text', { nullable: true })
   objectName?: string;
-  @Field()
+  @Field({ nullable: true })
   @ManyToOne(
     type => Place,
     place => place.acts,
@@ -76,45 +76,45 @@ export class ActBase {
   @Field(type => DateAndTime)
   @Column(type => DateAndTime)
   datetime: DateAndTime;
-  @Field()
+  @Field({ nullable: true })
   @ManyToOne(
     type => Method,
     method => method.acts,
     { cascade: true },
   )
   method?: Method;
-  @Field()
+  @Field({ nullable: true })
   @ManyToOne(
     type => ToolType,
     toolType => toolType.acts,
     { cascade: true },
   )
   toolType?: ToolType;
-  @Field()
+  @Field({ nullable: true })
   @Column('text', { nullable: true })
   climaticEnvironmental?: string;
-  @Field()
+  @Field({ nullable: true })
   @Column('text', { nullable: true })
   planning?: string;
   @Field(type => [NormativeDocument])
   @ManyToMany(() => NormativeDocument, { cascade: true })
   @JoinTable()
   normativeDocuments?: NormativeDocument[];
-  @Field()
+  @Field({ nullable: true })
   @ManyToOne(
     type => SampleType,
     sampleType => sampleType.acts,
     { cascade: true },
   )
   sampleType?: SampleType;
-  @Field(type => String)
+  @Field(type => String, { nullable: true })
   @Column('text', { nullable: true })
   sample?: string;
   @Field(type => [Preparation])
   @ManyToMany(() => Preparation, { cascade: true })
   @JoinTable()
-  preparation?: Preparation[];
-  @Field()
+  preparations?: Preparation[];
+  @Field({ nullable: true })
   @ManyToOne(
     type => Goal,
     goalAct => goalAct.acts,
@@ -125,40 +125,39 @@ export class ActBase {
   @ManyToMany(() => DefinedIndicator, { cascade: true })
   @JoinTable()
   definedIndicators?: DefinedIndicator[];
-  @Field()
+  @Field({ nullable: true })
   @Column('text', { nullable: true })
   additions?: string;
-  @Field()
+  @Field({ nullable: true })
   @Column('text', { nullable: true })
   informationAboutSelection?: string;
-  @Field()
+  @Field({ nullable: true })
   @ManyToOne(
     type => EnvironmentalEngineer,
     environmentalEngineer => environmentalEngineer.acts,
     { cascade: true },
   )
   environmentalEngineer?: EnvironmentalEngineer;
-  @Field()
+  @Field({ nullable: true })
   @ManyToOne(
     type => Representative,
     representative => representative.acts,
     { cascade: true },
   )
   representative?: Representative;
-  @Field()
+  @Field({ nullable: true })
   @ManyToOne(
     type => PassedSample,
     passedSample => passedSample.acts,
     { cascade: true },
   )
   passedSample?: PassedSample;
-  @Field(type => [Application])
+  @Field(type => [ApplicationBase])
   @OneToMany(
-    type => Application,
+    type => ApplicationBase,
     applications => applications.act,
-    { deferrable: 'INITIALLY DEFERRED' },
   )
-  applications?: Application[];
+  applications?: ApplicationBase[];
   @CreateDateColumn()
   createdAt?: Date;
   @UpdateDateColumn()

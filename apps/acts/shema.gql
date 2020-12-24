@@ -3,32 +3,32 @@
 # ------------------------------------------------------
 
 type Act {
-  additions: String!
-  applications: [Application!]!
-  climaticEnvironmental: String!
+  additions: String
+  applications: [ApplicationBase!]!
+  climaticEnvironmental: String
   customer: Customer!
   datetime: DateAndTime!
   definedIndicators: [DefinedIndicator!]!
-  environmentalEngineer: EnvironmentalEngineer!
+  environmentalEngineer: EnvironmentalEngineer
   generalCustomer: GeneralCustomer!
-  goal: Goal!
+  goal: Goal
   id: ID!
-  informationAboutSelection: String!
+  informationAboutSelection: String
   isCorrect: Boolean!
   lab: Lab!
-  method: Method!
+  method: Method
   name: String!
   normativeDocuments: [NormativeDocument!]!
-  objectName: String!
-  passedSample: PassedSample!
-  place: Place!
-  planning: String!
-  preparation: [Preparation!]!
-  representative: Representative!
-  sample: String!
-  sampleType: SampleType!
+  objectName: String
+  passedSample: PassedSample
+  place: Place
+  planning: String
+  preparations: [Preparation!]!
+  representative: Representative
+  sample: String
+  sampleType: SampleType
   status: String!
-  toolType: ToolType!
+  toolType: ToolType
   typeOfSample: TypeOfSample!
 }
 
@@ -52,16 +52,16 @@ type Address {
   zip: String
 }
 
-type Application {
-  datetime: DateAndTime!
+type ApplicationBase {
+  datetime: DateAndTime
   id: ID!
-  place: String!
+  place: Place
 }
 
 input ApplicationInput {
-  datetime: DateTimeInput!
+  datetime: DateTimeInput
   id: ID!
-  place: String!
+  place: InputPlace
 }
 
 type Customer {
@@ -74,8 +74,8 @@ type Customer {
 }
 
 type DateAndTime {
-  date: DateTime!
-  time: String!
+  date: DateTime
+  time: String
 }
 
 """
@@ -84,8 +84,8 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 scalar DateTime
 
 input DateTimeInput {
-  date: DateTime!
-  time: String!
+  date: DateTime
+  time: String
 }
 
 type DefinedIndicator {
@@ -112,6 +112,10 @@ type Goal {
   label: String!
 }
 
+input InputPlace {
+  id: ID!
+}
+
 type Lab {
   address: Address!
   email: String
@@ -127,19 +131,20 @@ type Method {
 }
 
 type Mutation {
+  copyManyActsByIds(ids: [String!]!, num: Float!): Boolean!
   createAct(data: NewActDto!): Act!
-  createApplication(data: PatchAppDto!): Application!
+  createApplicationBase(data: NewAppDto!): ApplicationBase!
   deleteByIdAct(id: String!): Act
-  deleteByIdApplication(id: String!): Application
+  deleteByIdApplicationBase(id: String!): ApplicationBase
   updateAct(data: PatchActDto!, id: String!): Act!
-  updateApplication(data: PatchAppDto!, id: String!): Application!
+  updateApplicationBase(data: PatchAppDto!, id: String!): ApplicationBase!
   updateWhereAct(data: String!, where: String!): Act!
-  updateWhereApplication(data: String!, where: String!): Application!
+  updateWhereApplicationBase(data: String!, where: String!): ApplicationBase!
 }
 
 input NewActDto {
   additions: String
-  applications: [ApplicationInput!]
+  applications: [PatchAppDto!]
   climaticEnvironmental: String
   customer: String!
   datetime: DateTimeInput
@@ -151,17 +156,22 @@ input NewActDto {
   lab: String!
   method: String
   name: String!
-  normativeDocument: [String!]
+  normativeDocuments: [String!]
   objectName: String
   passedSample: String
   place: String
   planning: String
-  preparation: [String!]
+  preparations: [String!]
   representative: String
   sample: String
   sampleType: String
   toolType: String
   typeOfSample: String!
+}
+
+input NewAppDto {
+  datetime: DateTimeInput
+  place: String
 }
 
 type NormativeDocument {
@@ -176,7 +186,7 @@ type PassedSample {
 
 input PatchActDto {
   additions: String
-  applications: [ApplicationInput!]
+  applications: [PatchAppDto!]
   climaticEnvironmental: String
   customer: String
   datetime: DateTimeInput
@@ -189,12 +199,12 @@ input PatchActDto {
   lab: String
   method: String
   name: String
-  normativeDocument: [String!]
+  normativeDocuments: [String!]
   objectName: String
   passedSample: String
   place: String
   planning: String
-  preparation: [String!]
+  preparations: [String!]
   representative: String
   sample: String
   sampleType: String
@@ -204,6 +214,7 @@ input PatchActDto {
 
 input PatchAppDto {
   datetime: DateTimeInput!
+  id: ID!
   place: String!
 }
 
@@ -219,13 +230,15 @@ type Preparation {
 
 type Query {
   findAllAct(field: String, relations: [String!]): [Act!]!
-  findAllApplication(field: String, relations: [String!]): [Application!]!
-  findByIdAct(id: String!): Act!
-  findByIdApplication(id: String!): Application!
+  findAllApplicationBase(field: String, relations: [String!]): [ApplicationBase!]!
+  findByIdAct(id: String!, relations: [String!]): Act!
+  findByIdApplicationBase(id: String!, relations: [String!]): ApplicationBase!
+  findManyByIdsAct(ids: [String!]!, relations: [String!]): [Act!]!
+  findManyByIdsApplicationBase(ids: [String!]!, relations: [String!]): [ApplicationBase!]!
   findManyWhereAct(where: String!): [Act!]!
-  findManyWhereApplication(where: String!): [Application!]!
+  findManyWhereApplicationBase(where: String!): [ApplicationBase!]!
   findOneWhereAct(where: String!): Act!
-  findOneWhereApplication(where: String!): Application!
+  findOneWhereApplicationBase(where: String!): ApplicationBase!
   getTableContent(conditions: TableConditions!): TableContent!
 }
 

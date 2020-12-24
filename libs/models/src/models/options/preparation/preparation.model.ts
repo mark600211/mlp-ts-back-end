@@ -8,7 +8,7 @@ import { PreparationBase } from './preparation-base.model';
 export class Preparation extends PreparationBase {
   @ManyToMany(
     type => Act,
-    acts => acts.preparation,
+    acts => acts.preparations,
     { nullable: true },
   )
   acts: Act[];

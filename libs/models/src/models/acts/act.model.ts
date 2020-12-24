@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/camelcase */
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
-import { ObjectType, Field, ID } from '@nestjs/graphql';
+import { ObjectType, Field, ID, InputType } from '@nestjs/graphql';
 import { ActBase } from './act-base.model';
 
 export enum ActStatus {

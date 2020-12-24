@@ -1,5 +1,5 @@
 import { InputType, Field } from '@nestjs/graphql';
-import { ApplicationBase } from '../../application';
+import { ApplicationBase, PatchAppDto } from '../../application';
 import { DateAndTime } from '../../date-time.model';
 
 @InputType()
@@ -31,13 +31,13 @@ export class PatchActDto {
   @Field({ nullable: true })
   planning?: string;
   @Field(type => [String], { nullable: true })
-  normativeDocument?: string[];
+  normativeDocuments?: string[];
   @Field({ nullable: true })
   sampleType?: string;
   @Field(type => String, { nullable: true })
   sample?: string;
   @Field(type => [String], { nullable: true })
-  preparation?: string[];
+  preparations?: string[];
   @Field({ nullable: true })
   goal?: string;
   @Field(ype => [String], { nullable: true })
@@ -52,6 +52,6 @@ export class PatchActDto {
   representative?: string;
   @Field({ nullable: true })
   passedSample?: string;
-  @Field(type => [ApplicationBase], { nullable: true })
-  applications: ApplicationBase[];
+  @Field(type => [PatchAppDto], { nullable: true })
+  applications: PatchAppDto[];
 }
